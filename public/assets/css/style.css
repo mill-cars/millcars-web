@@ -1008,7 +1008,8 @@ body.modal-open {
   background-color: transparent;
 }
 #header3.main-header .header-style2 {
-  background-color: #ffffff;
+  background-color: #000000;
+  opacity: 0.9;
   padding: 0px 25px;
   border-radius: 0px 0px 10px 10px;
   box-shadow: 0px 4px 19px 0px rgba(0, 0, 0, 0.07);
@@ -1176,7 +1177,7 @@ body.modal-open {
   font-weight: 500;
   padding: 31px 0px;
   letter-spacing: 0px;
-  color: #23272D;
+  color: #3455ec;
   font-size: 17px;
   text-transform: capitalize;
   transition: all 500ms ease;
@@ -1217,7 +1218,7 @@ body.modal-open {
 .main-header .main-menu .navigation > li:hover > a,
 .main-header .main-menu .navigation > li.current > a {
   opacity: 1;
-  color: #D01818;
+  color: #ffffff;
 }
 
 .main-header .main-menu .navigation > li > ul {
@@ -2092,7 +2093,7 @@ body.modal-open {
 .btn-icon-list {
   padding: 15px 25px;
   border-radius: 9px;
-  background-color: #0A1426;
+  background-color: #D01818;
   color: #ffffff;
   display: inline-block;
   font-family: var(--font-main-family);
@@ -2111,7 +2112,7 @@ body.modal-open {
 }
 .btn-icon-list:hover {
   color: #ffffff;
-  background-color: #D01818;
+  background-color: #3455ec;
 }
 
 .btn-sell {
