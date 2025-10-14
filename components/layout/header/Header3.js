@@ -13,13 +13,13 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                                     <li>
                                         <Link href="/#">
                                             <i className="icon-Group-11" />
-                                            <p>Hot Line: +1 800 123 456 789</p>
+                                            <p>Contacto: +58 412-6512845</p>
                                         </Link>
                                     </li>
                                     <li>
                                         <Link href="/#">
                                             <i className="icon-Group3" />
-                                            <p>Mail Us: your_protect@mail.com</p>
+                                            <p>Correo: ventas@millcars.com</p>
                                         </Link>
                                     </li>
                                 </ul>
@@ -58,43 +58,33 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                                             <div className="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                                 <ul className="navigation clearfix">
                                                     <li className="dropdown2 current">
-                                                        <Link href="/#">Home</Link>
+                                                        <Link href="/#">Inicio</Link>
+                                                    </li>
+                                                    <li className="dropdown2">
+                                                        <Link href="/#">Vehículos</Link>
                                                         <ul>
-                                                            <li className="current">
-                                                                <Link href="/">Home Page 01</Link>
-                                                            </li>
-                                                            <li><Link href="/home02">Home Page 02</Link></li>
-                                                            <li><Link href="/home03">Home Page 03</Link></li>
-                                                            <li><Link href="/home04">Home Page 04</Link></li>
-                                                            <li><Link href="/home05">Home Page 05</Link></li>
-                                                            <li><Link href="/home06">Home Page 06</Link></li>
+                                                            <li><Link href="/car-list">Listado de vehículos</Link></li>
+                                                            <li><Link href="/listing-details">Detalles del listado</Link></li>
                                                         </ul>
                                                     </li>
                                                     <li className="dropdown2">
-                                                        <Link href="/#">Cars</Link>
+                                                        <Link href="/#">Páginas</Link>
                                                         <ul>
-                                                            <li><Link href="/car-list">Car Listings</Link></li>
-                                                            <li><Link href="/listing-details">Listings Details</Link></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li className="dropdown2">
-                                                        <Link href="/#">Page</Link>
-                                                        <ul>
-                                                            <li><Link href="/dashboard">Dashboard</Link></li>
-                                                            <li><Link href="/my-inventory">My Inventory</Link></li>
-                                                            <li><Link href="/addcart">Add car</Link></li>
-                                                            <li><Link href="/seller-profile">Seller Profile</Link></li>
-                                                            <li><Link href="/dealer-details">Dealer Detail</Link></li>
+                                                            <li><Link href="/dashboard">Panel</Link></li>
+                                                            <li><Link href="/my-inventory">Mi inventario</Link></li>
+                                                            <li><Link href="/addcart">Agregar vehículo</Link></li>
+                                                            <li><Link href="/seller-profile">Perfil del vendedor</Link></li>
+                                                            <li><Link href="/dealer-details">Detalle del concesionario</Link></li>
                                                             <li><Link href="/404">404</Link></li>
                                                         </ul>
                                                     </li>
-                                                    <li className="dropdown2"><Link href="/#">News </Link>
+                                                    <li className="dropdown2"><Link href="/#">Noticias</Link>
                                                         <ul>
-                                                            <li><Link href="/blog">Blog List</Link></li>
-                                                            <li><Link href="/blog-single">Blog Detail</Link></li>
+                                                            <li><Link href="/blog">Blog</Link></li>
+                                                            <li><Link href="/blog-single">Detalle del blog</Link></li>
                                                         </ul>
                                                     </li>
-                                                    <li><Link href="/contact-us">Contact us </Link>
+                                                    <li><Link href="/contact-us">Contáctanos</Link>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -104,13 +94,13 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                                     <div className="header-account flex align-center">
                                         <div className="register ml--18">
                                             <div className="flex align-center">
-                                                <a data-bs-toggle="modal" onClick={handleToggle1} role="button">Register</a>
-                                                <a data-bs-toggle="modal" onClick={handleToggle2} role="button">Login</a>
+                                                <a data-bs-toggle="modal" onClick={handleToggle1} role="button">Registrarse</a>
+                                                <a data-bs-toggle="modal" onClick={handleToggle2} role="button">Iniciar sesión</a>
                                             </div>
                                         </div>
                                         <div className="flat-bt-top sc-btn-top ml--20 ">
                                             <Link className="btn-icon-list" href="/car-list">
-                                                <span>Listing Yours</span>
+                                                <span>Catálogo</span>
                                                 <i className="icon-add-button-1" />
                                             </Link>
                                         </div>
@@ -137,16 +127,16 @@ export default function Header3({ scroll, isMobileMenu, handleMobileMenu, handle
                                 <MobileMenu />
                             </div>
                             <div className="help-bar-mobie login-box">
-                                <a data-bs-toggle="modal" onClick={handleToggle1} role="button" className="fw-7 category"><i className="icon-user" />Login</a>
+                                <a data-bs-toggle="modal" onClick={handleToggle1} role="button" className="fw-7 category"><i className="icon-user" />Iniciar sesión</a>
                             </div>
                             <div className="help-bar-mobie search">
-                                <Link href="/#" className="fw-7 font-2"><i className="icon-loupe-1" />Search</Link>
+                                <Link href="/#" className="fw-7 font-2"><i className="icon-loupe-1" />Buscar</Link>
                             </div>
                             <div className="help-bar-mobie compare">
-                                <Link href="/#" className="fw-7 font-2"><i className="icon-shuffle-2-1" />Compare</Link>
+                                <Link href="/#" className="fw-7 font-2"><i className="icon-shuffle-2-1" />Comparar</Link>
                             </div>
                             <div className="help-bar-mobie cart">
-                                <Link href="/#" className="fw-7 font-2"><i className="icon-Vector" />Cart</Link>
+                                <Link href="/#" className="fw-7 font-2"><i className="icon-Vector" />Carrito</Link>
                             </div>
                         </div>
                     </nav>

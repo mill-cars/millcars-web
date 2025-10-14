@@ -17,18 +17,17 @@ export default function Slide() {
                         </div>
                         <div className="slide-item-content">
                             <div className="slide-content">
-                                <span className="wow fadeInUp sub-title" data-wow-delay="100ms" data-wow-duration="2000ms">Trusted Dealer, Rental</span>
+                                <span className="wow fadeInUp sub-title" data-wow-delay="100ms" data-wow-duration="2000ms">Concesionario confiable</span>
                                 <h1 className=" title-slide wow slideInUp" data-wow-delay="50ms" data-wow-duration="200ms">
-                                    premium car Collection..</h1>
+                                    Nuevo, usado e importado.</h1>
                                 <p className="description wow fadeInUp" data-wow-delay="300ms" data-wow-duration="2000ms">
-                                    Car is where early adopters and innovation seekers find lively
-                                    imaginative tech before it hits the mainstream.</p>
+                                    Más que autos, grandes decisiones. Su próximo vehículo lo espera.</p>
                                 <div className="box">
                                     {/* Button */}
                                     <div className="btn-main wow fadeInUp" data-wow-delay="400ms" data-wow-duration="2000ms">
                                         <Link href="/#" className="button_main_inner ">
                                             <span>
-                                                Go to listing
+                                                Ver listado
                                             </span>
                                         </Link>
                                     </div>
@@ -42,7 +41,7 @@ export default function Slide() {
                                 <img src="/assets/images/slide/icon.png" className="icon-shape wow swing" alt="" />
                                 <div className="box-offer">
                                     <p>40 <span>%</span></p>
-                                    <span>off</span>
+                                    <span>de descuento</span>
                                 </div>
                                 <div className="box-car">
                                     <img src="/assets/images/slide/car.png" alt="" />
@@ -52,18 +51,18 @@ export default function Slide() {
                                             </i>
                                             <div className={isToggled ? "content-price  active" : " content-price "}>
                                                 <div className="proflile">
-                                                    <span>Luxury Ford Car</span>
+                                                    <span>Ford de lujo</span>
                                                     <span className="price">$13000</span>
                                                 </div>
-                                                <p>1421 San Pedro St, Los Angeles, CA</p>
+                                                <p>Av. Principal, Los Cortijos de Lourdes, Caracas</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="box">
-                                <span>(603) 555-0123</span>
-                                <span>Contact@gmail.com</span>
+                                <span>(+58) 412-6512845</span>
+                                <span>ventas@millcars.com</span>
                             </div>
                         </div>
                     </div>
