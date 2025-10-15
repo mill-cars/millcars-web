@@ -19,7 +19,7 @@ export default function Slide() {
                             <div className="slide-content">
                                 <span className="wow fadeInUp sub-title" data-wow-delay="100ms" data-wow-duration="2000ms">Concesionario confiable</span>
                                 <h1 className=" title-slide wow slideInUp" data-wow-delay="50ms" data-wow-duration="200ms">
-                                    Nuevo, usado e importado.</h1>
+                                    Nuevo, usado, importado.</h1>
                                 <p className="description wow fadeInUp" data-wow-delay="300ms" data-wow-duration="2000ms">
                                     Más que autos, grandes decisiones. Su próximo vehículo lo espera.</p>
                                 <div className="box">
@@ -51,8 +51,8 @@ export default function Slide() {
                                             </i>
                                             <div className={isToggled ? "content-price  active" : " content-price "}>
                                                 <div className="proflile">
-                                                    <span>Ford de lujo</span>
-                                                    <span className="price">$13000</span>
+                                                    <span>TOYOTA</span>
+                                                    <span className="price">2026</span>
                                                 </div>
                                                 <p>Av. Principal, Los Cortijos de Lourdes, Caracas</p>
                                             </div>
