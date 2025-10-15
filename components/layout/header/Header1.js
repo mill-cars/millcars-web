@@ -53,7 +53,8 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
                     <div className="menu-backdrop" onClick={handleMobileMenu} />
                     <nav className="menu-box">
                         <div className="nav-logo">
-                            <Link href="/"><img src="/assets/images/logo/logo2@.png" alt="Logo Motorx" /></Link>
+                            <Link href="/"><img src="/assets/images/logo/logo2@.png" alt="Logo MILLCARS
+                            " /></Link>
                         </div>
                         <div className="bottom-canvas">
                             <MobileMenu />
