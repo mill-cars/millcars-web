@@ -18,6 +18,17 @@ dist/
 .wrangler/
 workers-site/
 
+# Wrangler / Cloudflare Pages local config and temporary files
+# ignore local wrangler config files (do not commit account-specific configs)
+wrangler.toml
+wrangler.local.toml
+wrangler.*.toml
+
+# ignore wrangler temporary/state folders explicitly
+.wrangler/tmp/
+.wrangler/state/
+.wrangler/**
+
 # Environment variables (local overrides)
 .env.local
 .env.*.local

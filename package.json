@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
+        "dev:pages": "npx wrangler pages dev --compatibility-flag=nodejs_compat -- npx next dev",
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
@@ -24,5 +25,8 @@
         "sass": "^1.69.5",
         "swiper": "^11.0.7",
         "wowjs": "^1.1.3"
+    },
+    "devDependencies": {
+        "wrangler": "^4.43.0"
     }
 }
