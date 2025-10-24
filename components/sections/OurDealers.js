@@ -11,7 +11,7 @@ export default function OurDealers() {
                             <h2 className="title-section-main wow fadeInUp">Our Dealers</h2>
                             <div className="btn-read-more wow fadeInUp">
                                 <Link className="more-link" href="/#">
-                                    <span>More Members</span>
+                                    <span>Más miembros</span>
                                     <i className="icon-arrow-up-right2" />
                                 </Link>
                             </div>

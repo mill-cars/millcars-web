@@ -8,10 +8,10 @@ export default function ExploreCar() {
                 <div className="themesflat-container">
                     <div className="explore-car-wrap">
                         <div className="header-section-main mb-46">
-                            <h2 className="title-section-main wow fadeInUp">Explore Our cars</h2>
+                            <h2 className="title-section-main wow fadeInUp">Explora nuestros autos</h2>
                             <div className="btn-read-more wow fadeInUp">
                                 <Link className="more-link" href="/#">
-                                    <span>View More</span>
+                                    <span>Ver Más</span>
                                     <i className="icon-arrow-up-right2" />
                                 </Link>
                             </div>

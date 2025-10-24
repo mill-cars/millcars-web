@@ -44,7 +44,7 @@ export default function MobileMenu() {
                     <Link href="/#">Cars</Link>
                     <ul style={{ display: `${isActive.key == 2 ? "block" : "none"}` }}>
                         <li className={pathname == "/car-list" ? "current" : ""}><Link href="/car-list">Car Listings</Link></li>
-                        <li className={pathname == "/listing-details" ? "current" : ""}><Link href="/listing-details">Listings Details</Link></li>
+                        <li className={pathname == "/listing-details" ? "current" : ""}><Link href="/listing-details">Detalles del anuncio</Link></li>
                     </ul>
                     <div className="dropdown2-btn" />
                 </li>
@@ -54,8 +54,8 @@ export default function MobileMenu() {
                         <li className={pathname == "/dashboard" ? "current" : ""}><Link href="/dashboard">Dashboard</Link></li>
                         <li className={pathname == "/my-inventory" ? "current" : ""}><Link href="/my-inventory">My Inventory</Link></li>
                         <li className={pathname == "/addcart" ? "current" : ""}><Link href="/addcart">Add car</Link></li>
-                        <li className={pathname == "/seller-profile" ? "current" : ""}><Link href="/seller-profile">Seller Profile</Link></li>
-                        <li className={pathname == "/dealer-details" ? "current" : ""}><Link href="/dealer-details">Dealer Detail</Link></li>
+                        <li className={pathname == "/seller-profile" ? "current" : ""}><Link href="/seller-profile">Perfil del vendedor</Link></li>
+                        <li className={pathname == "/dealer-details" ? "current" : ""}><Link href="/dealer-details">Detalle del concesionario</Link></li>
                         <li className={pathname == "/404" ? "current" : ""}><Link href="/404">404</Link></li>
                     </ul>
                     <div className="dropdown2-btn" />

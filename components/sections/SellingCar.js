@@ -14,8 +14,8 @@ export default function SellingCar() {
                 <div className="themesflat-container">
                     <div className="selling-car-wrap">
                         <div className="heading-section t-al-center mb-60">
-                            <span className="sub-title mb-6 wow fadeInUp">Find your car by car brand</span>
-                            <h2 className="title wow fadeInUp">Best selling Cars</h2>
+                            <span className="sub-title mb-6 wow fadeInUp">Encuentra tu auto por marca</span>
+                            <h2 className="title wow fadeInUp">Autos más vendidos</h2>
                         </div>
                         <div className="selling-car">
                             <div className="selling-carpart">
@@ -86,11 +86,11 @@ export default function SellingCar() {
                                 </div>
                             </div>
                             <div className="selling-content">
-                                <span className="sub-selling">New arrival</span>
+                                <span className="sub-selling">Llegada reciente</span>
                                 <h4 className="title-selling">Ford Explorer XLT-2018</h4>
-                                <p className="des">For 15 years, we raising the standard of used car ret
-                                    with one of the most innovative and reliable used ve
-                                    programmes ever created. A comprehensive
+                                <p className="des">Por 15 años, hemos elevado el estándar de autos usados
+                                    con uno de los más innovadores y confiables programas de 
+                                    vehículos usados jamás creados. Un rango completo de
                                 </p>
                                 <div className="price-selling">
                                     <span className="price-sale">$114700</span>
@@ -101,29 +101,29 @@ export default function SellingCar() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div className="btn-main">
                                     <Link href="/#" className="button_main_inner">
-                                        <span>Buy Now</span>
+                                        <span>Comprar ahora</span>
                                     </Link>
                                 </div>
                             </div>

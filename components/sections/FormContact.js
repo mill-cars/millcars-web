@@ -7,13 +7,13 @@ export default function FormContact() {
                 <div className="themesflat-container">
                     <div className="contact-form">
                         <div className="form-buy-car-form">
-                            <div className="title">Contact us Today</div>
+                            <div className="title">Contáctanos hoy</div>
                             <p className="description">Your email address will not be published.</p>
                             <form action="/" className="form-buy-car">
                                 <input type="text" className="input-buy-car" placeholder="Full Name here" />
                                 <input type="email" className="input-buy-car" placeholder="Email Address" />
                                 <textarea className="input-buy-car" placeholder="Write Message....." defaultValue={""} />
-                                <button type="submit">Send message</button>
+                                <button type="submit">Enviar mensaje</button>
                             </form>
                         </div>
                         <div className="map">

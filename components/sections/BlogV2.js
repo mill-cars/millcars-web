@@ -44,7 +44,7 @@ export default function BlogV2({ h4 }) {
                                         </h2>
                                         <div className="btn-read-more">
                                             <Link className="more-link" href="/blog-single">
-                                                <span>Read More</span>
+                                                <span>Leer más</span>
                                                 <i className="icon-Group-21" />
                                             </Link>
                                         </div>
@@ -84,7 +84,7 @@ export default function BlogV2({ h4 }) {
                                         </h2>
                                         <div className="btn-read-more">
                                             <Link className="more-link" href="/blog-single">
-                                                <span>Read More</span>
+                                                <span>Leer más</span>
                                                 <i className="icon-Group-21" />
                                             </Link>
                                         </div>
@@ -124,7 +124,7 @@ export default function BlogV2({ h4 }) {
                                         </h2>
                                         <div className="btn-read-more">
                                             <Link className="more-link" href="/blog-single">
-                                                <span>Read More</span>
+                                                <span>Leer más</span>
                                                 <i className="icon-Group-21" />
                                             </Link>
                                         </div>

@@ -11,7 +11,7 @@ export default function Sidebar() {
                 <div className="db-profile">
                     <img src="./assets/images/avatar/avt-blog.jpg" alt />
                     <div className="name">Mehedii Mohammad</div>
-                    <p className="seller">Private Seller</p>
+                    <p className="seller">Vendedor privado</p>
                 </div>
                 <div className="db-menu">
                     <ul>

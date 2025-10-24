@@ -59,22 +59,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -117,22 +117,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -181,22 +181,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -239,22 +239,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -303,22 +303,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -361,22 +361,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -425,22 +425,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -483,22 +483,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -547,22 +547,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -605,22 +605,22 @@ export default function CarListV2({ h5 }) {
                                                     <li className="listing-information fuel">
                                                         <i className="icon-gasoline-pump-1" />
                                                         <div className="inner">
-                                                            <span>Fuel type</span>
-                                                            <p>Petrol</p>
+                                                            <span>Tipo de combustible</span>
+                                                            <p>Gasolina</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information size-engine">
                                                         <i className="icon-Group1" />
                                                         <div className="inner">
-                                                            <span>Mileage</span>
+                                                            <span>Kilometraje</span>
                                                             <p>90 k.m</p>
                                                         </div>
                                                     </li>
                                                     <li className="listing-information transmission">
                                                         <i className="icon-gearbox-1" />
                                                         <div className="inner">
-                                                            <span>Transmission</span>
-                                                            <p>Auto</p>
+                                                            <span>Transmisión</span>
+                                                            <p>Automática</p>
                                                         </div>
                                                     </li>
                                                 </ul>

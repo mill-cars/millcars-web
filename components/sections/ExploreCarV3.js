@@ -11,7 +11,7 @@ export default function ExploreCarV3() {
                             <h2 className="title-section-main wow fadeInUp">Explore all cars</h2>
                             <div className="btn-read-more wow fadeInUp">
                                 <Link className="more-link" href="/#">
-                                    <span>View More</span>
+                                    <span>Ver Más</span>
                                     <i className="icon-arrow-up-right2" />
                                 </Link>
                             </div>

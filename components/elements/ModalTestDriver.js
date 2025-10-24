@@ -22,12 +22,12 @@ export default function ModalTestDriver({ handleToggle4, isToggled4 }) {
                                 </div>
                             </div>
                             <div className="group-form">
-                                <input className="test-driver-name" placeholder="Enter Your Name Here" type="text" />
+                                <input className="test-driver-name" placeholder="Ingresa tu nombre" type="text" />
                             </div>
                             <div className="group-form">
                                 <input className="test-driver-form" placeholder="Your Phone" type="tel" />
                             </div>
-                            <input className="test-driver-submit" type="submit" defaultValue="Send Request" />
+                            <input className="test-driver-submit" type="submit" defaultValue="Enviar solicitud" />
                         </form>
                     </div>
                 </div>

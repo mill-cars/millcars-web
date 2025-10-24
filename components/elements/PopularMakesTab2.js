@@ -18,10 +18,10 @@ export default function PopularMakesTab2() {
                             All Status</button>
                     </li>
                     <li className="nav-item" onClick={() => handleOnClick(2)}>
-                        <button className={activeIndex == 2 ? "nav-link active" : "nav-link"}>New Cars</button>
+                        <button className={activeIndex == 2 ? "nav-link active" : "nav-link"}>Autos nuevos</button>
                     </li>
                     <li className="nav-item" onClick={() => handleOnClick(3)}>
-                        <button className={activeIndex == 3 ? "nav-link active" : "nav-link"}>Used Cars</button>
+                        <button className={activeIndex == 3 ? "nav-link active" : "nav-link"}>Autos usados</button>
                     </li>
                 </ul>
             </div>
@@ -33,7 +33,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -84,22 +84,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -107,7 +107,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -123,7 +123,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -175,22 +175,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -198,7 +198,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -214,7 +214,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -266,22 +266,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -289,7 +289,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -305,7 +305,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -357,22 +357,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -380,7 +380,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -396,7 +396,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -448,22 +448,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -471,7 +471,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -487,7 +487,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -539,22 +539,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -562,7 +562,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -593,7 +593,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -645,22 +645,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -668,7 +668,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -684,7 +684,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -736,22 +736,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -759,7 +759,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -775,7 +775,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -827,22 +827,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -850,7 +850,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -866,7 +866,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -918,22 +918,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -941,7 +941,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -957,7 +957,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1009,22 +1009,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1032,7 +1032,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1048,7 +1048,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1100,22 +1100,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1123,7 +1123,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1154,7 +1154,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1206,22 +1206,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1229,7 +1229,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1245,7 +1245,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1297,22 +1297,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1320,7 +1320,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1336,7 +1336,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1388,22 +1388,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1411,7 +1411,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1427,7 +1427,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1479,22 +1479,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1502,7 +1502,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1518,7 +1518,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1570,22 +1570,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1593,7 +1593,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -1609,7 +1609,7 @@ export default function PopularMakesTab2() {
                             <Link href="/listing-details" className="image">
                                 <div className="stm-badge-top">
                                     <div className="feature">
-                                        <span>Featured</span>
+                                        <span>Destacado</span>
                                         <div className="cut">
                                             <svg width={24} height={22} viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.296 14.0939C13.9707 14.0939 15.3284 12.8164 15.3284 11.2406C15.3284 9.66468 13.9707 8.38718 12.296 8.38718C10.6213 8.38718 9.26367 9.66468 9.26367 11.2406C9.26367 12.8164 10.6213 14.0939 12.296 14.0939Z" fill="white" />
@@ -1661,22 +1661,22 @@ export default function PopularMakesTab2() {
                                         <li className="listing-information fuel">
                                             <i className="icon-gasoline-pump-1" />
                                             <div className="inner">
-                                                <span>Fuel type</span>
-                                                <p>Petrol</p>
+                                                <span>Tipo de combustible</span>
+                                                <p>Gasolina</p>
                                             </div>
                                         </li>
                                         <li className="listing-information size-engine">
                                             <i className="icon-Group1" />
                                             <div className="inner">
-                                                <span>Mileage</span>
+                                                <span>Kilometraje</span>
                                                 <p>90 k.m</p>
                                             </div>
                                         </li>
                                         <li className="listing-information transmission">
                                             <i className="icon-gearbox-1" />
                                             <div className="inner">
-                                                <span>Transmission</span>
-                                                <p>Auto</p>
+                                                <span>Transmisión</span>
+                                                <p>Automática</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -1684,7 +1684,7 @@ export default function PopularMakesTab2() {
                                 <div className="bottom-btn-wrap">
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/listing-details">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>

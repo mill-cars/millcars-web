@@ -43,10 +43,10 @@ export default function SlideFormV2() {
                                                 All Status</button>
                                         </li>
                                         <li className="nav-item" onClick={() => handleOnClick(2)}>
-                                            <button className={activeIndex == 2 ? "nav-link active" : "nav-link"}>New Cars</button>
+                                            <button className={activeIndex == 2 ? "nav-link active" : "nav-link"}>Autos nuevos</button>
                                         </li>
                                         <li className="nav-item" onClick={() => handleOnClick(3)}>
-                                            <button className={activeIndex == 3 ? "nav-link active" : "nav-link"}>Used Cars</button>
+                                            <button className={activeIndex == 3 ? "nav-link active" : "nav-link"}>Autos usados</button>
                                         </li>
                                     </ul>
                                     <div className="tab-content form-v4-content" id="pills-tabContent">

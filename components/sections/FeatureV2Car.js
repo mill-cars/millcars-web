@@ -8,14 +8,14 @@ export default function FeatureV2Car() {
                     <div className="feature-v2-car-wrap">
                         <div className="header-section">
                             <div className="heading-section">
-                                <span className="sub-title mb-6 wow fadeInUp">20% OFF FOR ONLINE BOOKing</span>
-                                <h2 className="title wow fadeInUp">Our Extra Features</h2>
+                                <span className="sub-title mb-6 wow fadeInUp">20% DESCUENTO EN RESERVAS EN LÍNEA</span>
+                                <h2 className="title wow fadeInUp">Nuestras características especiales</h2>
                             </div>
-                            <p className="description wow fadeInUp">For 15 years, we raising the standard of used car
-                                retailing with one
-                                of the
-                                most innovative and reliable used vehicle programmes ever created.
-                                A comprehensive range of
+                            <p className="description wow fadeInUp">Por 15 años, hemos elevado el estándar de autos usados
+                                con uno de los
+                                más
+                                innovadores y confiables programas de vehículos usados jamás creados.
+                                Un rango completo de
                             </p>
                         </div>
                         <div className="icon-box-feature">
@@ -24,7 +24,7 @@ export default function FeatureV2Car() {
                                     <img src="./assets/images/icon-box/icon1.png" alt="" />
                                 </div>
                                 <div className="content">
-                                    <div className="title">Trusted Car Dealership</div>
+                                    <div className="title">Concesionario de Autos Confiable</div>
                                     <p className="description">Lorem ipsum dolor sit amet, consect adipiscing elit.</p>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@ export default function FeatureV2Car() {
                                     <img src="./assets/images/icon-box/icon2.png" alt="" />
                                 </div>
                                 <div className="content">
-                                    <div className="title">Special Gift Offer</div>
+                                    <div className="title">Oferta de Regalo Especial</div>
                                     <p className="description">Lorem ipsum dolor sit amet, consect adipiscing elit.</p>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@ export default function FeatureV2Car() {
                                     <img src="./assets/images/icon-box/icon3.png" alt="" />
                                 </div>
                                 <div className="content">
-                                    <div className="title">Flexible Pricing</div>
+                                    <div className="title">Precios Flexibles</div>
                                     <p className="description">Lorem ipsum dolor sit amet, consect adipiscing elit.</p>
                                 </div>
                             </div>

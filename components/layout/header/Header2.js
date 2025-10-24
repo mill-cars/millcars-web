@@ -39,7 +39,7 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                                         <Link href="/#">Cars</Link>
                                                         <ul>
                                                             <li><Link href="/car-list">Car Listings</Link></li>
-                                                            <li><Link href="/listing-details">Listings Details</Link>
+                                                            <li><Link href="/listing-details">Detalles del anuncio</Link>
                                                             </li>
                                                         </ul>
                                                     </li>
@@ -50,9 +50,9 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                                             <li className="current"><Link href="/my-inventory">My
                                                                 Inventory</Link></li>
                                                             <li><Link href="/addcart">Add car</Link></li>
-                                                            <li><Link href="/seller-profile">Seller Profile</Link>
+                                                            <li><Link href="/seller-profile">Perfil del vendedor</Link>
                                                             </li>
-                                                            <li><Link href="/dealer-details">Dealer Detail</Link></li>
+                                                            <li><Link href="/dealer-details">Detalle del concesionario</Link></li>
                                                             <li><Link href="/404">404</Link></li>
                                                         </ul>
                                                     </li>
@@ -107,7 +107,7 @@ export default function Header2({ scroll, isMobileMenu, handleMobileMenu, handle
                                 <a data-bs-toggle="modal" onClick={handleToggle1} role="button" className="fw-7 category"><i className="icon-user" />Login</a>
                             </div>
                             <div className="help-bar-mobie search">
-                                <Link href="/#" className="fw-7 font-2"><i className="icon-loupe-1" />Search</Link>
+                                <Link href="/#" className="fw-7 font-2"><i className="icon-loupe-1" />Buscar</Link>
                             </div>
                             <div className="help-bar-mobie compare">
                                 <Link href="/#" className="fw-7 font-2"><i className="icon-shuffle-2-1" />Compare</Link>

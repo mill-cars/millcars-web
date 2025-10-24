@@ -9,7 +9,7 @@ export default function MobieApp() {
                     <div className="mobie-app">
                         <div className="mobie-app-content">
                             <span className="sub-title">20% OFF FOR ONLINE BOOKing</span>
-                            <div className="title">Download free <span className="text-red">mobile app</span> Today for you!
+                            <div className="title">Descargar gratis <span className="text-red">mobile app</span> Today for you!
                             </div>
                             <div className="image-wrap">
                                 <Link href="/#">

@@ -9,10 +9,10 @@ export default function NewCars1() {
                 <div className="themesflat-container">
                     <div className="new-cars-wrap">
                         <div className="header-section-main mb-46">
-                            <h2 className="title-section-main wow fadeInUp">Used cars</h2>
+                            <h2 className="title-section-main wow fadeInUp">Autos usados</h2>
                             <div className="btn-read-more wow fadeInUp">
                                 <Link className="more-link" href="/car-list">
-                                    <span>View More</span>
+                                    <span>Ver Más</span>
                                     <i className="icon-arrow-up-right2" />
                                 </Link>
                             </div>

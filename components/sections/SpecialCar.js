@@ -11,13 +11,13 @@ export default function SpecialCar() {
                         <div className="special-step">
                             <div className="special-step-item">
                                 <span className="number">1</span>
-                                <h4 className="title">Register for free</h4>
+                                <h4 className="title">Registrarse gratis</h4>
                                 <p className="description">For 15 years, we raising the standard of used car
                                     most innovative and reliable used vehicle program</p>
                             </div>
                             <div className="special-step-item">
                                 <span className="number">2</span>
-                                <h4 className="title">Submit your cars</h4>
+                                <h4 className="title">Publica tus autos</h4>
                                 <p className="description">For 15 years, we raising the standard of used car
                                     most innovative and reliable used vehicle program</p>
                             </div>
@@ -43,7 +43,7 @@ export default function SpecialCar() {
                                         </svg>
                                         <div className="number-counter number" data-to={200} data-speed={2000} data-waypoint-active="yes">
                                             <CounterUp count={200} /><span>k+</span></div>
-                                        <p>Registerd Users</p>
+                                        <p>Usuarios registrados</p>
                                     </div>
                                     <div className="widget-counter counter-v3">
                                         <svg width={97} height={49} viewBox="0 0 97 49" fill="none" xmlns="http://www.w3.org/2000/svg">

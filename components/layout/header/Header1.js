@@ -62,7 +62,7 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, handle
                                 <a data-bs-toggle="modal" onClick={handleToggle1} role="button" className="fw-7 category"><i className="icon-user" />Login</a>
                             </div>
                             <div className="help-bar-mobie search">
-                                <Link href="/#" className="fw-7 font-2"><i className="icon-loupe-1" />Search</Link>
+                                <Link href="/#" className="fw-7 font-2"><i className="icon-loupe-1" />Buscar</Link>
                             </div>
                             <div className="help-bar-mobie compare">
                                 <Link href="/#" className="fw-7 font-2"><i className="icon-shuffle-2-1" />Compare</Link>

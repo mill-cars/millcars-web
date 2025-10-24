@@ -24,18 +24,18 @@ export default function AddCart() {
                                 <form action="/" id="submit-add-cart" className="form-add-cart needs-validation" noValidate>
                                     <fieldset id="information" className="mb-60">
                                         <div className="inner-title mb-30">
-                                            <span className="sub-title">Add Your Car Today</span>
-                                            <h3 className="title">Add Your car</h3>
+                                            <span className="sub-title">Agrega tu auto hoy</span>
+                                            <h3 className="title">Agrega tu auto</h3>
                                         </div>
                                         <div className="tfad-listing-title mb-30">
                                             <div className="form-group">
-                                                <label>Listing Title (*)</label>
-                                                <input type="text" id="listing-title" className="form-control" name="listing-title" placeholder="Enter title here" />
+                                                <label>Título del anuncio (*)</label>
+                                                <input type="text" id="listing-title" className="form-control" name="listing-title" placeholder="Ingresa el título" />
                                             </div>
                                         </div>
                                         <div className="listing-fields-grid mb-30">
                                             <div className="form-group">
-                                                <label>Listing Title (*)</label>
+                                                <label>Título del anuncio (*)</label>
                                                 <div className="group-select">
 
                                                     <select className="nice-select">
@@ -54,7 +54,7 @@ export default function AddCart() {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label> Model (*)</label>
+                                                <label>Modelo (*)</label>
                                                 <div className="group-select">
 
                                                     <select className="nice-select">
@@ -73,7 +73,7 @@ export default function AddCart() {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Type (*)</label>
+                                                <label>Tipo (*)</label>
                                                 <div className="group-select">
 
                                                     <select className="nice-select">
@@ -88,37 +88,37 @@ export default function AddCart() {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Years (*)</label>
+                                                <label>Año (*)</label>
                                                 <div className="group-select">
                                                     <input type="tel" id="year" defaultValue={2022} required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Condition</label>
+                                                <label>Condición</label>
                                                 <div className="group-select">
 
                                                     <select className="nice-select">
-                                                        <option data-value className="option selected">Used</option>
-                                                        <option data-value="New" className="option">New</option>
+                                                        <option data-value className="option selected">Usado</option>
+                                                        <option data-value="New" className="option">Nuevo</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Stock Number</label>
+                                                <label>Número de stock</label>
                                                 <div className="group-select">
-                                                    <input type="tel" id="stock-number" placeholder="Enter Number" required />
+                                                    <input type="tel" id="stock-number" placeholder="Ingresa el número" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>VIN Number</label>
+                                                <label>Número VIN</label>
                                                 <div className="group-select">
-                                                    <input type="tel" id="vin-number" placeholder="Enter VIN" required />
+                                                    <input type="tel" id="vin-number" placeholder="Ingresa VIN" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Mileage</label>
+                                                <label>Kilometraje</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="mileage" placeholder="Enter Mileage" required />
+                                                    <input type="number" id="mileage" placeholder="Ingresa el kilometraje" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
@@ -151,7 +151,7 @@ export default function AddCart() {
                                             <div className="form-group">
                                                 <label>Engine Size</label>
                                                 <div className="group-select">
-                                                    <input type="text" id="engine-size" placeholder="Enter Engine" required />
+                                                    <input type="text" id="engine-size" placeholder="Ingresa el motor" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
@@ -240,7 +240,7 @@ export default function AddCart() {
                                         </div>
                                         <div className="listing-fields-grid mb-30">
                                             <div className="form-group">
-                                                <label>Request Price Label</label>
+                                                <label>Etiqueta de precio solicitado</label>
                                                 <div className="group-select">
                                                     <div className="radio">
                                                         <input id="first" type="radio" name="numbers" defaultValue="first" />
@@ -249,34 +249,34 @@ export default function AddCart() {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label> Regular Price *</label>
+                                                <label> Precio regular *</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="regular-price" placeholder="Enter Sale Price" required />
+                                                    <input type="number" id="regular-price" placeholder="Ingresa el precio de venta" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Sale Price</label>
+                                                <label>Precio de venta</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="sale-price" placeholder="Enter Sale Price" required />
+                                                    <input type="number" id="sale-price" placeholder="Ingresa el precio de venta" required />
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <label>Request Price Label</label>
+                                                <label>Etiqueta de precio solicitado</label>
                                                 <div className="group-select">
-                                                    <input type="number" id="requesr-price" placeholder="Enter Sale Price" required />
+                                                    <input type="number" id="requesr-price" placeholder="Ingresa el precio de venta" required />
                                                 </div>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset id="amenities" className="mb-60">
                                         <div className="inner-title mb-30">
-                                            <span className="sub-title">Add Your Car Today</span>
+                                            <span className="sub-title">Agrega tu auto hoy</span>
                                             <h3 className="title">Select Listing Features</h3>
                                         </div>
                                         <div className="tfad-listing-feature">
                                             <div className="listing-feature-item">
                                                 <div className="form-group">
-                                                    <label>Request Price Label</label>
+                                                    <label>Etiqueta de precio solicitado</label>
                                                     <div className="group-select">
                                                         <div className="radio">
                                                             <input id="front" type="checkbox" name="check" defaultValue="check" />
@@ -433,7 +433,7 @@ export default function AddCart() {
                                     </fieldset>
                                     <fieldset id="location" className="pd-bg mb-60">
                                         <div className="inner-title mb-30">
-                                            <span className="sub-title">Add Your Car Today</span>
+                                            <span className="sub-title">Agrega tu auto hoy</span>
                                             <h3 className="title">Add Your location</h3>
                                         </div>
                                         <p className="location mb-20">*Note: Just type the address into the search bar in the

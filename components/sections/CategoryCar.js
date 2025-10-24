@@ -9,7 +9,7 @@ export default function CategoryCar() {
                     <div className="category-car-wrap mb--280">
                         <div className="heading-section t-al-center">
                             <span className="sub-title mb-6 wow fadeInUp">20% OFF FOR ONLINE BOOKing</span>
-                            <h2 className="title wow fadeInUp">Browse By Your favorite <span className="red-title">Vehicles</span>types</h2>
+                            <h2 className="title wow fadeInUp">Explora por tus favoritos <span className="red-title">tipos de vehículos</span></h2>
                         </div>
                         <div className="category-car">
                             <div className="category-car-item">

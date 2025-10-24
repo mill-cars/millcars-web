@@ -6,7 +6,7 @@ export default function Footer1() {
                 <div className="themesflat-container">
                     <div className="row footer-top">
                         <div className="col-lg-6 col-md-12 col-12 pd-r80 ">
-                            <h2 className="title-footer-top">Do you Have <span className="red-title">something</span> to sell
+                            <h2 className="title-footer-top">¿Tienes algo <span className="red-title">que vender</span>
                                 through us?</h2>
                             {/* <img className="icon-ft" src="/assets/images/page/shape-footer.png" alt="" /> */}
                         </div>
@@ -36,7 +36,7 @@ export default function Footer1() {
                             <div className="widget widget-menu pl-60">
                                 <h3>Quick Links</h3>
                                 <ul className="box-menu">
-                                    <li><Link href="/#">Dealer Locator</Link></li>
+                                    <li><Link href="/#">Localizador de concesionarios</Link></li>
                                     <li><Link href="/#">Service Locator</Link></li>
                                     <li><Link href="/#">Pre-owned</Link></li>
                                     <li><Link href="/#">Accessori Originali</Link></li>
@@ -47,12 +47,12 @@ export default function Footer1() {
                         </div>
                         <div className="col-lg-3 col-md-6 col-12">
                             <div className="widget widget-menu pl-30">
-                                <h3>Research</h3>
+                                <h3>Investigación</h3>
                                 <ul className="box-menu">
                                     <li><Link href="/#">Build &amp; Price A Vehicle</Link></li>
                                     <li><Link href="/#">Compare Models</Link></li>
                                     <li><Link href="/#"> Warranty</Link></li>
-                                    <li><Link href="/#">Download a Brochure</Link></li>
+                                    <li><Link href="/#">Descargar un folleto</Link></li>
                                     <li><Link href="/#">Sign-Up for Updates</Link></li>
                                     <li><Link href="/#">Mail Me a Brochure</Link></li>
                                 </ul>
@@ -64,7 +64,7 @@ export default function Footer1() {
                                 <form method="post" className="email-footer-form form-submit" action="#" acceptCharset="utf-8">
                                     <div className="text-wrap clearfix">
                                         <fieldset className="email-wrap style-text">
-                                            <input type="email" className="tb-my-input" name="email" placeholder="Enter Email Adress" required />
+                                            <input type="email" className="tb-my-input" name="email" placeholder="Ingresa tu correo" required />
                                         </fieldset>
                                         <button name="submit" type="submit" className="btn-submit-email">
                                             <i className="icon-Group" />

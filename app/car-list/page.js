@@ -189,10 +189,10 @@ export default function CarList() {
                                                 </div>
                                             </div>
                                             <div className="form-group">
-                                                <input type="text" id="engine-size" className="form-control" name="mileage" defaultValue="Enter Engine Size" />
+                                                <input type="text" id="engine-size" className="form-control" name="mileage" defaultValue="Ingresa el tamaño del motor" />
                                             </div>
                                             <div className="form-group">
-                                                <input type="text" id="location" className="form-control" name="mileage" defaultValue="Enter Location" />
+                                                <input type="text" id="location" className="form-control" name="mileage" defaultValue="Ingresa la ubicación" />
                                             </div>
                                         </form>
                                     </div>
@@ -340,7 +340,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -442,7 +442,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -544,7 +544,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -646,7 +646,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -748,7 +748,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -850,7 +850,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -952,7 +952,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1054,7 +1054,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1156,7 +1156,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1274,7 +1274,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1376,7 +1376,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1478,7 +1478,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1580,7 +1580,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1682,7 +1682,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1784,7 +1784,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1886,7 +1886,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -1988,7 +1988,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2090,7 +2090,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2187,7 +2187,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2285,7 +2285,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2383,7 +2383,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2481,7 +2481,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2579,7 +2579,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2677,7 +2677,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2775,7 +2775,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2873,7 +2873,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -2971,7 +2971,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3089,7 +3089,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3191,7 +3191,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3293,7 +3293,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3395,7 +3395,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3497,7 +3497,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3599,7 +3599,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3701,7 +3701,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3803,7 +3803,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>
@@ -3905,7 +3905,7 @@ export default function CarList() {
                                                             </div>
                                                             <div className="btn-read-more">
                                                                 <Link className="more-link" href="/listing-details">
-                                                                    <span>View details</span>
+                                                                    <span>Ver detalles</span>
                                                                     <i className="icon-arrow-right2" />
                                                                 </Link>
                                                             </div>

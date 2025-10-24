@@ -13,7 +13,7 @@ export default function TakeAppointment() {
                             <div className="price">From <span className="text-red">$12499.00</span></div>
                             <div className="btn-main">
                                 <Link href="/#" className="button_main_inner">
-                                    <span>Buy Now</span>
+                                    <span>Comprar ahora</span>
                                 </Link>
                             </div>
                         </div>

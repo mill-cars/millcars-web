@@ -10,14 +10,14 @@ export default function BookingCar() {
                     <div className="booking-car">
                         <div className="header-section">
                             <div className="heading-section">
-                                <span className="sub-title mb-6 wow fadeInUp">20% OFF FOR ONLINE BOOKing</span>
-                                <h2 className="title wow fadeInUp">We,re Trusted Your Car <span className="text-red">Dealer</span></h2>
+                                <span className="sub-title mb-6 wow fadeInUp">20% DESCUENTO EN RESERVAS EN LÍNEA</span>
+                                <h2 className="title wow fadeInUp">Somos tu <span className="text-red">Distribuidor</span> de Autos de Confianza</h2>
                             </div>
-                            <p className="description wow fadeInUp">For 15 years, we raising the standard of used car
-                                retailing with one
-                                of the
-                                most innovative and reliable used vehicle programmes ever created.
-                                A comprehensive range of
+                            <p className="description wow fadeInUp">Por 15 años, hemos elevado el estándar de autos usados
+                                con uno de los 
+                                más
+                                innovadores y confiables programas de vehículos usados jamás creados.
+                                Un rango completo de
                             </p>
                         </div>
                         <div className="brand-car">

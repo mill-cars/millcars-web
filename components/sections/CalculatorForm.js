@@ -30,7 +30,7 @@ export default function CalculatorForm() {
                                     </fieldset>
                                 </div>
                                 <div className="btn-wrap-form mt-45">
-                                    <button type="submit" className="payment">Calculate Payment</button>
+                                    <button type="submit" className="payment">Calcular pago</button>
                                     <button type="reset" className="btn-reset"><i className="icon-rotate-left-circular-arrow-interface-symbol-1" />
                                         Reset All
                                     </button>

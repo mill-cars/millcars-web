@@ -63,13 +63,13 @@ export default function ContactUs() {
                                     <form action="/" id="form-contact-us-page">
                                         <div className="input-contact-us-wrap">
                                             <fieldset className="input-contact-us">
-                                                <input aria-required="true" aria-invalid="false" placeholder="Enter your name" type="text" />
+                                                <input aria-required="true" aria-invalid="false" placeholder="Ingresa tu nombre" type="text" />
                                             </fieldset>
                                             <fieldset className="input-contact-us">
-                                                <input aria-required="true" aria-invalid="false" placeholder="Enter Email Address" type="email" />
+                                                <input aria-required="true" aria-invalid="false" placeholder="Ingresa tu correo" type="email" />
                                             </fieldset>
                                             <fieldset className="input-contact-us">
-                                                <input aria-required="true" aria-invalid="false" placeholder="Enter Phone Number" type="tel" />
+                                                <input aria-required="true" aria-invalid="false" placeholder="Ingresa tu teléfono Number" type="tel" />
                                             </fieldset>
                                             <fieldset className="input-contact-us">
                                                 <input aria-required="true" aria-invalid="false" placeholder="Subject" type="text" />

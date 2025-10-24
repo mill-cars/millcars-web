@@ -11,7 +11,7 @@ export default function BannerV2H4() {
                             <div className="tf-car-banner car-banner-style2">
                                 <div className="group-content">
                                     <span className="sub-heading">Car inventory</span>
-                                    <h3 className="heading-car">Search Over <span className="text-red">18000+</span> Used
+                                    <h3 className="heading-car">Busca más de <span className="text-red">18000+</span> Used
                                         Vehicles</h3>
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/#">

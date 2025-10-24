@@ -10,10 +10,10 @@ export default function CarBannerV1() {
                         <div className="col-md-6">
                             <div className="tf-car-banner car-bg-red">
                                 <div className="group-content">
-                                    <h3 className="heading">Are you looking for buy a new car</h3>
+                                    <h3 className="heading">¿Estás buscando comprar un auto nuevo?</h3>
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/#">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>
@@ -27,10 +27,10 @@ export default function CarBannerV1() {
                         <div className="col-md-6">
                             <div className="tf-car-banner car-bg-black">
                                 <div className="group-content">
-                                    <h3 className="heading">Are you looking for buy a new car</h3>
+                                    <h3 className="heading">¿Estás buscando comprar un auto nuevo?</h3>
                                     <div className="btn-read-more">
                                         <Link className="more-link" href="/#">
-                                            <span>View details</span>
+                                            <span>Ver detalles</span>
                                             <i className="icon-arrow-right2" />
                                         </Link>
                                     </div>

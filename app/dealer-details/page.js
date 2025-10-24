@@ -199,7 +199,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -301,7 +301,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -403,7 +403,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -505,7 +505,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -607,7 +607,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -709,7 +709,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -811,7 +811,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -913,7 +913,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -1015,7 +1015,7 @@ export default function DealerDetails() {
                                                     </div>
                                                     <div className="btn-read-more">
                                                         <Link className="more-link" href="/listing-details">
-                                                            <span>View details</span>
+                                                            <span>Ver detalles</span>
                                                             <i className="icon-arrow-right2" />
                                                         </Link>
                                                     </div>
@@ -1090,7 +1090,7 @@ export default function DealerDetails() {
                                             <i className="icon-Group2" />
                                         </div>
                                         <div className="group-form">
-                                            <input className="admin-form" aria-invalid="false" placeholder="Enter Phone" type="text" />
+                                            <input className="admin-form" aria-invalid="false" placeholder="Ingresa tu teléfono" type="text" />
                                             <i className="icon-Group-14" />
                                         </div>
                                         <div className="group-form">

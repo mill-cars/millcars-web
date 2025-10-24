@@ -14,15 +14,15 @@ export default function SlideSearchCar() {
                     <div className="search-form-widget">
                         <ul className="nav nav-tabs" id="myTab" role="tablist">
                             <li className="nav-item" onClick={() => handleOnClick(1)}>
-                                <button className={activeIndex == 1 ? "nav-link active" : "nav-link"}>All Cars</button>
+                                <button className={activeIndex == 1 ? "nav-link active" : "nav-link"}>Todos los Autos</button>
                             </li>
                             <li className="nav-item" onClick={() => handleOnClick(2)}>
-                                <button className={activeIndex == 2 ? "nav-link active" : "nav-link"}>Used
-                                    car</button>
+                                <button className={activeIndex == 2 ? "nav-link active" : "nav-link"}>Auto
+                                    usado</button>
                             </li>
                             <li className="nav-item" onClick={() => handleOnClick(3)}>
-                                <button className={activeIndex == 3 ? "nav-link active" : "nav-link"}>New
-                                    Cars</button>
+                                <button className={activeIndex == 3 ? "nav-link active" : "nav-link"}>Autos
+                                    nuevos</button>
                             </li>
                         </ul>
                         <div className="tab-content" id="myTabContent">
@@ -32,7 +32,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <div className="group-select">
                                                 <select className="nice-select">
-                                                    <option data-value className="option selected">Make</option>
+                                                    <option data-value className="option selected">Marca</option>
                                                     <option data-value="Acura" className="option">Acura</option>
                                                     <option data-value="Audi" className="option">Audi</option>
                                                     <option data-value="Bentley" className="option">Bentley</option>
@@ -49,7 +49,7 @@ export default function SlideSearchCar() {
                                             <div className="group-select">
 
                                                 <select className="nice-select">
-                                                    <option data-value className="option selected">Models</option>
+                                                    <option data-value className="option selected">Modelos</option>
                                                     <option data-value="3 Series" className="option">3 Series</option>
                                                     <option data-value="718 Boxster T" className="option">718 Boxster T</option>
                                                     <option data-value="718 Cayman" className="option">718 Cayman</option>
@@ -67,7 +67,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <div className="widget widget-price ">
                                                 <div className="caption flex-two">
-                                                    <p className="price-range">Price</p>
+                                                    <p className="price-range">Precio</p>
                                                 </div>
                                                 <RangeSlider />
                                             </div>{/* /.widget_price */}
@@ -75,7 +75,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <button type="submit" className="button-search-listing">
                                                 <i className="icon-search-1 me-2" />
-                                                2351 Cars
+                                                2351 Autos
                                             </button>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@ export default function SlideSearchCar() {
                                             <div className="group-select">
 
                                                 <select className="nice-select">
-                                                    <option data-value className="option selected">Make</option>
+                                                    <option data-value className="option selected">Marca</option>
                                                     <option data-value="Acura" className="option">Acura</option>
                                                     <option data-value="Audi" className="option">Audi</option>
                                                     <option data-value="Bentley" className="option">Bentley</option>
@@ -105,7 +105,7 @@ export default function SlideSearchCar() {
                                             <div className="group-select">
 
                                                 <select className="nice-select">
-                                                    <option data-value className="option selected">Models</option>
+                                                    <option data-value className="option selected">Modelos</option>
                                                     <option data-value="3 Series" className="option">3 Series</option>
                                                     <option data-value="718 Boxster T" className="option">718 Boxster T</option>
                                                     <option data-value="718 Cayman" className="option">718 Cayman</option>
@@ -123,7 +123,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <div className="widget widget-price ">
                                                 <div className="caption flex-two">
-                                                    <p className="price-range">Price</p>
+                                                    <p className="price-range">Precio</p>
                                                 </div>
                                                 <RangeSlider />
                                             </div>{/* /.widget_price */}
@@ -131,7 +131,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <button type="submit" className="button-search-listing">
                                                 <i className="icon-search-1 me-2" />
-                                                2351 Cars
+                                                2351 Autos
                                             </button>
                                         </div>
                                     </div>
@@ -144,7 +144,7 @@ export default function SlideSearchCar() {
                                             <div className="group-select">
 
                                                 <select className="nice-select">
-                                                    <option data-value className="option selected">Make</option>
+                                                    <option data-value className="option selected">Marca</option>
                                                     <option data-value="Acura" className="option">Acura</option>
                                                     <option data-value="Audi" className="option">Audi</option>
                                                     <option data-value="Bentley" className="option">Bentley</option>
@@ -161,7 +161,7 @@ export default function SlideSearchCar() {
                                             <div className="group-select">
 
                                                 <select className="nice-select">
-                                                    <option data-value className="option selected">Models</option>
+                                                    <option data-value className="option selected">Modelos</option>
                                                     <option data-value="3 Series" className="option">3 Series</option>
                                                     <option data-value="718 Boxster T" className="option">718 Boxster T</option>
                                                     <option data-value="718 Cayman" className="option">718 Cayman</option>
@@ -179,7 +179,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <div className="widget widget-price ">
                                                 <div className="caption flex-two">
-                                                    <p className="price-range">Price</p>
+                                                    <p className="price-range">Precio</p>
                                                 </div>
                                                 <RangeSlider />
                                             </div>{/* /.widget_price */}
@@ -187,7 +187,7 @@ export default function SlideSearchCar() {
                                         <div className="form-group">
                                             <button type="submit" className="button-search-listing">
                                                 <i className="icon-search-1 me-2" />
-                                                2351 Cars
+                                                2351 Autos
                                             </button>
                                         </div>
                                     </div>
