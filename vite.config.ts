@@ -17,5 +17,10 @@ export default defineConfig(({mode}) => {
     server: {
       hmr: process.env.DISABLE_HMR !== 'true',
     },
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true,
+    },
+    publicDir: 'public',
   };
 });
