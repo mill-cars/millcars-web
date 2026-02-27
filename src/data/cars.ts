@@ -31,7 +31,7 @@ export const CARS_DATA: Car[] = [
     fuelType: 'gasolina',
     owners: 2,
     plateEnd: 7,
-    image: 'https://images.unsplash.com/photo-1594070319944-7c0c63146b7c?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=800',
     description: 'Deportivo y confiable. Llantas nuevas.',
     features: ['Sunroof', 'Sensores de proximidad', 'Modo Eco']
   },
