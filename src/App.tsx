@@ -12,15 +12,15 @@ import { getWhatsAppLink } from './lib/utils';
 const ADS = [
   {
     id: 1,
-    title: "Financiamiento 0%",
-    subtitle: "En modelos seleccionados 2024",
+    title: "Financiamiento Directo",
+    subtitle: "En modelos seleccionados 2026",
     image: "https://picsum.photos/seed/carad1/1200/400",
     cta: "Ver Modelos",
     color: "#D00000"
   },
   {
     id: 2,
-    title: "Bono de $2,000",
+    title: "Bono de $1,000",
     subtitle: "Al entregar tu auto usado como parte de pago",
     image: "https://picsum.photos/seed/carad2/1200/400",
     cta: "Avaluar mi Auto",
@@ -28,8 +28,8 @@ const ADS = [
   },
   {
     id: 3,
-    title: "Seguro Gratis",
-    subtitle: "Por el primer año en toda la línea SUV",
+    title: "Vende tu Auto en 24H",
+    subtitle: "Obtén una oferta instantánea y sin compromiso",
     image: "https://picsum.photos/seed/carad3/1200/400",
     cta: "Más Info",
     color: "#000000"
