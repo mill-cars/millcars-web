@@ -14,6 +14,10 @@ dist/
 .vercel/
 .now/
 
+# Vercel config (no usado en Cloudflare)
+vercel.json
+vercel.json.backup
+
 # Cloudflare Pages / Workers (Wrangler)
 .wrangler/
 workers-site/
