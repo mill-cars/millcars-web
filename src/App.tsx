@@ -170,13 +170,13 @@ export default function App() {
                     Tecnología y criterio experto
                   </div>
                   <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-on-surface sm:text-6xl lg:text-[5.25rem]">
-                    Showroom digital para
+                    Compra o vende tu auto
                     <span className="mt-2 block text-primary italic">
-                      autos excepcionales.
+                      de forma r&aacute;pida y segura
                     </span>
                   </h1>
                   <p className="max-w-2xl text-lg leading-8 text-on-surface-variant sm:text-[1.35rem]">
-                    Descubre, compara y vende con una experiencia m&aacute;s precisa, confiable y elegante. IA que entiende tus preferencias y acelera cada decisi&oacute;n.
+                    Autos verificados, precios competitivos y asesor&iacute;a inteligente.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button variant="primary" size="lg" className="flex items-center gap-2 shadow-xl shadow-primary/20" onClick={() => window.location.href = '/'}>
