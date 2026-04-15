@@ -17,13 +17,25 @@ export default function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const isAdminPage = currentPath === '/admin';
   const isLoginPage = currentPath === '/login';
-  const isSellPage = currentPath === '/vender';
+  const isQuotePage = currentPath === '/cotizar';
+  const isLegacySellPage = currentPath === '/vender';
 
   useEffect(() => {
     const onPopState = () => setCurrentPath(window.location.pathname);
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
+
+  const navigateTo = (path: string) => {
+    if (window.location.pathname === path) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [filters, setFilters] = useState<SearchFilters>({});
@@ -128,8 +140,8 @@ export default function App() {
     return <Login />;
   }
 
-  if (isSellPage) {
-    return <Vender />;
+  if (isQuotePage || isLegacySellPage) {
+    return <Vender mode="cotizar" />;
   }
 
   return (
@@ -176,15 +188,28 @@ export default function App() {
                     </span>
                   </h1>
                   <p className="max-w-2xl text-lg leading-8 text-on-surface-variant sm:text-[1.35rem]">
-                    Autos verificados, precios competitivos y asesor&iacute;a inteligente.
+                    Autos verificados, estimación clara y asesor&iacute;a inteligente.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button variant="primary" size="lg" className="flex items-center gap-2 shadow-xl shadow-primary/20" onClick={() => window.location.href = '/'}>
-                      Explorar inventario
+                  <div className="flex flex-col gap-4 sm:flex-row">
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      className="flex items-center gap-2 shadow-xl shadow-primary/20"
+                      onClick={() => navigateTo('/cotizar')}
+                    >
+                      Cotizar mi auto gratis
                       <span className="material-symbols-outlined">arrow_forward</span>
                     </Button>
-                    <Button variant="secondary" size="lg" onClick={() => window.location.href = '/vender'}>
-                      Valorar mi auto
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      className="flex items-center gap-2"
+                      onClick={() => {
+                        window.location.href = '/#catalogo';
+                      }}
+                    >
+                      Ver catálogo
+                      <span className="material-symbols-outlined">apps</span>
                     </Button>
                   </div>
                 </div>
@@ -364,21 +389,21 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        {/* Featured Car (Destacados) */}
+        {/* Catálogo principal */}
         {featuredCars.length > 0 && (
-          <section className="bg-surface-container-low px-0 py-14">
+          <section id="catalogo" className="bg-surface-container-low px-0 py-14 scroll-mt-36">
             <div className="max-w-7xl mx-auto">
               <div className="mb-10 flex items-end justify-between">
                 <div>
                   <h2 className="mb-2 text-3xl font-black tracking-tight">
-                    {hasActiveSearch ? 'Resultados recomendados' : 'Destacados'}
+                    {hasActiveSearch ? 'Resultados recomendados' : 'Catálogo disponible'}
                   </h2>
                   <p className="font-label text-sm uppercase tracking-[0.18em] text-on-surface-variant">
-                    {hasActiveSearch ? 'Selección afinada por tu búsqueda' : 'Ingeniería de Precisión y Lujo Moderno'}
+                    {hasActiveSearch ? 'Selección afinada por tu búsqueda' : 'Selección destacada del catálogo'}
                   </p>
                 </div>
-                <a className="text-primary font-bold hidden md:flex items-center gap-2 hover:translate-x-1 transition-transform" href="#">
-                  Ver Todos <span className="material-symbols-outlined">arrow_right_alt</span>
+                <a className="text-primary font-bold hidden md:flex items-center gap-2 hover:translate-x-1 transition-transform" href="/#catalogo">
+                  Ir al catálogo <span className="material-symbols-outlined">arrow_right_alt</span>
                 </a>
               </div>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -445,14 +470,14 @@ export default function App() {
           <div className="max-w-7xl mx-auto bg-primary-container rounded-[2.5rem] p-12 lg:p-24 relative overflow-hidden text-on-primary-container">
             <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/20 -skew-x-12 translate-x-20"></div>
             <div className="relative z-10 max-w-2xl">
-              <h2 className="text-5xl md:text-7xl font-black leading-tight tracking-tighter mb-8">¿Listo para estrenar?</h2>
-              <p className="text-xl mb-12 opacity-90 leading-relaxed">Explora nuestro catálogo verificado o recibe una oferta por tu auto actual. Todo en minutos, sin intermediarios.</p>
+              <h2 className="text-5xl md:text-7xl font-black leading-tight tracking-tighter mb-8">¿Quieres una cotización rápida?</h2>
+              <p className="text-xl mb-12 opacity-90 leading-relaxed">Deja tus datos, recibe una estimación y, si quieres vender, te contactamos por WhatsApp y correo con la información del formulario.</p>
               <div className="flex flex-col md:flex-row gap-4">
-                <button onClick={() => window.location.href = '/'} className="bg-white text-primary px-8 py-4 rounded-xl font-black text-lg hover:bg-on-primary-container transition-colors flex-1 md:flex-none">
-                  Ver autos disponibles
+                <button onClick={() => window.location.href = '/cotizar'} className="bg-white text-primary px-8 py-4 rounded-xl font-black text-lg hover:bg-on-primary-container transition-colors flex-1 md:flex-none">
+                  Cotizar mi auto gratis
                 </button>
-                <button onClick={() => window.location.href = '/vender'} className="border-2 border-white text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-white/10 transition-colors flex-1 md:flex-none">
-                  Cotizar mi auto
+                <button onClick={() => window.location.href = '/'} className="border-2 border-white text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-white/10 transition-colors flex-1 md:flex-none">
+                  Ver autos disponibles
                 </button>
               </div>
             </div>

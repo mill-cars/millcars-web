@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 
 interface PublicHeaderProps {
-  active?: 'inventario' | 'vender';
+  active?: 'inventario' | 'cotizar';
   ctaLabel?: string;
   ctaHref?: string;
   offsetDesktop?: boolean;
@@ -39,11 +39,11 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
           </a>
 
           <nav className="hidden md:flex items-center rounded-full border border-slate-200 bg-slate-50/85 p-1.5 text-sm font-medium">
-            <a href="/" className={linkClass(active === 'inventario')}>
-              Inventario
+            <a href="/#catalogo" className={linkClass(active === 'inventario')}>
+              Catálogo
             </a>
-            <a href="/vender" className={linkClass(active === 'vender')}>
-              Vender
+            <a href="/cotizar" className={linkClass(active === 'cotizar')}>
+              Cotizar
             </a>
           </nav>
 
@@ -72,11 +72,11 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
         <div className="mx-auto max-w-7xl px-5 pb-4 sm:px-6 lg:px-8 md:hidden">
           <div className="rounded-[1.4rem] border border-white/70 bg-white/92 p-4 shadow-[0_18px_48px_rgba(17,28,45,0.1)]">
             <div className="flex flex-col gap-2 text-sm font-medium">
-              <a href="/" className={linkClass(active === 'inventario')} onClick={() => setMobileMenuOpen(false)}>
-                Inventario
+              <a href="/#catalogo" className={linkClass(active === 'inventario')} onClick={() => setMobileMenuOpen(false)}>
+                Catálogo
               </a>
-              <a href="/vender" className={linkClass(active === 'vender')} onClick={() => setMobileMenuOpen(false)}>
-                Vender
+              <a href="/cotizar" className={linkClass(active === 'cotizar')} onClick={() => setMobileMenuOpen(false)}>
+                Cotizar
               </a>
             </div>
             <a
