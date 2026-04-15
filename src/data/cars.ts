@@ -1,6 +1,7 @@
 import { Car } from '../types';
 
-export const CARS_DATA: Car[] = [
+export const INITIAL_CARS_DATA: Car[] = [
+  // ... items will be here temporarily ...
   {
     id: '1',
     brand: 'Toyota',
@@ -189,3 +190,25 @@ export const CARS_DATA: Car[] = [
     features: ['Aire acondicionado', 'Radio Bluetooth', 'Vidrios eléctricos']
   }
 ];
+
+export const getCars = (): Car[] => {
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('millcars_inventory');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  }
+  return [...INITIAL_CARS_DATA];
+};
+
+export const saveCar = (car: Car) => {
+  const cars = getCars();
+  cars.push(car);
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('millcars_inventory', JSON.stringify(cars));
+  }
+  CARS_DATA.length = 0;
+  CARS_DATA.push(...cars);
+};
+
+export const CARS_DATA: Car[] = getCars();
