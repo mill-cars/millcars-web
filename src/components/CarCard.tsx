@@ -1,105 +1,158 @@
 import React from 'react';
 import { Car } from '../types';
 import { formatNumber, getWhatsAppLink } from '../lib/utils';
-import { Calendar, Gauge, User, Hash, ChevronRight, MessageCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface CarCardProps {
   car: Car;
   onClick: (car: Car) => void;
+  variant?: 'featured' | 'used';
 }
 
-export const CarCard: React.FC<CarCardProps> = ({ car, onClick }) => {
+export const CarCard: React.FC<CarCardProps> = ({ car, onClick, variant = 'featured' }) => {
   const waLink = getWhatsAppLink(car.brand, car.model, car.year);
 
+  if (variant === 'used') {
+    return (
+      <div 
+        onClick={() => onClick(car)}
+        className="min-w-[300px] md:min-w-[340px] bg-white rounded-[1.6rem] overflow-hidden snap-start border border-outline-variant/10 p-2 cursor-pointer group hover:shadow-xl transition-all"
+      >
+        <div className="aspect-[16/11] relative overflow-hidden rounded-[1.2rem]">
+          <img 
+            src={car.image} 
+            alt={`${car.brand} ${car.model}`} 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.18em]">
+            {car.condition === 'nuevo' ? 'Nuevo' : 'Certificado'}
+          </div>
+        </div>
+        <div className="p-5">
+          <div className="mb-4 flex items-start justify-between gap-3">
+            <div>
+              <h3 className="max-w-[180px] truncate text-lg font-black uppercase tracking-tight text-on-surface">
+                {car.brand} {car.model}
+              </h3>
+              <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-outline">
+                {car.year} · {car.condition === 'nuevo' ? 'Nuevo' : 'Usado'}
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="relative group/price cursor-help">
+                <span className="text-lg font-black price-blur">${formatNumber(car.price)}</span>
+                <div className="absolute bottom-full right-0 mb-2 w-max px-3 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover/price:opacity-100 transition-opacity z-10">
+                    Regístrate para ver el precio
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mb-4 grid grid-cols-2 gap-3">
+            <div className="rounded-xl bg-surface-container-low px-3 py-2.5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-outline">Km</p>
+              <p className="mt-1 text-sm font-bold text-on-surface">{formatNumber(car.mileage)}</p>
+            </div>
+            <div className="rounded-xl bg-surface-container-low px-3 py-2.5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-outline">Dueños</p>
+              <p className="mt-1 text-sm font-bold text-on-surface">{car.owners}</p>
+            </div>
+          </div>
+          <div className="flex gap-3 mt-auto">
+            <button className="flex-[2] bg-black text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.18em] hover:bg-slate-900 transition-colors">
+              DETALLES
+            </button>
+            <a 
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex-1 bg-whatsapp text-white rounded-xl flex items-center justify-center hover:opacity-90 transition-opacity max-w-[60px]"
+            >
+              <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>chat</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -5 }}
-      className="bg-white rounded-2xl overflow-hidden shadow-sm border border-black/5 group cursor-pointer"
+    <div 
       onClick={() => onClick(car)}
+      className="mx-auto flex h-full w-full max-w-[350px] cursor-pointer flex-col overflow-hidden rounded-[1.7rem] border border-outline-variant/10 bg-white shadow-sm transition-all group hover:-translate-y-1 hover:shadow-xl"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <img
-          src={car.image}
-          alt={`${car.brand} ${car.model}`}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      <div className="relative aspect-[16/11] overflow-hidden">
+        <img 
+          src={car.image} 
+          alt={`${car.brand} ${car.model}`} 
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute top-3 left-3">
-          <span className={car.condition === 'nuevo' ? 'bg-[#0078FF] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider' : 'bg-[#D00000] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider'}>
-            {car.condition}
-          </span>
+        <div className={`absolute left-3 top-3 ${car.condition === 'nuevo' ? 'bg-primary' : 'bg-red-600'} rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-white`}>
+          {car.condition}
         </div>
       </div>
       
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-5 flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-xl font-bold text-black leading-tight font-display uppercase tracking-tight group-hover:text-[#D00000] transition-colors">
-              {car.brand} <span className="text-black/30">{car.model}</span>
+            <h3 className="flex items-baseline gap-2 text-xl font-black uppercase tracking-tight text-on-surface">
+              {car.brand} <span className="font-medium text-outline">{car.model}</span>
             </h3>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-[10px] font-bold text-black/20 font-mono tracking-widest uppercase">{car.year}</span>
-              <span className="w-1 h-1 rounded-full bg-black/10"></span>
-              <span className="text-[10px] font-bold text-[#0078FF] font-mono tracking-widest uppercase">{car.condition}</span>
+              <span className="text-sm font-bold text-outline">{car.year}</span>
+              <span className="w-1 h-1 rounded-full bg-outline-variant"></span>
+              <span className="text-[11px] font-black uppercase tracking-[0.16em] text-primary">{car.condition}</span>
             </div>
           </div>
-          <div className="flex flex-col items-end">
-            <span className="text-[9px] font-bold text-black/20 uppercase tracking-[0.2em] mb-1 font-display">Cotización</span>
-            <div className="bg-black/5 px-3 py-1.5 rounded-xl blur-[5px] select-none text-sm font-bold font-mono">
-              $XX.XXX
+          <div className="text-right">
+            <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-outline">Cotizaci&oacute;n</span>
+            <div className="relative group/price cursor-help">
+              <span className="text-lg font-black price-blur">${formatNumber(car.price)}</span>
+              <div className="absolute bottom-full right-0 mb-2 w-max px-3 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover/price:opacity-100 transition-opacity z-10">
+                Regístrate para ver el precio
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="flex items-center gap-2.5 text-[11px] text-black/50 font-medium">
-            <div className="w-8 h-8 rounded-lg bg-black/[0.03] flex items-center justify-center">
-              <Gauge size={14} className="text-black/40" />
+        <div className="mb-5 grid grid-cols-2 gap-3">
+          <div className="flex items-center gap-3 rounded-[1rem] bg-surface-container-low px-3 py-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white">
+              <span className="material-symbols-outlined text-lg text-outline">speed</span>
             </div>
-            <span className="font-mono">{formatNumber(car.mileage)} km</span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-outline">Kilometraje</p>
+              <p className="text-sm font-bold">{formatNumber(car.mileage)} km</p>
+            </div>
           </div>
-          <div className="flex items-center gap-2.5 text-[11px] text-black/50 font-medium">
-            <div className="w-8 h-8 rounded-lg bg-black/[0.03] flex items-center justify-center">
-              <User size={14} className="text-black/40" />
+          <div className="flex items-center gap-3 rounded-[1rem] bg-surface-container-low px-3 py-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white">
+              <span className="material-symbols-outlined text-lg text-outline">person</span>
             </div>
-            <span>{car.owners} {car.owners === 1 ? 'Dueño' : 'Dueños'}</span>
-          </div>
-          <div className="flex items-center gap-2.5 text-[11px] text-black/50 font-medium">
-            <div className="w-8 h-8 rounded-lg bg-black/[0.03] flex items-center justify-center">
-              <Hash size={14} className="text-black/40" />
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-outline">Propiedad</p>
+              <p className="text-sm font-bold">{car.owners} Dueño{car.owners !== 1 ? 's' : ''}</p>
             </div>
-            <span className="font-mono">***{car.plateEnd}</span>
-          </div>
-          <div className="flex items-center gap-2.5 text-[11px] text-black/50 font-medium">
-            <div className="w-8 h-8 rounded-lg bg-black/[0.03] flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: car.color === 'Blanco' ? '#fff' : car.color === 'Negro' ? '#000' : car.color === 'Rojo' ? '#D00000' : car.color === 'Gris' ? '#888' : car.color === 'Plata' ? '#C0C0C0' : '#444' }} />
-            </div>
-            <span>{car.color}</span>
           </div>
         </div>
 
-        <div className="flex gap-2">
-          <button className="flex-1 py-3 bg-black text-white rounded-xl font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#D00000] transition-all duration-300 font-display shadow-md shadow-black/5">
-            Detalles
-            <ChevronRight size={14} />
+        <div className="flex gap-3 mt-auto">
+          <button className="flex-[2] rounded-[1rem] bg-black py-3.5 text-[11px] font-black uppercase tracking-[0.18em] text-white flex items-center justify-center gap-2 hover:bg-slate-900 transition-colors">
+            DETALLES <span className="material-symbols-outlined text-xs">arrow_forward_ios</span>
           </button>
           <a 
             href={waLink}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="px-4 py-3 bg-[#25D366] text-white rounded-xl font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#128C7E] transition-all duration-300 font-display shadow-md shadow-[#25D366]/10"
+            className="flex-1 rounded-[1rem] bg-whatsapp py-3.5 text-[11px] font-black uppercase tracking-[0.16em] text-white flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <MessageCircle size={16} />
-            Precio
+            <span className="material-symbols-outlined text-lg" style={{fontVariationSettings: "'FILL' 1"}}>chat</span> PRECIO
           </a>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };

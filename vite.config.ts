@@ -1,10 +1,11 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, loadEnv} from 'vite';
 
-export default defineConfig(() => {
-  // En Cloudflare, las env vars están en process.env
-  const apiKey = process.env.GEMINI_API_KEY || '';
+export default defineConfig(({ command, mode }) => {
+  // Cargar variables de entorno desde archivos .env
+  const env = loadEnv(mode, process.cwd(), '');
+  const apiKey = env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || '';
   
   // Log para debug (se verá en el build log de Cloudflare)
   console.log('🔑 GEMINI_API_KEY configurada:', apiKey ? 'SÍ (longitud: ' + apiKey.length + ')' : 'NO ❌');
@@ -12,7 +13,8 @@ export default defineConfig(() => {
   return {
     plugins: [react()],
     define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(apiKey),
+      'import.meta.env.GEMINI_API_KEY': JSON.stringify(apiKey),
+      'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(apiKey),
     },
     resolve: {
       alias: {

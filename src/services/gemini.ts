@@ -2,8 +2,15 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { SearchFilters, Car } from "../types";
 import { CARS_DATA } from "../data/cars";
 
-const apiKey = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenAI({ apiKey });
+const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "";
+
+function createGenAI() {
+  if (!apiKey) {
+    return null;
+  }
+
+  return new GoogleGenAI({ apiKey });
+}
 
 const SYSTEM_INSTRUCTION = `
 Eres "carsAgent", un asistente de compras de autos inteligente y experto, inspirado en la capacidad analítica de Rufus. 
@@ -36,6 +43,15 @@ Ejemplo de respuesta de comparación:
 
 export async function chatWithAgent(message: string, history: any[] = []) {
   const model = "gemini-3-flash-preview";
+
+  const genAI = createGenAI();
+
+  if (!genAI) {
+    return {
+      message: "El asistente IA no está configurado todavía. Define `GEMINI_API_KEY` en tu entorno para habilitar respuestas con Gemini.",
+      filters: {}
+    };
+  }
   
   try {
     const response = await genAI.models.generateContent({
