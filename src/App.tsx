@@ -268,10 +268,11 @@ function AppContent() {
     <div className="min-h-screen bg-surface">
       <PublicHeader active="inventario" ctaLabel="Ingresar" ctaHref="/login" />
 
-      <main className="flex-1 overflow-x-hidden px-4 pb-0 pt-[112px] sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-[1600px] items-start gap-8 xl:grid-cols-[320px_minmax(0,1fr)]">
-          <div className="hidden self-start lg:block">
-            <div className="lg:sticky lg:top-[118px]">
+      <main className="flex-1 px-4 pb-0 pt-[112px] sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1600px] items-stretch gap-8 xl:grid-cols-[320px_minmax(0,1fr)]">
+          {/* Stretch to full row height so sticky can stay in view for the whole page scroll */}
+          <div className="hidden min-h-0 self-stretch lg:block">
+            <div className="sticky top-[118px] z-30 min-h-0 lg:max-h-[calc(100vh-132px)]">
               <AssistantPanel
                 messages={messages}
                 onSendMessage={handleSendMessage}
@@ -285,7 +286,7 @@ function AppContent() {
             </div>
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 overflow-x-hidden">
         {/* Hero Section - hidden when agent search is active */}
         <AnimatePresence mode="wait">
           {!hasActiveSearch ? (
@@ -656,7 +657,7 @@ function AppContent() {
         type="button"
         aria-label="Abrir asistente de búsqueda"
         onClick={() => setIsAssistantOpen(true)}
-        className="lg:hidden fixed bottom-6 right-6 z-[100] flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-primary shadow-2xl transition-transform active:scale-95"
+        className={`lg:hidden fixed bottom-6 right-6 z-[100] flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-primary shadow-2xl transition-[transform,opacity] duration-200 active:scale-95 ${isAssistantOpen ? 'pointer-events-none opacity-0' : ''}`}
       >
         <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>
           chat_bubble
