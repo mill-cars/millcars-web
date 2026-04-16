@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
               </div>
             </a>
             <p className="max-w-sm text-sm leading-relaxed text-white/65">
-              Encuentra, compara y vende autos con una experiencia guiada por inteligencia artificial, diseñada para claridad y confianza.
+              Encuentra, compara y cotiza autos con una experiencia guiada por inteligencia artificial, diseñada para claridad y confianza.
             </p>
             <div className="flex gap-3">
               {socialLinks.map(({ icon, label, href }, index) => (
@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
             <h4 className="mb-6 text-[10px] font-black uppercase tracking-[0.35em] text-on-surface-variant">Explorar</h4>
             <ul className="space-y-4 text-sm text-on-surface-variant">
               <li><a href="/" className="transition-colors hover:text-white">Inventario</a></li>
-              <li><a href="/vender" className="transition-colors hover:text-white">Vender auto</a></li>
+              <li><a href="/cotizar" className="transition-colors hover:text-white">Cotizar auto</a></li>
               <li><a href="#" className="transition-colors hover:text-white">Asesoría IA</a></li>
               <li><a href="#" className="transition-colors hover:text-white">Sucursales</a></li>
             </ul>
