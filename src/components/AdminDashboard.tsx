@@ -3,14 +3,28 @@ import { ArrowUpDown, ChevronLeft, ChevronRight, Filter, MoreVertical, X, Zap } 
 import { Car } from '../types';
 import { getCars, saveCar, CARS_DATA } from '../data/cars';
 import { AdminHeader } from './AdminHeader';
+import { UsersPanel } from './UsersPanel';
+import { useAuth } from '../context/AuthContext';
+
+type AdminView = 'inventario' | 'usuarios';
 
 export function AdminDashboard() {
+  const { session, loading } = useAuth();
+  const [activeView, setActiveView] = useState<AdminView>('inventario');
+  const [searchQuery, setSearchQuery] = useState('');
   const [cars, setCars] = useState<Car[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filterStatus, setFilterStatus] = useState<'todos' | 'disponibles' | 'reservados'>('todos');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+
+  // Auth guard: redirect to login if not authenticated
+  useEffect(() => {
+    if (!loading && !session) {
+      window.location.href = '/login';
+    }
+  }, [loading, session]);
 
   useEffect(() => {
     // Initial fetch
@@ -57,14 +71,28 @@ export function AdminDashboard() {
           </button>
         </div>
         <nav className="flex flex-col gap-1 p-4 text-sm font-semibold tracking-wide">
-          <a className="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-lg cursor-pointer transition-all hover:translate-x-1 duration-200" href="#">
-            <span className="material-symbols-outlined text-xl">local_shipping</span>
+          <button
+            onClick={() => { setActiveView('inventario'); setSearchQuery(''); setSidebarOpen(false); }}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg w-full text-left transition-all duration-200 ${
+              activeView === 'inventario'
+                ? 'bg-primary/10 text-primary'
+                : 'text-on-surface-variant hover:bg-surface-container hover:translate-x-1'
+            }`}
+          >
+            <span className="material-symbols-outlined text-xl" style={activeView === 'inventario' ? { fontVariationSettings: "'FILL' 1" } : {}}>local_shipping</span>
             <span>Inventario</span>
-          </a>
-          <a className="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-lg cursor-pointer transition-all hover:translate-x-1 duration-200" href="#">
-            <span className="material-symbols-outlined text-xl">group</span>
+          </button>
+          <button
+            onClick={() => { setActiveView('usuarios'); setSearchQuery(''); setSidebarOpen(false); }}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg w-full text-left transition-all duration-200 ${
+              activeView === 'usuarios'
+                ? 'bg-primary/10 text-primary'
+                : 'text-on-surface-variant hover:bg-surface-container hover:translate-x-1'
+            }`}
+          >
+            <span className="material-symbols-outlined text-xl" style={activeView === 'usuarios' ? { fontVariationSettings: "'FILL' 1" } : {}}>group</span>
             <span>Usuarios</span>
-          </a>
+          </button>
         </nav>
       </aside>
 
@@ -80,13 +108,15 @@ export function AdminDashboard() {
       <div className="flex-1">
         {/* Header */}
         <AdminHeader
-          userName="Admin User"
-          userRole="Gestor de Flota"
-          searchPlaceholder="Buscar inventario, VIN, o modelos..."
+          searchPlaceholder={activeView === 'inventario' ? 'Buscar inventario, VIN, o modelos...' : 'Buscar usuarios, roles o emails...'}
+          onSearch={setSearchQuery}
           onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
         />
 
-        {/* Dashboard Content */}
+        {/* Switch views */}
+        {activeView === 'usuarios' ? (
+          <UsersPanel searchQuery={searchQuery} />
+        ) : (
         <main className="p-6 sm:p-8 min-h-[calc(100vh-4rem)]">
           <div className="flex justify-between items-end mb-10 gap-4 flex-col sm:flex-row">
             <div>
@@ -319,6 +349,7 @@ export function AdminDashboard() {
             </div>
           </div>
         </main>
+        )}
       </div>
 
       {showModal && (

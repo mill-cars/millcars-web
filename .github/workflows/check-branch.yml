@@ -1,0 +1,16 @@
+name: Restricción de Rama
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check_source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar si el origen es develop
+        if: github.event.pull_request.head.ref != 'develop'
+        run: |
+          echo "Acceso denegado: Solo se permiten merges a main desde la rama develop."
+          exit 1

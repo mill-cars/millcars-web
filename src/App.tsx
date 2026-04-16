@@ -12,8 +12,9 @@ import { PublicHeader } from './components/PublicHeader';
 import { Footer } from './components/Footer';
 import { Button } from './components/Button';
 import { AssistantPanel } from './components/AssistantPanel';
+import { AuthProvider } from './context/AuthContext';
 
-export default function App() {
+function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const isAdminPage = currentPath === '/admin';
   const isLoginPage = currentPath === '/login';
@@ -644,5 +645,13 @@ export default function App() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
