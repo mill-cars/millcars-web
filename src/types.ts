@@ -14,6 +14,10 @@ export interface Car {
   image: string;
   description: string;
   features: string[];
+  /** Whether the car is visible in the public catalog (soft-delete) */
+  isActive?: boolean;
+  /** SEO-friendly slug */
+  slug?: string;
 }
 
 export interface Message {

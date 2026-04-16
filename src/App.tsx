@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Car, Message, SearchFilters } from './types';
-import { CARS_DATA } from './data/cars';
+import { fetchCars } from './services/carsService';
 import { chatWithAgent } from './services/gemini';
 import { CarCard } from './components/CarCard';
 import { motion, AnimatePresence } from 'motion/react';
@@ -47,10 +47,30 @@ function AppContent() {
   const [input, setInput] = useState('');
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
 
+  // ── Real data from Supabase ──────────────────────────────────────────────
+  const [carsData, setCarsData] = useState<Car[]>([]);
+  const [carsLoading, setCarsLoading] = useState(true);
+  const [carsError, setCarsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCarsLoading(true);
+    fetchCars()
+      .then(data => {
+        setCarsData(data);
+        setCarsError(null);
+      })
+      .catch(err => {
+        setCarsError('No se pudieron cargar los vehículos. Intenta nuevamente.');
+        console.error(err);
+      })
+      .finally(() => setCarsLoading(false));
+  }, []);
+  // ────────────────────────────────────────────────────────────────────────
+
   const hasActiveSearch = messages.length > 0 || Object.keys(filters).length > 0;
 
   const filteredCars = useMemo(() => {
-    return CARS_DATA.filter(car => {
+    return carsData.filter(car => {
       // Multi-value brand filter
       if (filters.brand) {
         const brands = filters.brand.toLowerCase().split(',').map(b => b.trim());
@@ -89,7 +109,10 @@ function AppContent() {
 
       return true;
     });
-  }, [filters]);
+  }, [filters, carsData]);
+
+  // Limit public catalog to 10 units total (3 featured + 7 used)
+  const catalogCars = filteredCars.slice(0, 10);
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
@@ -132,8 +155,8 @@ function AppContent() {
     setMessages([]);
   };
 
-  const featuredCars = filteredCars.slice(0, 3);
-  const usedPopularCars = filteredCars.slice(3, 10);
+  const featuredCars = catalogCars.slice(0, 3);
+  const usedPopularCars = catalogCars.slice(3, 10);
 
   if (isAddVehiclePage) {
     return <AddVehiclePage />;
@@ -396,8 +419,49 @@ function AppContent() {
           )}
         </AnimatePresence>
 
+        {/* ── Loading skeleton ───────────────────────────────────────────── */}
+        {carsLoading && (
+          <section className="bg-surface-container-low px-0 py-14">
+            <div className="max-w-7xl mx-auto">
+              <div className="mb-10">
+                <div className="h-8 w-56 rounded-xl bg-outline-variant/20 animate-pulse mb-3" />
+                <div className="h-4 w-40 rounded-lg bg-outline-variant/15 animate-pulse" />
+              </div>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {[1, 2, 3, 4, 5, 6].map(i => (
+                  <div key={i} className="rounded-[1.75rem] border border-outline-variant/20 bg-surface-container overflow-hidden">
+                    <div className="h-52 bg-outline-variant/20 animate-pulse" />
+                    <div className="p-5 space-y-3">
+                      <div className="h-4 w-3/4 rounded-lg bg-outline-variant/20 animate-pulse" />
+                      <div className="h-3 w-1/2 rounded-lg bg-outline-variant/15 animate-pulse" />
+                      <div className="h-6 w-1/3 rounded-lg bg-outline-variant/20 animate-pulse mt-4" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ── Error state ──────────────────────────────────────────────────── */}
+        {!carsLoading && carsError && (
+          <section className="mx-0 rounded-[2rem] bg-surface-container-low px-8 py-24">
+            <div className="max-w-xl mx-auto text-center space-y-6">
+              <span className="material-symbols-outlined text-6xl text-error">wifi_off</span>
+              <h3 className="text-3xl font-black text-on-surface">Error al cargar</h3>
+              <p className="text-on-surface-variant">{carsError}</p>
+              <button
+                onClick={() => { setCarsLoading(true); fetchCars().then(d => { setCarsData(d); setCarsError(null); }).catch(e => setCarsError(e.message)).finally(() => setCarsLoading(false)); }}
+                className="bg-primary text-on-primary px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:scale-105 transition-transform"
+              >
+                Reintentar
+              </button>
+            </div>
+          </section>
+        )}
+
         {/* Catálogo principal */}
-        {featuredCars.length > 0 && (
+        {!carsLoading && !carsError && featuredCars.length > 0 && (
           <section id="catalogo" className="bg-surface-container-low px-0 py-14 scroll-mt-36">
             <div className="max-w-7xl mx-auto">
               <div className="mb-10 flex items-end justify-between">
@@ -430,7 +494,7 @@ function AppContent() {
         )}
 
         {/* Popular Used Cars */}
-        {usedPopularCars.length > 0 && (
+        {!carsLoading && !carsError && usedPopularCars.length > 0 && (
           <section className="overflow-hidden bg-surface px-0 py-24">
             <div className="max-w-7xl mx-auto">
               <div className="mb-12">
@@ -455,8 +519,8 @@ function AppContent() {
           </section>
         )}
 
-        {/* Fallback no results */}
-        {filteredCars.length === 0 && (
+        {/* Fallback no results — only when not loading and no error */}
+        {!carsLoading && !carsError && filteredCars.length === 0 && (
           <section className="mx-0 rounded-[2rem] bg-surface-container-low px-8 py-24">
              <div className="max-w-xl mx-auto text-center space-y-6">
                 <span className="material-symbols-outlined text-6xl text-outline-variant">search_off</span>

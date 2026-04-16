@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUpDown, ChevronLeft, ChevronRight, Filter, MoreVertical, Zap } from 'lucide-react';
 import { Car } from '../types';
-import { getCars } from '../data/cars';
+import { fetchAllCars } from '../services/carsService';
 import { AdminHeader } from './AdminHeader';
 import { UsersPanel } from './UsersPanel';
 import { useAuth } from '../context/AuthContext';
@@ -13,8 +13,10 @@ export function AdminDashboard() {
   const [activeView, setActiveView] = useState<AdminView>('inventario');
   const [searchQuery, setSearchQuery] = useState('');
   const [cars, setCars] = useState<Car[]>([]);
+  const [carsLoading, setCarsLoading] = useState(true);
+  const [carsError, setCarsError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [filterStatus, setFilterStatus] = useState<'todos' | 'disponibles' | 'reservados'>('todos');
+  const [filterStatus, setFilterStatus] = useState<'todos' | 'disponibles' | 'inactivos'>('todos');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
@@ -26,17 +28,22 @@ export function AdminDashboard() {
   }, [loading, session]);
 
   useEffect(() => {
-    // Initial fetch
-    setCars(getCars());
-  }, []);
+    const loadCars = () => {
+      setCarsLoading(true);
+      fetchAllCars()
+        .then(data => { setCars(data); setCarsError(null); })
+        .catch(err => setCarsError(err.message))
+        .finally(() => setCarsLoading(false));
+    };
+    if (!loading && session) loadCars();
+  }, [loading, session]);
 
   const filteredCars = cars.filter(car => {
-    if (filterStatus === 'disponibles') {
-      return cars.indexOf(car) % 3 !== 0; // Simulate available status
-    }
-    if (filterStatus === 'reservados') {
-      return cars.indexOf(car) % 3 === 0; // Simulate reserved status
-    }
+    const matchesSearch = !searchQuery ||
+      `${car.brand} ${car.model}`.toLowerCase().includes(searchQuery.toLowerCase());
+    if (!matchesSearch) return false;
+    if (filterStatus === 'disponibles') return car.isActive !== false;
+    if (filterStatus === 'inactivos') return car.isActive === false;
     return true;
   });
 
@@ -47,8 +54,11 @@ export function AdminDashboard() {
   );
 
   const handleSaved = () => {
-    // Refresh local list from static data (real-time refresh via Supabase can be added later)
-    setCars(getCars());
+    setCarsLoading(true);
+    fetchAllCars()
+      .then(data => { setCars(data); setCarsError(null); })
+      .catch(err => setCarsError(err.message))
+      .finally(() => setCarsLoading(false));
   };
 
   return (
@@ -148,40 +158,54 @@ export function AdminDashboard() {
               <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                 Total Unidades
               </p>
-              <p className="text-3xl font-black text-slate-950 dark:text-slate-50">{cars.length}</p>
+              {carsLoading
+                ? <div className="h-9 w-16 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse mt-1" />
+                : <p className="text-3xl font-black text-slate-950 dark:text-slate-50">{cars.length}</p>
+              }
               <p className="text-xs text-green-600 dark:text-green-400 font-bold mt-2 flex items-center gap-1">
-                <span className="material-symbols-outlined text-base align-middle">trending_up</span> +12% vs mes anterior
+                <span className="material-symbols-outlined text-base align-middle">trending_up</span> Desde Supabase
               </p>
             </div>
             <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
               <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                En Showroom
+                Activos
               </p>
-              <p className="text-3xl font-black text-slate-950 dark:text-slate-50">
-                {cars.filter((_, i) => i % 3 !== 0).length}
-              </p>
+              {carsLoading
+                ? <div className="h-9 w-16 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse mt-1" />
+                : <p className="text-3xl font-black text-slate-950 dark:text-slate-50">
+                    {cars.filter(c => c.isActive !== false).length}
+                  </p>
+              }
               <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-4">
-                <div className="bg-blue-600 h-full rounded-full w-2/3"></div>
+                <div className="bg-blue-600 h-full rounded-full" style={{ width: cars.length ? `${(cars.filter(c => c.isActive !== false).length / cars.length) * 100}%` : '0%' }} />
               </div>
             </div>
             <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
               <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
                 Valor de Flota
               </p>
-              <p className="text-3xl font-black text-slate-950 dark:text-slate-50">
-                ${(cars.reduce((acc, car) => acc + car.price, 0) / 1000000).toFixed(1)}M
-              </p>
+              {carsLoading
+                ? <div className="h-9 w-20 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse mt-1" />
+                : <p className="text-3xl font-black text-slate-950 dark:text-slate-50">
+                    ${(cars.reduce((acc, car) => acc + car.price, 0) / 1000000).toFixed(1)}M
+                  </p>
+              }
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium">
-                Tasación actualizada hoy
+                Tasación actualizada
               </p>
             </div>
             <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
               <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Días Promedio
+                Inactivos
               </p>
-              <p className="text-3xl font-black text-slate-950 dark:text-slate-50">18</p>
-              <p className="text-xs text-blue-600 dark:text-blue-400 font-bold mt-2 flex items-center gap-1">
-                <Zap className="w-4 h-4" /> Alta rotación
+              {carsLoading
+                ? <div className="h-9 w-10 rounded-lg bg-slate-200 dark:bg-slate-700 animate-pulse mt-1" />
+                : <p className="text-3xl font-black text-slate-950 dark:text-slate-50">
+                    {cars.filter(c => c.isActive === false).length}
+                  </p>
+              }
+              <p className="text-xs text-orange-500 dark:text-orange-400 font-bold mt-2 flex items-center gap-1">
+                <Zap className="w-4 h-4" /> Fuera de catálogo
               </p>
             </div>
           </div>
@@ -190,10 +214,7 @@ export function AdminDashboard() {
             <div className="p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 gap-4">
               <div className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 sm:pb-0">
                 <button
-                  onClick={() => {
-                    setFilterStatus('todos');
-                    setCurrentPage(1);
-                  }}
+                  onClick={() => { setFilterStatus('todos'); setCurrentPage(1); }}
                   className={`text-sm font-bold px-2 pb-1 transition-colors whitespace-nowrap ${
                     filterStatus === 'todos'
                       ? 'border-b-2 border-blue-600 text-slate-950 dark:text-slate-50'
@@ -203,30 +224,24 @@ export function AdminDashboard() {
                   Todos ({cars.length})
                 </button>
                 <button
-                  onClick={() => {
-                    setFilterStatus('disponibles');
-                    setCurrentPage(1);
-                  }}
+                  onClick={() => { setFilterStatus('disponibles'); setCurrentPage(1); }}
                   className={`text-sm font-medium px-2 pb-1 transition-colors whitespace-nowrap ${
                     filterStatus === 'disponibles'
                       ? 'border-b-2 border-blue-600 text-slate-950 dark:text-slate-50 font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-50'
                   }`}
                 >
-                  Disponibles ({cars.filter((_, i) => i % 3 !== 0).length})
+                  Activos ({cars.filter(c => c.isActive !== false).length})
                 </button>
                 <button
-                  onClick={() => {
-                    setFilterStatus('reservados');
-                    setCurrentPage(1);
-                  }}
+                  onClick={() => { setFilterStatus('inactivos'); setCurrentPage(1); }}
                   className={`text-sm font-medium px-2 pb-1 transition-colors whitespace-nowrap ${
-                    filterStatus === 'reservados'
+                    filterStatus === 'inactivos'
                       ? 'border-b-2 border-blue-600 text-slate-950 dark:text-slate-50 font-bold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-950 dark:hover:text-slate-50'
                   }`}
                 >
-                  Reservados ({cars.filter((_, i) => i % 3 === 0).length})
+                  Inactivos ({cars.filter(c => c.isActive === false).length})
                 </button>
               </div>
               <div className="flex gap-2">
@@ -250,45 +265,50 @@ export function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-                {paginatedCars.length > 0 ? (
+                {carsLoading ? (
+                  <tr>
+                    <td colSpan={6} className="px-8 py-12 text-center">
+                      <div className="flex items-center justify-center gap-3 text-slate-500 dark:text-slate-400">
+                        <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                        Cargando inventario desde Supabase...
+                      </div>
+                    </td>
+                  </tr>
+                ) : carsError ? (
+                  <tr>
+                    <td colSpan={6} className="px-8 py-12 text-center text-red-500">
+                      {carsError}
+                    </td>
+                  </tr>
+                ) : paginatedCars.length > 0 ? (
                   paginatedCars.map((car) => {
-                    const globalIndex = cars.indexOf(car);
-                    const isReserved = globalIndex % 3 === 0;
+                    const isActive = car.isActive !== false;
                     return (
-                      <tr
-                        key={car.id}
-                        className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group"
-                  >
+                      <tr key={car.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-4">
                         <img
                           alt={car.model}
                           className="w-16 h-10 object-cover rounded-lg group-hover:scale-105 transition-transform"
-                          src={
-                            car.image ||
-                            'https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&q=80&w=200'
-                          }
+                          src={car.image}
                         />
                         <div>
                           <p className="font-bold text-slate-950 dark:text-slate-50">
                             {car.brand} {car.model}
                           </p>
                           <p className="text-xs text-slate-500 dark:text-slate-400">
-                            VIN: {Math.random().toString(36).substring(2, 10).toUpperCase()}...
-                            {car.plateEnd}
+                            {car.year} · {car.color} · {car.mileage.toLocaleString()} km
                           </p>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-5">
-                      <span
-                        className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full ${
-                          isReserved
-                            ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400'
-                            : 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
-                        }`}
-                      >
-                        {isReserved ? 'Reservado' : 'Disponible'}
+                      <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full ${
+                        isActive
+                          ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      }`}>
+                        {isActive ? 'Activo' : 'Inactivo'}
                       </span>
                     </td>
                     <td className="px-6 py-5">
