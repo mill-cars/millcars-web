@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
+import { getSiteOrigin } from '../lib/siteUrl';
 
 interface AuthContextValue {
   session: Session | null;
@@ -44,7 +45,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin,
+        redirectTo: getSiteOrigin(),
       },
     });
   }, []);
