@@ -50,7 +50,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
     mode === 'mobile'
       ? 'flex h-full min-h-0 flex-col bg-white'
       : mode === 'embedded'
-        ? 'flex max-h-[calc(100vh-132px)] flex-col overflow-hidden rounded-[1.9rem] border border-slate-200/80 bg-white shadow-[0_24px_60px_rgba(17,28,45,0.08)]'
+        ? 'flex max-h-[calc(100vh-132px)] min-h-0 w-full flex-col overflow-hidden rounded-[1.9rem] border border-slate-200/80 bg-white shadow-[0_24px_60px_rgba(17,28,45,0.08)]'
         : 'hidden h-screen flex-col border-r border-outline-variant/20 bg-white lg:flex lg:w-[336px] lg:sticky lg:top-0';
   const contentClass =
     mode === 'mobile'
