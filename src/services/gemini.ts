@@ -1,6 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { SearchFilters, Car } from "../types";
-import { CARS_DATA } from "../data/cars";
+import { SearchFilters } from "../types";
+import { fetchCars } from "./carsService";
 
 const apiKey = import.meta.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY || "";
 
@@ -12,7 +12,8 @@ function createGenAI() {
   return new GoogleGenAI({ apiKey });
 }
 
-const SYSTEM_INSTRUCTION = `
+function buildSystemInstruction(inventory: string) {
+  return `
 Eres "carsAgent", un asistente de compras de autos inteligente y experto, inspirado en la capacidad analítica de Rufus. 
 Tu misión es guiar a los usuarios a través de nuestro inventario de autos de manera conversacional, profunda y útil.
 
@@ -25,7 +26,7 @@ CAPACIDADES ESTILO RUFUS:
 6. PLACAS: Si el usuario busca un auto por el fin de la placa, usa el campo "plateEnd".
 
 INVENTARIO ACTUAL (Úsalo para responder preguntas específicas):
-${JSON.stringify(CARS_DATA.map(c => ({ id: c.id, brand: c.brand, model: c.model, price: c.price, year: c.year, mileage: c.mileage, features: c.features, description: c.description })), null, 2)}
+${inventory}
 
 REGLAS DE RESPUESTA:
 - Responde siempre en ESPAÑOL.
@@ -40,6 +41,7 @@ Ejemplo de respuesta de comparación:
   "filters": { "brand": "Toyota,Honda" }
 }
 `;
+}
 
 export async function chatWithAgent(message: string, history: any[] = []) {
   const model = "gemini-3-flash-preview";
@@ -52,7 +54,31 @@ export async function chatWithAgent(message: string, history: any[] = []) {
       filters: {}
     };
   }
-  
+
+  // Build the system instruction with real-time inventory from Supabase
+  let inventoryJson = "[]";
+  try {
+    const cars = await fetchCars();
+    inventoryJson = JSON.stringify(
+      cars.map(c => ({
+        id: c.id,
+        brand: c.brand,
+        model: c.model,
+        price: c.price,
+        year: c.year,
+        mileage: c.mileage,
+        features: c.features,
+        description: c.description,
+      })),
+      null,
+      2
+    );
+  } catch {
+    console.warn("[gemini] Could not fetch live inventory, agent will have no context.");
+  }
+
+  const systemInstruction = buildSystemInstruction(inventoryJson);
+
   try {
     const response = await genAI.models.generateContent({
       model,
@@ -60,7 +86,7 @@ export async function chatWithAgent(message: string, history: any[] = []) {
         { role: "user", parts: [{ text: message }] }
       ],
       config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
+        systemInstruction,
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
