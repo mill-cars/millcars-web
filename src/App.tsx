@@ -4,7 +4,7 @@ import { fetchCars } from './services/carsService';
 import { chatWithAgent } from './services/gemini';
 import { CarCard } from './components/CarCard';
 import { motion, AnimatePresence } from 'motion/react';
-import { formatNumber, getWhatsAppLink } from './lib/utils';
+import { countActiveFilters, formatNumber, getWhatsAppLink } from './lib/utils';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AddVehiclePage } from './components/AddVehiclePage';
 import { Login } from './components/Login';
@@ -14,6 +14,91 @@ import { Footer } from './components/Footer';
 import { Button } from './components/Button';
 import { AssistantPanel } from './components/AssistantPanel';
 import { AuthProvider } from './context/AuthContext';
+
+const PRICE_POLICY_MESSAGE =
+  'Respecto al precio, por políticas de seguridad y para brindarte la mejor oferta del día, te invito a iniciar sesión o registrarte en nuestro portal. También puedes contactarnos directamente por WhatsApp desde la tarjeta del vehículo para recibir atención inmediata de uno de nuestros asesores. ¿Te gustaría coordinar una visita para verla en persona?';
+
+const filterCarsByFilters = (cars: Car[], filters: SearchFilters) => {
+  return cars.filter(car => {
+    if (filters.brand) {
+      const brands = filters.brand.toLowerCase().split(',').map(b => b.trim());
+      if (!brands.some(b => car.brand.toLowerCase().includes(b))) return false;
+    }
+
+    if (filters.model) {
+      const models = filters.model.toLowerCase().split(',').map(m => m.trim());
+      if (!models.some(m => car.model.toLowerCase().includes(m))) return false;
+    }
+
+    if (filters.minPrice && car.price < filters.minPrice) return false;
+    if (filters.maxPrice && car.price > filters.maxPrice) return false;
+    if (filters.minYear && car.year < filters.minYear) return false;
+    if (filters.maxYear && car.year > filters.maxYear) return false;
+    if (filters.maxMileage && car.mileage > filters.maxMileage) return false;
+    if (filters.color && !car.color.toLowerCase().includes(filters.color.toLowerCase())) return false;
+    if (filters.condition && car.condition !== filters.condition) return false;
+    if (filters.plateEnd !== undefined && car.plateEnd !== filters.plateEnd) return false;
+    if (filters.owners !== undefined && car.owners > filters.owners) return false;
+    if (filters.fuelType && !car.fuelType.toLowerCase().includes(filters.fuelType.toLowerCase())) return false;
+    if (filters.transmission && !car.transmission.toLowerCase().includes(filters.transmission.toLowerCase())) return false;
+
+    if (filters.query) {
+      const q = filters.query.toLowerCase();
+      const inBrand = car.brand.toLowerCase().includes(q);
+      const inModel = car.model.toLowerCase().includes(q);
+      const inDesc = car.description.toLowerCase().includes(q);
+      const inFeatures = car.features.some(f => f.toLowerCase().includes(q));
+      if (!inBrand && !inModel && !inDesc && !inFeatures) return false;
+    }
+
+    return true;
+  });
+};
+
+const buildFiltersFromMentionedCars = (text: string, cars: Car[]): SearchFilters | null => {
+  const normalizedText = text.toLowerCase();
+  const mentionedCars = cars.filter(car => normalizedText.includes(`${car.brand} ${car.model}`.toLowerCase()));
+
+  if (mentionedCars.length === 0) {
+    return null;
+  }
+
+  const uniqueBrands = [...new Set(mentionedCars.map(car => car.brand))];
+  const uniqueModels = [...new Set(mentionedCars.map(car => car.model))];
+
+  return {
+    brand: uniqueBrands.join(','),
+    model: uniqueModels.join(','),
+  };
+};
+
+const buildConciseAssistantMessage = (cars: Car[]) => {
+  const listedCars = cars.slice(0, 3);
+  const lines = listedCars.map((car, index) => `${index + 1}. ${car.brand} ${car.model} (${car.year})`);
+  return `${lines.join('\n')}\n\n${PRICE_POLICY_MESSAGE}`;
+};
+
+const extractExplicitFiltersFromText = (text: string): Partial<SearchFilters> => {
+  const normalized = text.toLowerCase();
+  const explicitFilters: Partial<SearchFilters> = {};
+
+  // "menos de $15,000", "menor a 15000", "max 15000"
+  const maxPriceMatch = normalized.match(/(?:menos de|menor a|max(?:imo)?(?: de)?)\s*\$?\s*([\d.,]+)/i);
+  if (maxPriceMatch?.[1]) {
+    const parsed = Number(maxPriceMatch[1].replace(/[.,]/g, ''));
+    if (!Number.isNaN(parsed) && parsed > 0) {
+      explicitFilters.maxPrice = parsed;
+    }
+  }
+
+  if (/\bautom[áa]tic[oa]s?\b/i.test(normalized)) {
+    explicitFilters.transmission = 'automático';
+  } else if (/\bmanual(?:es)?\b/i.test(normalized)) {
+    explicitFilters.transmission = 'manual';
+  }
+
+  return explicitFilters;
+};
 
 function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -46,6 +131,7 @@ function AppContent() {
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const [input, setInput] = useState('');
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [assistantAutoAdjusted, setAssistantAutoAdjusted] = useState(false);
 
   // ── Real data from Supabase ──────────────────────────────────────────────
   const [carsData, setCarsData] = useState<Car[]>([]);
@@ -67,48 +153,11 @@ function AppContent() {
   }, []);
   // ────────────────────────────────────────────────────────────────────────
 
-  const hasActiveSearch = messages.length > 0 || Object.keys(filters).length > 0;
+  const activeFilterCount = countActiveFilters(filters as object);
+  const hasActiveSearch = messages.length > 0 || activeFilterCount > 0;
 
   const filteredCars = useMemo(() => {
-    return carsData.filter(car => {
-      // Multi-value brand filter
-      if (filters.brand) {
-        const brands = filters.brand.toLowerCase().split(',').map(b => b.trim());
-        if (!brands.some(b => car.brand.toLowerCase().includes(b))) return false;
-      }
-      
-      // Multi-value model filter
-      if (filters.model) {
-        const models = filters.model.toLowerCase().split(',').map(m => m.trim());
-        if (!models.some(m => car.model.toLowerCase().includes(m))) return false;
-      }
-
-      if (filters.minPrice && car.price < filters.minPrice) return false;
-      if (filters.maxPrice && car.price > filters.maxPrice) return false;
-      if (filters.minYear && car.year < filters.minYear) return false;
-      if (filters.maxYear && car.year > filters.maxYear) return false;
-      if (filters.maxMileage && car.mileage > filters.maxMileage) return false;
-      if (filters.color && !car.color.toLowerCase().includes(filters.color.toLowerCase())) return false;
-      if (filters.condition && car.condition !== filters.condition) return false;
-      if (filters.plateEnd !== undefined && car.plateEnd !== filters.plateEnd) return false;
-      if (filters.owners !== undefined && car.owners > filters.owners) return false;
-      
-      // New filters
-      if (filters.fuelType && !car.fuelType.toLowerCase().includes(filters.fuelType.toLowerCase())) return false;
-      if (filters.transmission && !car.transmission.toLowerCase().includes(filters.transmission.toLowerCase())) return false;
-      
-      // General query search
-      if (filters.query) {
-        const q = filters.query.toLowerCase();
-        const inBrand = car.brand.toLowerCase().includes(q);
-        const inModel = car.model.toLowerCase().includes(q);
-        const inDesc = car.description.toLowerCase().includes(q);
-        const inFeatures = car.features.some(f => f.toLowerCase().includes(q));
-        if (!inBrand && !inModel && !inDesc && !inFeatures) return false;
-      }
-
-      return true;
-    });
+    return filterCarsByFilters(carsData, filters);
   }, [filters, carsData]);
 
   // Limit public catalog to 10 units total (3 featured + 7 used)
@@ -130,21 +179,61 @@ function AppContent() {
 
     try {
       const response = await chatWithAgent(text, messages);
-      
+
+      const aiFilters = response.filters ?? {};
+      let nextFilters = aiFilters;
+      let adjustedByFallback = false;
+      const resultsWithAiFilters = filterCarsByFilters(carsData, aiFilters);
+
+      if (resultsWithAiFilters.length === 0) {
+        const fallbackFilters = buildFiltersFromMentionedCars(response.message ?? '', carsData);
+        if (fallbackFilters) {
+          nextFilters = fallbackFilters;
+          adjustedByFallback = true;
+        } else if (countActiveFilters(aiFilters as object) > 0) {
+          nextFilters = {};
+          adjustedByFallback = true;
+        }
+      }
+
+      // Enforce hard constraints explicitly written by the user
+      const explicitFilters = extractExplicitFiltersFromText(text);
+      nextFilters = { ...nextFilters, ...explicitFilters };
+
+      let resultsForFinalFilters = filterCarsByFilters(carsData, nextFilters);
+
+      // Final reconciliation: if we still have no results but assistant mentioned concrete cars,
+      // prioritize visual coherence between chat and result grid.
+      if (resultsForFinalFilters.length === 0) {
+        const finalFallbackFilters = buildFiltersFromMentionedCars(response.message ?? '', carsData);
+        if (finalFallbackFilters) {
+          const fallbackResults = filterCarsByFilters(carsData, finalFallbackFilters);
+          if (fallbackResults.length > 0) {
+            nextFilters = finalFallbackFilters;
+            resultsForFinalFilters = fallbackResults;
+            adjustedByFallback = true;
+          }
+        }
+      }
+
+      const assistantText =
+        resultsForFinalFilters.length > 0
+          ? buildConciseAssistantMessage(resultsForFinalFilters)
+          : response.message;
+
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'model',
-        text: response.message,
+        text: assistantText,
         timestamp: Date.now(),
       };
 
       setMessages(prev => [...prev, botMessage]);
-      
-      if (response.filters && Object.keys(response.filters).length > 0) {
-        setFilters(prev => ({ ...prev, ...response.filters }));
-      }
+      setFilters(nextFilters);
+      setAssistantAutoAdjusted(adjustedByFallback);
     } catch (error) {
       console.error(error);
+      setAssistantAutoAdjusted(false);
     } finally {
       setIsLoading(false);
     }
@@ -153,6 +242,7 @@ function AppContent() {
   const clearFilters = () => {
     setFilters({});
     setMessages([]);
+    setAssistantAutoAdjusted(false);
   };
 
   const featuredCars = catalogCars.slice(0, 3);
@@ -387,7 +477,7 @@ function AppContent() {
                     <span className="material-symbols-outlined text-primary text-xl" style={{fontVariationSettings: "'FILL' 1"}}>smart_toy</span>
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-[0.18em] text-outline">carsAgent · Resultados</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.18em] text-outline">Asistente IA · Resultados</p>
                     {isLoading ? (
                       <div className="flex items-center gap-2 mt-0.5">
                         <p className="text-sm font-bold text-primary">Procesando búsqueda</p>
@@ -525,7 +615,7 @@ function AppContent() {
              <div className="max-w-xl mx-auto text-center space-y-6">
                 <span className="material-symbols-outlined text-6xl text-outline-variant">search_off</span>
                 <h3 className="text-3xl font-black text-on-surface">Sin coincidencias</h3>
-                <p className="text-on-surface-variant">Intenta ajustar tu búsqueda o pídele asistencia a carsAgent para encontrar opciones similares.</p>
+                <p className="text-on-surface-variant">Intenta ajustar tu búsqueda o usa el asistente para encontrar opciones similares.</p>
                 <button 
                   onClick={clearFilters}
                   className="bg-primary text-on-primary px-8 py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:scale-105 transition-transform"
