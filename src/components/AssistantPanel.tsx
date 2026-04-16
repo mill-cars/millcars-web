@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import ReactMarkdown from 'react-markdown';
 import { Message, SearchFilters } from '../types';
+import { countActiveFilters } from '../lib/utils';
 
 interface AssistantPanelProps {
   messages: Message[];
@@ -17,8 +18,9 @@ interface AssistantPanelProps {
 }
 
 const quickQuestions = [
-  'SUV familiares con bajo kilometraje',
-  'Sedán automático desde 2020',
+  'SUV familiar automático menos de $15,000',
+  'Pick-up 4x4 con bajo kilometraje',
+  'Hatchback para ciudad con buen consumo',
 ];
 
 export const AssistantPanel: React.FC<AssistantPanelProps> = ({
@@ -33,7 +35,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
   onClose,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const activeFilterCount = Object.keys(filters).length;
+  const activeFilterCount = countActiveFilters(filters as object);
   const hasActiveSearch = messages.length > 0 || activeFilterCount > 0;
   const visibleMessages = messages.slice(-2);
   const hiddenMessagesCount = Math.max(messages.length - visibleMessages.length, 0);
@@ -80,7 +82,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
                 </div>
                 <div>
                   <p className="text-[10px] font-black uppercase tracking-[0.22em] text-outline">Asistente IA</p>
-                  <p className="text-sm font-semibold text-slate-900">B&uacute;squeda guiada</p>
+                  <p className="text-sm font-semibold text-slate-900">Encuentra tu auto ideal</p>
                 </div>
               </div>
 
@@ -124,16 +126,16 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
             <div className="space-y-5 rounded-[1.7rem] border border-slate-200/80 bg-white p-5 shadow-[0_14px_40px_rgba(17,28,45,0.06)]">
               <div className="space-y-2.5">
                 <h3 className="font-display text-[1.62rem] font-semibold leading-[1.02] tracking-[-0.04em] text-slate-950">
-                  ¿Qué auto buscas?
+                  Encuentra autos más rápido
                 </h3>
                 <p className="max-w-md text-sm leading-6 text-slate-600">
-                  Escribe marca, presupuesto, año o tipo de vehículo.
+                  Describe el tipo de auto, presupuesto, transmisión o uso que necesitas y te mostramos opciones para empezar.
                 </p>
               </div>
 
               <div className="space-y-2.5">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-outline">Sugerencias</p>
-                <div className="space-y-3">
+                <div className="grid gap-3 sm:grid-cols-2">
                   {quickQuestions.map((question) => (
                     <button
                       key={question}
@@ -203,7 +205,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
           className="space-y-2"
         >
           <label className="sr-only" htmlFor="assistant-query">
-            Describir vehículo que buscas
+            Describe el vehículo que buscas
           </label>
           <div className="relative">
             <input
@@ -211,7 +213,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
               type="text"
               value={input}
               onChange={(event) => onInputChange(event.target.value)}
-              placeholder="Ej: SUV automático por menos de $15,000"
+              placeholder="SUV familiar automático menos de $15,000"
               className="w-full rounded-[1.25rem] border border-outline-variant bg-surface-container-low px-4 py-3.5 pr-14 text-sm text-on-surface placeholder:text-outline/55 focus:border-primary focus:ring-2 focus:ring-primary/15 focus:outline-none disabled:opacity-60"
               disabled={isLoading}
             />
