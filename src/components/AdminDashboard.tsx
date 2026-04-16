@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpDown, ChevronLeft, ChevronRight, Filter, MoreVertical, X, Zap } from 'lucide-react';
+import { ArrowUpDown, ChevronLeft, ChevronRight, Filter, MoreVertical, Zap } from 'lucide-react';
 import { Car } from '../types';
-import { getCars, saveCar, CARS_DATA } from '../data/cars';
+import { getCars } from '../data/cars';
 import { AdminHeader } from './AdminHeader';
 import { UsersPanel } from './UsersPanel';
 import { useAuth } from '../context/AuthContext';
@@ -13,7 +13,6 @@ export function AdminDashboard() {
   const [activeView, setActiveView] = useState<AdminView>('inventario');
   const [searchQuery, setSearchQuery] = useState('');
   const [cars, setCars] = useState<Car[]>([]);
-  const [showModal, setShowModal] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filterStatus, setFilterStatus] = useState<'todos' | 'disponibles' | 'reservados'>('todos');
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,10 +46,9 @@ export function AdminDashboard() {
     currentPage * itemsPerPage
   );
 
-  const handleAddCar = (newCar: Car) => {
-    saveCar(newCar);
+  const handleSaved = () => {
+    // Refresh local list from static data (real-time refresh via Supabase can be added later)
     setCars(getCars());
-    setShowModal(false);
   };
 
   return (
@@ -133,7 +131,10 @@ export function AdminDashboard() {
                 <span className="hidden sm:inline">Exportar CSV</span>
               </button>
               <button 
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  window.history.pushState({}, '', '/admin/vehiculos/nuevo');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                }}
                 className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold shadow-lg shadow-blue-600/20 hover:scale-105 active:scale-95 transition-all">
                 <span className="material-symbols-outlined text-base">add</span>
                 <span className="hidden sm:inline">Añadir</span>
@@ -352,227 +353,7 @@ export function AdminDashboard() {
         )}
       </div>
 
-      {showModal && (
-        <CreateVehicleModal onClose={() => setShowModal(false)} onSave={handleAddCar} />
-      )}
     </div>
   );
 }
 
-function CreateVehicleModal({ onClose, onSave }: { onClose: () => void, onSave: (c: Car) => void }) {
-  const [formData, setFormData] = useState({
-    brand: '', model: '', year: new Date().getFullYear(),
-    price: 0, mileage: 0, color: '', condition: 'nuevo',
-    transmission: 'automático', fuelType: 'gasolina',
-    owners: 0, plateEnd: 0, image: '', description: ''
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newCar: Car = {
-      ...formData,
-      id: Date.now().toString(),
-      features: []
-    } as Car;
-    onSave(newCar);
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
-          <h2 className="text-2xl font-black text-slate-950 dark:text-slate-50">
-            Añadir Nuevo Vehículo
-          </h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-600 dark:text-slate-400"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-        <div className="p-8 overflow-y-auto">
-          <form id="vehicle-form" onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Marca
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.brand}
-                  onChange={e => setFormData({...formData, brand: e.target.value})}
-                  placeholder="Ej: Porsche"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Modelo
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.model}
-                  onChange={e => setFormData({...formData, model: e.target.value})}
-                  placeholder="Ej: 911 GT3"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Año
-                </label>
-                <input
-                  required
-                  type="number"
-                  min="1900"
-                  max={new Date().getFullYear() + 1}
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.year}
-                  onChange={e => setFormData({...formData, year: parseInt(e.target.value)})}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Precio ($)
-                </label>
-                <input
-                  required
-                  type="number"
-                  min="0"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.price}
-                  onChange={e => setFormData({...formData, price: parseInt(e.target.value)})}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Kilometraje (KM)
-                </label>
-                <input
-                  required
-                  type="number"
-                  min="0"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.mileage}
-                  onChange={e => setFormData({...formData, mileage: parseInt(e.target.value)})}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Color
-                </label>
-                <input
-                  required
-                  type="text"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.color}
-                  onChange={e => setFormData({...formData, color: e.target.value})}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Estado
-                </label>
-                <select
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.condition}
-                  onChange={e => setFormData({...formData, condition: e.target.value as 'nuevo'|'usado'})}
-                >
-                  <option value="nuevo">Nuevo</option>
-                  <option value="usado">Usado</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Transmisión
-                </label>
-                <select
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.transmission}
-                  onChange={e => setFormData({...formData, transmission: e.target.value})}
-                >
-                  <option value="automático">Automático</option>
-                  <option value="manual">Manual</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Combustible
-                </label>
-                <select
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.fuelType}
-                  onChange={e => setFormData({...formData, fuelType: e.target.value})}
-                >
-                  <option value="gasolina">Gasolina</option>
-                  <option value="diesel">Diésel</option>
-                  <option value="híbrido">Híbrido</option>
-                  <option value="eléctrico">Eléctrico</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                  Terminación Placa
-                </label>
-                <input
-                  required
-                  type="number"
-                  min="0"
-                  max="9"
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  value={formData.plateEnd}
-                  onChange={e => setFormData({...formData, plateEnd: parseInt(e.target.value)})}
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                URL Imagen
-              </label>
-              <input
-                required
-                type="url"
-                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                value={formData.image}
-                onChange={e => setFormData({...formData, image: e.target.value})}
-                placeholder="https://..."
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Descripción
-              </label>
-              <textarea
-                required
-                rows={3}
-                className="w-full rounded-xl border border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 p-3 text-sm focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                value={formData.description}
-                onChange={e => setFormData({...formData, description: e.target.value})}
-              ></textarea>
-            </div>
-          </form>
-        </div>
-        <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-6 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            form="vehicle-form"
-            className="px-6 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Guardar Vehículo
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
