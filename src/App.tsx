@@ -6,6 +6,7 @@ import { CarCard } from './components/CarCard';
 import { motion, AnimatePresence } from 'motion/react';
 import { formatNumber, getWhatsAppLink } from './lib/utils';
 import { AdminDashboard } from './components/AdminDashboard';
+import { AddVehiclePage } from './components/AddVehiclePage';
 import { Login } from './components/Login';
 import { Vender } from './components/Vender';
 import { PublicHeader } from './components/PublicHeader';
@@ -17,6 +18,7 @@ import { AuthProvider } from './context/AuthContext';
 function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const isAdminPage = currentPath === '/admin';
+  const isAddVehiclePage = currentPath === '/admin/vehiculos/nuevo';
   const isLoginPage = currentPath === '/login';
   const isQuotePage = currentPath === '/cotizar';
   const isLegacySellPage = currentPath === '/vender';
@@ -132,6 +134,10 @@ function AppContent() {
 
   const featuredCars = filteredCars.slice(0, 3);
   const usedPopularCars = filteredCars.slice(3, 10);
+
+  if (isAddVehiclePage) {
+    return <AddVehiclePage />;
+  }
 
   if (isAdminPage) {
     return <AdminDashboard />;
