@@ -318,7 +318,7 @@ function AppContent() {
                    Compra o vende tu auto de forma rápida y segura
                   </h1>
                   <p className="max-w-2xl text-lg leading-8 text-on-surface-variant sm:text-[1.35rem]">
-                    Millcars es un concesionario y plataforma digital especializada en la compra y venta de vehículos nuevos importados directamente y usados, con asesoría personalizada y una experiencia segura y confiable.
+                    Millcars es un concesionario de vehículos nuevos importados y usados con asesoría personalizada y compra segura.
                   </p>
                   <div className="flex flex-col gap-4 sm:flex-row">
                   <Button

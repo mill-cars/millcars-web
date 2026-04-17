@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
               </div>
             </a>
             <p className="max-w-sm text-xs leading-relaxed text-white/65">
-              Millcars es un concesionario y plataforma digital especializada en la compra y venta de vehículos nuevos importados directamente y usados, con asesoría personalizada y una experiencia segura y confiable.
+              Millcars es un concesionario de vehículos nuevos importados y usados con asesoría personalizada y compra segura.
             </p>
             <div className="flex gap-3">
               {socialLinks.map(({ icon, label, href }, index) => (
