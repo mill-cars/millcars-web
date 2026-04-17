@@ -9,6 +9,38 @@ interface CarCardProps {
   variant?: 'featured' | 'used';
 }
 
+export const CarCardSkeleton: React.FC<{ variant?: 'featured' | 'used' }> = ({ variant = 'featured' }) => {
+  if (variant === 'used') {
+    return (
+      <div className="min-w-[220px] md:min-w-[220px] bg-white rounded-[1.6rem] overflow-hidden snap-start border border-outline-variant/10 p-2 animate-pulse">
+        <div className="aspect-[16/11] relative overflow-hidden rounded-[1.2rem] bg-slate-200"></div>
+        <div className="p-5">
+          <div className="h-4 bg-slate-200 rounded w-3/4 mb-3"></div>
+          <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto flex h-full w-full max-w-[350px] flex-col overflow-hidden rounded-[1.7rem] border border-outline-variant/10 bg-white p-2 animate-pulse">
+      <div className="relative aspect-[16/11] overflow-hidden rounded-[1.2rem] bg-slate-200 mb-5"></div>
+      <div className="px-3 pb-3 flex flex-1 flex-col">
+        <div className="h-5 bg-slate-200 rounded w-2/3 mb-2"></div>
+        <div className="h-4 bg-slate-200 rounded w-1/3 mb-6"></div>
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="h-12 bg-slate-200 rounded-[1rem]"></div>
+          <div className="h-12 bg-slate-200 rounded-[1rem]"></div>
+        </div>
+        <div className="flex gap-3 mt-auto">
+          <div className="flex-[2] h-11 bg-slate-200 rounded-[1rem]"></div>
+          <div className="flex-1 h-11 bg-slate-200 rounded-[1rem]"></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const CarCard: React.FC<CarCardProps> = ({ car, onClick, variant = 'featured' }) => {
   const waLink = getWhatsAppLink(car.brand, car.model, car.year);
 
@@ -16,7 +48,7 @@ export const CarCard: React.FC<CarCardProps> = ({ car, onClick, variant = 'featu
     return (
       <div 
         onClick={() => onClick(car)}
-        className="min-w-[300px] md:min-w-[340px] bg-white rounded-[1.6rem] overflow-hidden snap-start border border-outline-variant/10 p-2 cursor-pointer group hover:shadow-xl transition-all"
+        className="min-w-[200px] md:min-w-[220px] bg-white rounded-[1.6rem] overflow-hidden snap-start border border-outline-variant/10 p-2 cursor-pointer group hover:shadow-xl transition-all"
       >
         <div className="aspect-[16/11] relative overflow-hidden rounded-[1.2rem]">
           <img 
@@ -32,45 +64,13 @@ export const CarCard: React.FC<CarCardProps> = ({ car, onClick, variant = 'featu
         <div className="p-5">
           <div className="mb-4 flex items-start justify-between gap-3">
             <div>
-              <h3 className="max-w-[180px] truncate text-lg font-black uppercase tracking-tight text-on-surface">
+              <h5 className="max-w-[180px] truncate text-base font-black uppercase tracking-tight text-on-surface">
                 {car.brand} {car.model}
-              </h3>
-              <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-outline">
+              </h5>
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-outline">
                 {car.year} · {car.condition === 'nuevo' ? 'Nuevo' : 'Usado'}
               </p>
             </div>
-            <div className="text-right">
-              <div className="relative group/price cursor-help">
-                <span className="text-lg font-black price-blur">${formatNumber(car.price)}</span>
-                <div className="absolute bottom-full right-0 mb-2 w-max px-3 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover/price:opacity-100 transition-opacity z-10">
-                    Regístrate para ver el precio
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mb-4 grid grid-cols-2 gap-3">
-            <div className="rounded-xl bg-surface-container-low px-3 py-2.5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-outline">Km</p>
-              <p className="mt-1 text-sm font-bold text-on-surface">{formatNumber(car.mileage)}</p>
-            </div>
-            <div className="rounded-xl bg-surface-container-low px-3 py-2.5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-outline">Dueños</p>
-              <p className="mt-1 text-sm font-bold text-on-surface">{car.owners}</p>
-            </div>
-          </div>
-          <div className="flex gap-3 mt-auto">
-            <button className="flex-[2] bg-black text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.18em] hover:bg-slate-900 transition-colors">
-              DETALLES
-            </button>
-            <a 
-              href={waLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex-1 bg-whatsapp text-white rounded-xl flex items-center justify-center hover:opacity-90 transition-opacity max-w-[60px]"
-            >
-              <span className="material-symbols-outlined" style={{fontVariationSettings: "'FILL' 1"}}>chat</span>
-            </a>
           </div>
         </div>
       </div>
