@@ -314,11 +314,11 @@ function AppContent() {
                   <div className="inline-flex items-center self-start rounded-full bg-primary-fixed px-3.5 py-1.5 font-label text-[11px] font-semibold uppercase tracking-[0.18em] text-on-primary-fixed">
                     Tecnología y criterio experto
                   </div>
-                  <h5 className="max-w-4xl font-display text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-on-surface sm:text-5xl lg:text-[4.25rem]">
+                  <h1 className="max-w-4xl font-display text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-on-surface sm:text-5xl lg:text-[4.25rem]">
                    Compra o vende tu auto de forma rápida y segura
-                  </h5>
+                  </h1>
                   <p className="max-w-2xl text-lg leading-8 text-on-surface-variant sm:text-[1.35rem]">
-                    Encuentra, compara y cotiza el vehículo ideal con ayuda de inteligencia artificial y autos verificados
+                    Millcars es un concesionario y plataforma digital especializada en la compra y venta de vehículos nuevos importados directamente y usados, con asesoría personalizada y una experiencia segura y confiable.
                   </p>
                   <div className="flex flex-col gap-4 sm:flex-row">
                   <Button
