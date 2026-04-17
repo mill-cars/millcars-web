@@ -38,8 +38,8 @@ export const Footer: React.FC = () => {
                 <p className="text-[10px] font-black uppercase tracking-[0.32em] text-on-surface-variant">MILLCARS</p>
               </div>
             </a>
-            <p className="max-w-sm text-sm leading-relaxed text-white/65">
-              Encuentra, compara y cotiza autos con una experiencia guiada por inteligencia artificial, diseñada para claridad y confianza.
+            <p className="max-w-sm text-xs leading-relaxed text-white/65">
+              Millcars es un concesionario y plataforma digital especializada en la compra y venta de vehículos nuevos importados directamente y usados, con asesoría personalizada y una experiencia segura y confiable.
             </p>
             <div className="flex gap-3">
               {socialLinks.map(({ icon, label, href }, index) => (

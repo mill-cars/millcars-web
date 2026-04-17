@@ -1,5 +1,5 @@
 {
-  "name": "carsAgent AI",
-  "description": "Buscador inteligente de autos con agente de ventas IA. Encuentra tu auto ideal conversando.",
+  "name": "Millcars",
+  "description": "Millcars es un concesionario y plataforma digital especializada en la compra y venta de vehículos nuevos importados directamente y usados, con asesoría personalizada y una experiencia segura y confiable.",
   "requestFramePermissions": []
 }
