@@ -36,7 +36,6 @@ export const Footer: React.FC = () => {
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-[0.32em] text-on-surface-variant">MILLCARS</p>
-                <p className="text-lg font-bold text-on-surface">Showroom IA</p>
               </div>
             </a>
             <p className="max-w-sm text-sm leading-relaxed text-white/65">

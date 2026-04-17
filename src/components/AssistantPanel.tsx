@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useId } from 'react';
 // Material Icons reemplazan Lucide
 import { motion, AnimatePresence } from 'motion/react';
 import ReactMarkdown from 'react-markdown';
@@ -20,7 +20,6 @@ interface AssistantPanelProps {
 const quickQuestions = [
   'SUV familiar automático menos de $15,000',
   'Pick-up 4x4 con bajo kilometraje',
-  'Hatchback para ciudad con buen consumo',
 ];
 
 export const AssistantPanel: React.FC<AssistantPanelProps> = ({
@@ -34,6 +33,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
   mode = 'desktop',
   onClose,
 }) => {
+  const inputId = useId();
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeFilterCount = countActiveFilters(filters as object);
   const hasActiveSearch = messages.length > 0 || activeFilterCount > 0;
@@ -204,12 +204,12 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
           }}
           className="space-y-2"
         >
-          <label className="sr-only" htmlFor="assistant-query">
+          <label className="sr-only" htmlFor={inputId}>
             Describe el vehículo que buscas
           </label>
           <div className="relative">
             <input
-              id="assistant-query"
+              id={inputId}
               type="text"
               value={input}
               onChange={(event) => onInputChange(event.target.value)}

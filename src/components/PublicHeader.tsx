@@ -58,14 +58,12 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
     <header className={`${shellClass} z-50 bg-white/72 backdrop-blur-2xl`}>
       <div className="mx-auto max-w-7xl px-5 pb-3 pt-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 rounded-[1.6rem] border border-white/70 bg-white/82 px-4 py-3 shadow-[0_16px_48px_rgba(17,28,45,0.08)]">
-          <a href="/" className="min-w-0 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-[1.2rem] bg-[linear-gradient(135deg,#111c2d_0%,#1d2d4f_100%)] text-primary shadow-[0_12px_30px_rgba(17,28,45,0.18)]">
-              <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>directions_car</span>
-            </div>
-            <div className="min-w-0">
-              <p className="text-[10px] font-black uppercase tracking-[0.34em] text-on-surface-variant">MILLCARS</p>
-              <p className="truncate text-base font-semibold tracking-[-0.03em] text-on-surface">Showroom IA</p>
-            </div>
+          <a href="/" className="relative flex items-center shrink-0 h-10 w-40">
+              <img 
+                src="/assets/millcars-logo.png" 
+                alt="Millcars" 
+                className="absolute top-1/2 -translate-y-1/2 left-0 h-36 w-auto max-w-none object-contain" 
+              />
           </a>
 
           <nav className="hidden md:flex items-center rounded-full border border-slate-200 bg-slate-50/85 p-1.5 text-sm font-medium">
