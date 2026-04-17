@@ -1,8 +1,8 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Car, Message, SearchFilters } from './types';
 import { fetchCars } from './services/carsService';
 import { chatWithAgent } from './services/gemini';
-import { CarCard } from './components/CarCard';
+import { CarCard, CarCardSkeleton } from './components/CarCard';
 import { motion, AnimatePresence } from 'motion/react';
 import { countActiveFilters, formatNumber, getWhatsAppLink } from './lib/utils';
 import { AdminDashboard } from './components/AdminDashboard';
@@ -132,6 +132,7 @@ function AppContent() {
   const [input, setInput] = useState('');
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [assistantAutoAdjusted, setAssistantAutoAdjusted] = useState(false);
+  const featuredScrollRef = useRef<HTMLDivElement | null>(null);
 
   // ── Real data from Supabase ──────────────────────────────────────────────
   const [carsData, setCarsData] = useState<Car[]>([]);
@@ -245,6 +246,15 @@ function AppContent() {
     setAssistantAutoAdjusted(false);
   };
 
+  const scrollFeaturedCars = (direction: 'left' | 'right') => {
+    if (!featuredScrollRef.current) return;
+    const amount = Math.round(featuredScrollRef.current.clientWidth * 0.85);
+    featuredScrollRef.current.scrollBy({
+      left: direction === 'right' ? amount : -amount,
+      behavior: 'smooth',
+    });
+  };
+
   const featuredCars = catalogCars.slice(0, 3);
   const usedPopularCars = catalogCars.slice(3, 10);
 
@@ -269,22 +279,24 @@ function AppContent() {
       <PublicHeader active="inventario" ctaLabel="Ingresar" ctaHref="/login" />
 
       <main className="flex-1 px-4 pb-0 pt-[112px] sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-[1600px] items-stretch gap-8 xl:grid-cols-[320px_minmax(0,1fr)]">
+        <div className={`mx-auto grid max-w-[1600px] items-stretch gap-8 ${hasActiveSearch ? 'xl:grid-cols-[320px_minmax(0,1fr)]' : 'grid-cols-1'}`}>
           {/* Stretch to full row height so sticky can stay in view for the whole page scroll */}
-          <div className="hidden min-h-0 self-stretch lg:block">
-            <div className="sticky top-[118px] z-30 min-h-0 lg:max-h-[calc(100vh-132px)]">
-              <AssistantPanel
-                messages={messages}
-                onSendMessage={handleSendMessage}
-                isLoading={isLoading}
-                input={input}
-                onInputChange={setInput}
-                filters={filters}
-                clearFilters={clearFilters}
-                mode="embedded"
-              />
+          {hasActiveSearch && (
+            <div className="hidden min-h-0 self-stretch lg:block">
+              <div className="sticky top-[118px] z-30 min-h-0 lg:max-h-[calc(100vh-132px)]">
+                <AssistantPanel
+                  messages={messages}
+                  onSendMessage={handleSendMessage}
+                  isLoading={isLoading}
+                  input={input}
+                  onInputChange={setInput}
+                  filters={filters}
+                  clearFilters={clearFilters}
+                  mode="embedded"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="min-w-0 overflow-x-hidden">
         {/* Hero Section - hidden when agent search is active */}
@@ -302,29 +314,18 @@ function AppContent() {
                   <div className="inline-flex items-center self-start rounded-full bg-primary-fixed px-3.5 py-1.5 font-label text-[11px] font-semibold uppercase tracking-[0.18em] text-on-primary-fixed">
                     Tecnología y criterio experto
                   </div>
-                  <h1 className="max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-on-surface sm:text-6xl lg:text-[5.25rem]">
-                    Compra o vende tu auto
-                    <span className="mt-2 block text-primary italic">
-                      de forma r&aacute;pida y segura
-                    </span>
-                  </h1>
+                  <h5 className="max-w-4xl font-display text-4xl font-semibold leading-[0.95] tracking-[-0.05em] text-on-surface sm:text-5xl lg:text-[4.25rem]">
+                   Compra o vende tu auto de forma rápida y segura
+                  </h5>
                   <p className="max-w-2xl text-lg leading-8 text-on-surface-variant sm:text-[1.35rem]">
-                    Autos verificados, estimación clara y asesor&iacute;a inteligente.
+                    Encuentra, compara y cotiza el vehículo ideal con ayuda de inteligencia artificial y autos verificados
                   </p>
                   <div className="flex flex-col gap-4 sm:flex-row">
-                    <Button
+                  <Button
                       variant="primary"
                       size="lg"
-                      className="flex items-center gap-2 shadow-xl shadow-primary/20"
-                      onClick={() => navigateTo('/cotizar')}
-                    >
-                      Cotizar mi auto gratis
-                      <span className="material-symbols-outlined">arrow_forward</span>
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="lg"
-                      className="flex items-center gap-2"
+                       className="flex items-center gap-2 shadow-xl shadow-primary/20"
+                      
                       onClick={() => {
                         window.location.href = '/#catalogo';
                       }}
@@ -332,100 +333,101 @@ function AppContent() {
                       Ver catálogo
                       <span className="material-symbols-outlined">apps</span>
                     </Button>
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      className="flex items-center gap-2"
+                     
+                      onClick={() => navigateTo('/cotizar')}
+                    >
+                      Cotizar mi auto gratis
+                      <span className="material-symbols-outlined">arrow_forward</span>
+                    </Button>
+                    
                   </div>
                 </div>
-                <div className="col-span-12 lg:col-span-5 relative mt-12 lg:mt-0">
-                  <div className="absolute -top-20 -right-20 h-96 w-96 rounded-full bg-primary-fixed-dim/30 blur-[120px]"></div>
-                  <div className="relative space-y-4">
-                    <div className="group relative overflow-hidden rounded-[2rem] border border-outline-variant/30 bg-surface-container-low shadow-[0_24px_80px_rgba(17,28,45,0.12)]">
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#111c2d]/75 via-[#111c2d]/10 to-transparent z-10"></div>
-                      <img
-                        alt="Fachada principal de Millcars"
-                        className="h-[420px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        src="/assets/millcars-rif.webp"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 z-20 p-6 text-white">
-                        <p className="font-label text-[11px] uppercase tracking-[0.18em] text-white/75">
-                          Presencia de marca
-                        </p>
-                        <h3 className="mt-2 font-display text-2xl font-semibold leading-tight">
-                          Una vitrina confiable, física y digital.
-                        </h3>
-                        <p className="mt-2 max-w-sm text-sm leading-6 text-white/80">
-                          Combinamos respaldo comercial, curaduría visual y atención asistida para elevar la experiencia de compra.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      {featuredCars.map((car, index) => (
-                        <div
-                          key={car.id}
-                          className="group relative overflow-hidden rounded-[1.5rem] border border-outline-variant/20 bg-surface-container-low shadow-[0_12px_32px_rgba(17,28,45,0.08)]"
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#111c2d]/70 via-[#111c2d]/10 to-transparent z-10"></div>
-                          <img
-                            alt={`${car.brand} ${car.model}`}
-                            className="h-48 w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            src={car.image}
-                            referrerPolicy="no-referrer"
-                          />
-                          <div className="absolute inset-x-0 bottom-0 z-20 p-4 text-white">
-                            <p className="font-label text-[10px] uppercase tracking-[0.18em] text-white/70">
-                              {index === 0 ? 'Selección destacada' : index === 1 ? 'Listo para entregar' : 'Publicidad de inventario'}
-                            </p>
-                            <h4 className="mt-1 font-display text-lg font-semibold leading-tight">
-                              {car.brand} {car.model}
-                            </h4>
-                            <p className="mt-1 text-sm text-white/80">
-                              {car.year} · ${formatNumber(car.price)}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                
+                {/* Asistente IA - Mantiene al usuario enganchado (F-pattern) */}
+                <div className="col-span-12 lg:col-span-4 lg:col-start-9 hidden lg:flex flex-col justify-center z-10 mt-12 lg:mt-0">
+                  <div className="bg-surface-container-low border border-outline-variant/30 rounded-[2rem] shadow-lg shadow-black/5 overflow-hidden h-[450px]">
+                    <AssistantPanel
+                      messages={messages}
+                      onSendMessage={handleSendMessage}
+                      isLoading={isLoading}
+                      input={input}
+                      onInputChange={setInput}
+                      filters={filters}
+                      clearFilters={clearFilters}
+                      mode="embedded"
+                    />
                   </div>
                 </div>
               </div>
 
-              <div className="max-w-7xl mx-auto mt-16">
-                <div className="grid gap-4 md:grid-cols-3">
-                  {[
-                    {
-                      title: 'Inspección técnica integral',
-                      detail: 'Vehículos revisados en más de 240 puntos clave.',
-                      tone: 'bg-green-100 text-green-700',
-                    },
-                    {
-                      title: 'Garantía y respaldo',
-                      detail: 'Acompañamiento postventa para comprar con más calma.',
-                      tone: 'bg-blue-100 text-blue-700',
-                    },
-                    {
-                      title: 'Gestión documental',
-                      detail: 'Trámites guiados para que el cierre sea más simple.',
-                      tone: 'bg-violet-100 text-violet-700',
-                    },
-                  ].map(item => (
-                    <div
-                      key={item.title}
-                      className="rounded-[1.75rem] border border-outline-variant/20 bg-surface-container-lowest p-6 shadow-[0_12px_32px_rgba(17,28,45,0.06)]"
-                    >
-                      <div className={`flex h-11 w-11 items-center justify-center rounded-full text-lg font-bold ${item.tone}`}>
-                        ✓
-                      </div>
-                      <h3 className="mt-4 font-display text-xl font-semibold text-on-surface">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-on-surface-variant">
-                        {item.detail}
-                      </p>
+              {/* Popular Used Cars */}
+              {(carsLoading || (!carsError && usedPopularCars.length > 0)) && (
+                <section className="overflow-hidden bg-surface px-0 py-10 lg:py-12">
+                  <div className="max-w-7xl mx-auto">
+                    <div className="mb-6 lg:mb-8">
+                      <h2 className="text-2xl font-black tracking-tight mb-2">Autos destacados</h2>
+                      <p className="text-on-surface-variant font-label text-sm uppercase tracking-widest">Certificados y Pre-Inspeccionados</p>
                     </div>
-                  ))}
+                    <div className="flex space-x-4 overflow-x-auto pb-4 snap-x no-scrollbar lg:space-x-5 lg:pb-6">
+                      <AnimatePresence mode='popLayout'>
+                        {carsLoading ? (
+                          <>
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <CarCardSkeleton key={`skeleton-${i}`} variant="used" />
+                            ))}
+                          </>
+                        ) : (
+                          usedPopularCars.map(car => (
+                            <CarCard 
+                              key={car.id} 
+                              car={car} 
+                              onClick={setSelectedCar} 
+                              variant="used"
+                            />
+                          ))
+                        )}
+                      </AnimatePresence>
+                      {/* Fallback padding so the last item isn't strictly against the edge if scrolling */}
+                    </div>
+                  </div>
+                </section>
+              )}
+
+              {/* Showroom Section */}
+              <section className="mt-10 lg:mt-16 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col lg:flex-row items-center gap-12 bg-surface-container-low rounded-[2.5rem] p-8 lg:p-12 border border-outline-variant/20 shadow-sm">
+                  <div className="flex-1 space-y-6">
+                    <div className="inline-flex items-center rounded-full bg-primary/10 px-3.5 py-1.5 font-label text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
+                      Atención Física
+                    </div>
+                    <h2 className="text-3xl lg:text-[2.5rem] font-display font-semibold leading-tight tracking-tight text-on-surface">
+                      Visítanos en nuestro showroom
+                    </h2>
+                    <p className="text-lg leading-relaxed text-on-surface-variant max-w-lg">
+                      Contamos con un espacio físico donde puedes ver los vehículos, recibir asesoría personalizada y comprar con total confianza.
+                    </p>
+                    <div className="flex items-center gap-3 mt-6 bg-surface px-5 py-4 rounded-2xl border border-outline-variant/30 w-fit">
+                        <span className="material-symbols-outlined text-primary text-2xl font-light">location_on</span>
+                        <p className="font-medium text-sm text-on-surface">Av. Principal, Los Cortijos de Lourdes</p>
+                    </div>
+                  </div>
+                  <div className="flex-1 w-full lg:w-auto">
+                    <div className="group relative overflow-hidden rounded-[2rem] border border-outline-variant/30 shadow-2xl shadow-black/5">
+                      <img
+                        alt="Fachada principal de Millcars"
+                        className="h-[360px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        src="/assets/millcars-rif.webp"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-8 rounded-[2rem] border border-outline-variant/20 bg-surface-container-lowest p-6 shadow-[0_18px_48px_rgba(17,28,45,0.06)] lg:p-8">
+                 <div className="mt-8 rounded-[2rem] border border-outline-variant/20 bg-surface-container-lowest p-6 shadow-[0_18px_48px_rgba(17,28,45,0.06)] lg:p-8">
                   <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div className="max-w-2xl">
                       <p className="font-label text-[11px] uppercase tracking-[0.18em] text-outline">
@@ -461,7 +463,10 @@ function AppContent() {
                     </div>
                   </div>
                 </div>
-              </div>
+
+                
+              </section>
+
             </motion.section>
           ) : (
             <motion.section
@@ -510,30 +515,6 @@ function AppContent() {
           )}
         </AnimatePresence>
 
-        {/* ── Loading skeleton ───────────────────────────────────────────── */}
-        {carsLoading && (
-          <section className="bg-surface-container-low px-0 py-14">
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-10">
-                <div className="h-8 w-56 rounded-xl bg-outline-variant/20 animate-pulse mb-3" />
-                <div className="h-4 w-40 rounded-lg bg-outline-variant/15 animate-pulse" />
-              </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="rounded-[1.75rem] border border-outline-variant/20 bg-surface-container overflow-hidden">
-                    <div className="h-52 bg-outline-variant/20 animate-pulse" />
-                    <div className="p-5 space-y-3">
-                      <div className="h-4 w-3/4 rounded-lg bg-outline-variant/20 animate-pulse" />
-                      <div className="h-3 w-1/2 rounded-lg bg-outline-variant/15 animate-pulse" />
-                      <div className="h-6 w-1/3 rounded-lg bg-outline-variant/20 animate-pulse mt-4" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
         {/* ── Error state ──────────────────────────────────────────────────── */}
         {!carsLoading && carsError && (
           <section className="mx-0 rounded-[2rem] bg-surface-container-low px-8 py-24">
@@ -552,7 +533,7 @@ function AppContent() {
         )}
 
         {/* Catálogo principal */}
-        {!carsLoading && !carsError && featuredCars.length > 0 && (
+        {(carsLoading || (!carsError && featuredCars.length > 0)) && (
           <section id="catalogo" className="bg-surface-container-low px-0 py-14 scroll-mt-36">
             <div className="max-w-7xl mx-auto">
               <div className="mb-10 flex items-end justify-between">
@@ -564,51 +545,32 @@ function AppContent() {
                     {hasActiveSearch ? 'Selección afinada por tu búsqueda' : 'Selección destacada del catálogo'}
                   </p>
                 </div>
-                <a className="text-primary font-bold hidden md:flex items-center gap-2 hover:translate-x-1 transition-transform" href="/#catalogo">
-                  Ir al catálogo <span className="material-symbols-outlined">arrow_right_alt</span>
-                </a>
               </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+  <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 <AnimatePresence mode='popLayout'>
-                  {featuredCars.map(car => (
-                    <CarCard 
-                      key={car.id} 
-                      car={car} 
-                      onClick={setSelectedCar} 
-                      variant="featured"
-                    />
-                  ))}
+                  {carsLoading ? (
+                    <>
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <CarCardSkeleton key={`skeleton-main-${i}`} variant="featured" />
+                      ))}
+                    </>
+                  ) : (
+                    featuredCars.map(car => (
+                      <CarCard 
+                        key={car.id}
+                        car={car} 
+                        onClick={setSelectedCar} 
+                        variant="featured"
+                      />
+                    ))
+                  )}
                 </AnimatePresence>
               </div>
             </div>
           </section>
         )}
 
-        {/* Popular Used Cars */}
-        {!carsLoading && !carsError && usedPopularCars.length > 0 && (
-          <section className="overflow-hidden bg-surface px-0 py-24">
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-12">
-                <h2 className="text-4xl font-black tracking-tight mb-2">Selección de Usados Populares</h2>
-                <p className="text-on-surface-variant font-label text-sm uppercase tracking-widest">Certificados y Pre-Inspeccionados</p>
-              </div>
-              <div className="flex space-x-8 overflow-x-auto pb-12 snap-x no-scrollbar">
-                <AnimatePresence mode='popLayout'>
-                  {usedPopularCars.map(car => (
-                    <CarCard 
-                      key={car.id} 
-                      car={car} 
-                      onClick={setSelectedCar} 
-                      variant="used"
-                    />
-                  ))}
-                </AnimatePresence>
-                {/* Fallback padding so the last item isn't strictly against the edge if scrolling */}
-                <div className="min-w-4 shrink-0"></div>
-              </div>
-            </div>
-          </section>
-        )}
+        
 
         {/* Fallback no results — only when not loading and no error */}
         {!carsLoading && !carsError && filteredCars.length === 0 && (
@@ -626,6 +588,42 @@ function AppContent() {
              </div>
           </section>
         )}
+
+
+                        <div className="grid gap-4 md:grid-cols-3">
+                  {[
+                    {
+                      title: 'Inspección técnica integral',
+                      detail: 'Vehículos revisados en más de 240 puntos clave.',
+                      tone: 'bg-green-100 text-green-700',
+                    },
+                    {
+                      title: 'Garantía y respaldo',
+                      detail: 'Acompañamiento postventa para comprar con más calma.',
+                      tone: 'bg-blue-100 text-blue-700',
+                    },
+                    {
+                      title: 'Gestión documental',
+                      detail: 'Trámites guiados para que el cierre sea más simple.',
+                      tone: 'bg-violet-100 text-violet-700',
+                    },
+                  ].map(item => (
+                    <div
+                      key={item.title}
+                      className="rounded-[1.75rem] border border-outline-variant/20 bg-surface-container-lowest p-6 shadow-[0_12px_32px_rgba(17,28,45,0.06)]"
+                    >
+                      <div className={`flex h-11 w-11 items-center justify-center rounded-full text-lg font-bold ${item.tone}`}>
+                        ✓
+                      </div>
+                      <h3 className="mt-4 font-display text-xl font-semibold text-on-surface">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-6 text-on-surface-variant">
+                        {item.detail}
+                      </p>
+                    </div>
+                  ))}
+                </div>
 
         {/* Final CTA Section */}
         <section className="px-0 py-24">
