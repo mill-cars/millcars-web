@@ -71,7 +71,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
               Catálogo
             </a>
             <a href="/cotizar" className={linkClass(active === 'cotizar')}>
-              Vender mi auto
+              Vender
             </a>
           </nav>
 
@@ -199,7 +199,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                 Catálogo
               </a>
               <a href="/cotizar" className={linkClass(active === 'cotizar')} onClick={() => setMobileMenuOpen(false)}>
-                Cotizar
+                Vender
               </a>
             </div>
 

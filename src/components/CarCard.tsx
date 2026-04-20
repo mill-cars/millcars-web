@@ -106,15 +106,6 @@ export const CarCard: React.FC<CarCardProps> = ({ car, onClick, variant = 'featu
               <span className="text-[11px] font-black uppercase tracking-[0.16em] text-primary">{car.condition}</span>
             </div>
           </div>
-          <div className="text-right">
-            <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.18em] text-outline">Cotizaci&oacute;n</span>
-            <div className="relative group/price cursor-help">
-              <span className="text-lg font-black price-blur">${formatNumber(car.price)}</span>
-              <div className="absolute bottom-full right-0 mb-2 w-max px-3 py-1 bg-on-surface text-white text-[10px] rounded opacity-0 group-hover/price:opacity-100 transition-opacity z-10">
-                Regístrate para ver el precio
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="mb-5 grid grid-cols-2 gap-3">
