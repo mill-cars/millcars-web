@@ -20,6 +20,7 @@ interface AssistantPanelProps {
 const quickQuestions = [
   'SUV familiar automático menos de $15,000',
   'Pick-up 4x4 con bajo kilometraje',
+  'Sedán económico para ciudad',
 ];
 
 export const AssistantPanel: React.FC<AssistantPanelProps> = ({
@@ -56,7 +57,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
     mode === 'mobile'
       ? 'assistant-content flex-1 overflow-y-auto bg-[linear-gradient(180deg,#f7f9fc_0%,#f3f6fb_100%)] p-4 lg:p-5'
       : mode === 'embedded'
-        ? 'assistant-content flex-1 overflow-y-auto bg-[linear-gradient(180deg,#f7f9fc_0%,#f3f6fb_100%)] p-4 lg:p-5'
+        ? 'assistant-content overflow-y-auto bg-[linear-gradient(180deg,#f7f9fc_0%,#f3f6fb_100%)] p-4 lg:p-5'
       : 'assistant-content flex-1 overflow-y-auto bg-[linear-gradient(180deg,#f7f9fc_0%,#f3f6fb_100%)] px-4 pb-4 pt-[94px] lg:px-5 lg:pb-5 lg:pt-[94px]';
 
   return (
@@ -123,30 +124,24 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
           )}
 
           {messages.length === 0 ? (
-            <div className="space-y-5 rounded-[1.7rem] border border-slate-200/80 bg-white p-5 shadow-[0_14px_40px_rgba(17,28,45,0.06)]">
-              <div className="space-y-2.5">
-                <h3 className="font-display text-[1.62rem] font-semibold leading-[1.02] tracking-[-0.04em] text-slate-950">
-                  Encuentra autos más rápido
-                </h3>
-                <p className="max-w-md text-sm leading-6 text-slate-600">
-                  Describe el tipo de auto, presupuesto, transmisión o uso que necesitas y te mostramos opciones para empezar.
-                </p>
-              </div>
-
-              <div className="space-y-2.5">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-outline">Sugerencias</p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {quickQuestions.map((question) => (
-                    <button
-                      key={question}
-                      type="button"
-                      onClick={() => onSendMessage(question)}
-                      className="w-full rounded-[1.2rem] border border-slate-200 bg-slate-50/80 p-3.5 text-left transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:bg-white hover:shadow-sm"
-                    >
-                      <p className="text-sm font-semibold leading-6 text-slate-900">{question}</p>
-                    </button>
-                  ))}
-                </div>
+            <div className="space-y-3">
+              <h3 className="font-display text-lg font-semibold tracking-tight text-slate-950">
+                Encuentra autos más rápido
+              </h3>
+              <p className="text-[13px] leading-5 text-slate-500">
+                Describe el auto que buscas o prueba una sugerencia:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {quickQuestions.map((question) => (
+                  <button
+                    key={question}
+                    type="button"
+                    onClick={() => onSendMessage(question)}
+                    className="rounded-full border border-slate-200 bg-white px-3.5 py-2 text-[13px] font-medium text-slate-700 shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 hover:text-primary hover:shadow-md active:scale-[0.97]"
+                  >
+                    {question}
+                  </button>
+                ))}
               </div>
             </div>
           ) : (
@@ -204,7 +199,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
           }}
           className="space-y-2"
         >
-          <label className="sr-only" htmlFor={inputId}>
+          <label className="block text-sm font-semibold text-slate-900" htmlFor={inputId}>
             Describe el vehículo que buscas
           </label>
           <div className="relative">
