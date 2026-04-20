@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { countActiveFilters, formatNumber, getWhatsAppLink } from './lib/utils';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AddVehiclePage } from './components/AddVehiclePage';
+import { EditVehiclePage } from './components/EditVehiclePage';
 import { Login } from './components/Login';
 import { Vender } from './components/Vender';
 import { PublicHeader } from './components/PublicHeader';
@@ -104,6 +105,7 @@ function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const isAdminPage = currentPath === '/admin';
   const isAddVehiclePage = currentPath === '/admin/vehiculos/nuevo';
+  const isEditVehiclePage = /^\/admin\/vehiculos\/[^/]+\/editar$/.test(currentPath);
   const isLoginPage = currentPath === '/login';
   const isQuotePage = currentPath === '/cotizar';
   const isLegacySellPage = currentPath === '/vender';
@@ -260,6 +262,10 @@ function AppContent() {
 
   if (isAddVehiclePage) {
     return <AddVehiclePage />;
+  }
+
+  if (isEditVehiclePage) {
+    return <EditVehiclePage />;
   }
 
   if (isAdminPage) {
