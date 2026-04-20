@@ -347,7 +347,7 @@ function AppContent() {
                      
                       onClick={() => navigateTo('/cotizar')}
                     >
-                      Cotizar mi auto gratis
+                      Vender mi auto
                       <span className="material-symbols-outlined">arrow_forward</span>
                     </Button>
                     
@@ -596,7 +596,7 @@ function AppContent() {
           </section>
         )}
 
-
+ <section className="px-0 py-24">
                         <div className="grid gap-4 md:grid-cols-3">
                   {[
                     {
@@ -631,6 +631,7 @@ function AppContent() {
                     </div>
                   ))}
                 </div>
+</section>
 
         {/* Final CTA Section */}
         <section className="px-0 py-24">
@@ -641,7 +642,7 @@ function AppContent() {
               <p className="text-xl mb-12 opacity-90 leading-relaxed">Deja tus datos, recibe una estimación y, si quieres vender, te contactamos por WhatsApp y correo con la información del formulario.</p>
               <div className="flex flex-col md:flex-row gap-4">
                 <button onClick={() => window.location.href = '/cotizar'} className="bg-white text-primary px-8 py-4 rounded-xl font-black text-lg hover:bg-on-primary-container transition-colors flex-1 md:flex-none">
-                  Cotizar mi auto gratis
+                  Vender mi auto
                 </button>
                 <button onClick={() => window.location.href = '/'} className="border-2 border-white text-white px-8 py-4 rounded-xl font-black text-lg hover:bg-white/10 transition-colors flex-1 md:flex-none">
                   Ver autos disponibles

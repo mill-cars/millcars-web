@@ -197,7 +197,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
             event.preventDefault();
             onSendMessage(input);
           }}
-          className="space-y-2"
+          className="space-y-1"
         >
           <label className="block text-sm font-semibold text-slate-900" htmlFor={inputId}>
             Describe el vehículo que buscas
