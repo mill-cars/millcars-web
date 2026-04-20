@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Upload,
   CheckCircle,
   AlertCircle,
   Loader2,
-  ImagePlus,
   ArrowLeft,
   Save,
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { AdminHeader } from './AdminHeader';
+import { MultiImageUpload } from './MultiImageUpload';
+import { ManagedImage, saveCarImages, fetchCarImages } from '../services/imageService';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -101,13 +101,9 @@ export function EditVehiclePage() {
   const [toast, setToast] = useState<Toast>(null);
 
   // Image state
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [existingImageUrl, setExistingImageUrl] = useState<string | null>(null);
-  const [existingImageId, setExistingImageId] = useState<string | null>(null);
-  const [existingStoragePath, setExistingStoragePath] = useState<string | null>(null);
+  const [images, setImages] = useState<ManagedImage[]>([]);
+  const [originalImages, setOriginalImages] = useState<ManagedImage[]>([]);
   const [imageError, setImageError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [formData, setFormData] = useState({
     brand_id: '',
@@ -152,13 +148,8 @@ export function EditVehiclePage() {
         )
         .eq('id', carId)
         .single(),
-      supabase
-        .from('car_images')
-        .select('id, url, storage_path')
-        .eq('car_id', carId)
-        .eq('is_cover', true)
-        .maybeSingle(),
-    ]).then(([carResult, imgResult]) => {
+      fetchCarImages(carId),
+    ]).then(([carResult, carImages]) => {
       if (carResult.error || !carResult.data) {
         setLoadingCar(false);
         return;
@@ -180,12 +171,17 @@ export function EditVehiclePage() {
         is_active: c.is_active !== false,
       });
 
-      if (imgResult.data) {
-        setExistingImageUrl(imgResult.data.url ?? null);
-        setImagePreview(imgResult.data.url ?? null);
-        setExistingImageId(imgResult.data.id ?? null);
-        setExistingStoragePath(imgResult.data.storage_path ?? null);
-      }
+      // Map car images to ManagedImage format
+      const managed: ManagedImage[] = carImages.map((ci, i) => ({
+        id: ci.id,
+        url: ci.url,
+        storagePath: ci.storagePath,
+        isCover: ci.isCover,
+        sortOrder: i,
+        isPersisted: true,
+      }));
+      setImages(managed);
+      setOriginalImages(managed);
 
       setLoadingCar(false);
     });
@@ -197,61 +193,19 @@ export function EditVehiclePage() {
     setTimeout(() => setToast(null), 5000);
   }
 
-  // ── Image handling ────────────────────────────────────────────────────────
-  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setImageError(null);
-
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      setImageError('Formato no permitido. Usa JPG, PNG o WebP.');
-      return;
-    }
-    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      setImageError(`El archivo supera ${MAX_FILE_SIZE_MB} MB.`);
-      return;
-    }
-
-    setImageFile(file);
-    const reader = new FileReader();
-    reader.onload = (ev) => setImagePreview(ev.target?.result as string);
-    reader.readAsDataURL(file);
-  }
-
-  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    const file = e.dataTransfer.files?.[0];
-    if (!file) return;
-    const fakeEvent = { target: { files: [file] } } as unknown as React.ChangeEvent<HTMLInputElement>;
-    handleFileSelect(fakeEvent);
-  }
-
-  // ── Upload image → Supabase Storage ──────────────────────────────────────
-  async function uploadImage(file: File, id: string): Promise<string> {
-    const ext = file.name.split('.').pop() ?? 'jpg';
-    const storagePath = `${id}/${Date.now()}.${ext}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from(BUCKET_NAME)
-      .upload(storagePath, file, { contentType: file.type, upsert: false });
-
-    if (uploadError) throw uploadError;
-
-    // Optionally remove old image from storage
-    if (existingStoragePath) {
-      await supabase.storage.from(BUCKET_NAME).remove([existingStoragePath]);
-    }
-
-    const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath);
-    return data.publicUrl;
-  }
+  // ── Image handling is now delegated to MultiImageUpload + imageService ──
 
   // ── Submit ────────────────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!imageFile && !existingImageUrl) {
-      setImageError('La imagen del vehículo es obligatoria.');
+    if (images.length === 0) {
+      setImageError('Debes agregar al menos una imagen del vehículo.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (!images.some((i) => i.isCover)) {
+      setImageError('Debes seleccionar una imagen principal.');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -288,32 +242,8 @@ export function EditVehiclePage() {
 
       if (carError) throw carError;
 
-      // 2) Upload new image if user picked one
-      if (imageFile) {
-        const publicUrl = await uploadImage(imageFile, carId);
-
-        if (existingImageId) {
-          // Update existing cover image record
-          const { error: imgUpdateError } = await supabase
-            .from('car_images')
-            .update({
-              url: publicUrl,
-              storage_path: `${carId}/${imageFile.name}`,
-            })
-            .eq('id', existingImageId);
-          if (imgUpdateError) throw imgUpdateError;
-        } else {
-          // Insert new cover image if none existed
-          const { error: imgInsertError } = await supabase.from('car_images').insert({
-            car_id: carId,
-            url: publicUrl,
-            storage_path: `${carId}/${imageFile.name}`,
-            is_cover: true,
-            sort_order: 0,
-          });
-          if (imgInsertError) throw imgInsertError;
-        }
-      }
+      // 2) Save images (upload new, delete removed, update order/cover)
+      await saveCarImages(carId, images, originalImages);
 
       showToast('success', '¡Vehículo actualizado exitosamente!');
       setTimeout(() => {
@@ -493,84 +423,22 @@ export function EditVehiclePage() {
 
           {/* ── Form ───────────────────────────────────────────────────────── */}
           <form id="edit-vehicle-form" onSubmit={handleSubmit} className="space-y-8">
-            {/* ── Section 1: Image ─────────────────────────────────────────── */}
+            {/* ── Section 1: Images ────────────────────────────────────────── */}
             <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
               <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                 <h2 className="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
-                  Imagen del vehículo
+                  Imágenes del vehículo
                 </h2>
+                <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                  Sube hasta 5 imágenes. La imagen principal será la portada en el catálogo.
+                </p>
               </div>
               <div className="p-6">
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onDrop={handleDrop}
-                  onDragOver={(e) => e.preventDefault()}
-                  onClick={() => fileInputRef.current?.click()}
-                  onKeyDown={(e) => e.key === 'Enter' && fileInputRef.current?.click()}
-                  className={`relative w-full h-64 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all group overflow-hidden ${
-                    imageError
-                      ? 'border-red-400 bg-red-50 dark:bg-red-900/10'
-                      : imagePreview
-                      ? 'border-blue-400'
-                      : 'border-slate-300 dark:border-slate-600 hover:border-blue-400 hover:bg-blue-50/30 dark:hover:border-blue-500 dark:hover:bg-blue-900/10'
-                  }`}
-                >
-                  {imagePreview ? (
-                    <>
-                      <img
-                        src={imagePreview}
-                        alt="Vista previa"
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                        <ImagePlus className="w-10 h-10 text-white" />
-                        <p className="text-white text-sm font-bold">Cambiar imagen</p>
-                      </div>
-                      <div className="absolute top-3 right-3 bg-green-500 text-white rounded-full p-1.5 shadow-lg">
-                        <CheckCircle className="w-4 h-4" />
-                      </div>
-                      {imageFile && (
-                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur text-white text-[11px] rounded-xl px-3 py-1.5 font-mono">
-                          {imageFile.name} · {(imageFile.size / 1024 / 1024).toFixed(2)} MB
-                        </div>
-                      )}
-                      {!imageFile && existingImageUrl && (
-                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur text-white text-[11px] rounded-xl px-3 py-1.5 font-mono">
-                          Imagen actual · Haz clic para reemplazar
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <div className="flex flex-col items-center gap-4 px-6 text-center">
-                      <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-700 flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors">
-                        <Upload className="w-8 h-8 text-slate-400 group-hover:text-blue-500 transition-colors" />
-                      </div>
-                      <div>
-                        <p className="text-base font-bold text-slate-700 dark:text-slate-300">
-                          Arrastra una imagen o haz clic para seleccionar
-                        </p>
-                        <p className="text-sm text-slate-400 dark:text-slate-500 mt-1">
-                          JPG, PNG, WebP · Máx. {MAX_FILE_SIZE_MB} MB
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {imageError && (
-                  <p className="mt-2 text-sm text-red-500 flex items-center gap-1.5 font-medium">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    {imageError}
-                  </p>
-                )}
-
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  className="hidden"
-                  onChange={handleFileSelect}
+                <MultiImageUpload
+                  images={images}
+                  onChange={setImages}
+                  error={imageError}
+                  onErrorChange={setImageError}
                 />
               </div>
             </section>

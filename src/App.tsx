@@ -8,6 +8,7 @@ import { countActiveFilters, formatNumber, getWhatsAppLink } from './lib/utils';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AddVehiclePage } from './components/AddVehiclePage';
 import { EditVehiclePage } from './components/EditVehiclePage';
+import { VehicleDetailModal } from './components/VehicleDetailModal';
 import { Login } from './components/Login';
 import { Vender } from './components/Vender';
 import { PublicHeader } from './components/PublicHeader';
@@ -695,118 +696,10 @@ function AppContent() {
       {/* Selected Car Modal */}
       <AnimatePresence>
         {selectedCar && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 md:p-12">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedCar(null)}
-              className="absolute inset-0 bg-black/90 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 30 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              className="relative w-full max-w-6xl bg-surface rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row max-h-[90vh]"
-            >
-              <button 
-                onClick={() => setSelectedCar(null)}
-                className="absolute top-6 right-6 z-10 w-10 h-10 bg-black/20 hover:bg-black/50 hover:text-white text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur"
-              >
-                <span className="material-symbols-outlined">close</span>
-              </button>
-
-              <div className="lg:w-3/5 h-80 lg:h-auto relative overflow-hidden">
-                <img 
-                  src={selectedCar.image} 
-                  className="w-full h-full object-cover"
-                  alt={selectedCar.model}
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-10 left-10">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="bg-primary text-on-primary px-3 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest">
-                      {selectedCar.condition}
-                    </span>
-                    <span className="text-white/60 font-mono text-[10px] tracking-widest font-bold">EST. {selectedCar.year}</span>
-                  </div>
-                  <h2 className="text-5xl font-black text-white tracking-tighter uppercase">
-                    {selectedCar.brand} <br/><span className="text-white/60">{selectedCar.model}</span>
-                  </h2>
-                </div>
-              </div>
-
-              <div className="lg:w-2/5 p-10 lg:p-12 overflow-y-auto bg-surface flex flex-col">
-                <div className="flex justify-between items-end mb-10 border-b border-outline-variant/20 pb-6 shrink-0">
-                  <div>
-                    <span className="text-[9px] font-black text-outline uppercase tracking-widest mb-1 block">Status</span>
-                    <p className="text-xs font-bold text-whatsapp uppercase tracking-widest">Disponible</p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[9px] font-black text-outline uppercase tracking-widest mb-1 block">Cotización</span>
-                    <div className="bg-surface-container-high px-4 py-2 rounded-xl price-blur text-2xl font-black text-on-surface">
-                      $XX.XXX
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-8 flex-1">
-                  <div>
-                    <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-4">Reseña del Experto</h4>
-                    <p className="text-on-surface-variant leading-relaxed text-sm font-medium">
-                      {selectedCar.description}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-8">
-                    <div>
-                      <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-2">Recorrido</h4>
-                      <p className="text-lg font-black tracking-tight">{formatNumber(selectedCar.mileage)} <span className="text-[10px] text-outline font-bold">KM</span></p>
-                    </div>
-                    <div>
-                      <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-2">Transmisión</h4>
-                      <p className="text-lg font-black uppercase tracking-tight">{selectedCar.transmission}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-2">Motorización</h4>
-                      <p className="text-lg font-black uppercase tracking-tight">{selectedCar.fuelType}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-2">Identificación</h4>
-                      <p className="text-lg font-black tracking-tight flex items-center gap-1">PLACA <span className="text-primary bg-primary/10 px-2 rounded font-mono">***{selectedCar.plateEnd}</span></p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-4">Equipamiento Premium</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedCar.features.map((f, i) => (
-                        <span key={i} className="bg-surface-container-high px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-wider text-on-surface-variant">
-                          {f}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="pt-8 flex gap-3 shrink-0 mt-8 border-t border-outline-variant/10">
-                  <a 
-                    href={getWhatsAppLink(selectedCar.brand, selectedCar.model, selectedCar.year)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-[2] py-4 bg-whatsapp text-white rounded-xl font-black uppercase tracking-widest hover:opacity-90 transition-all duration-300 transform hover:scale-[1.01] flex items-center justify-center gap-3 text-[10px] shadow-xl shadow-whatsapp/20"
-                  >
-                    <span className="material-symbols-outlined text-lg" style={{fontVariationSettings: "'FILL' 1"}}>chat</span>
-                    Solicitar Cotización
-                  </a>
-                  <button className="flex-1 py-4 bg-black text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-900 transition-all duration-300 transform hover:scale-[1.01] flex items-center justify-center text-[10px]">
-                    Test Drive
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          <VehicleDetailModal
+            car={selectedCar}
+            onClose={() => setSelectedCar(null)}
+          />
         )}
       </AnimatePresence>
     </div>
