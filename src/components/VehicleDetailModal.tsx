@@ -71,7 +71,7 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
         </button>
 
         {/* ── Left Pane: Image Gallery ── */}
-        <div className="lg:w-3/5 h-80 lg:h-auto relative overflow-hidden group bg-black">
+        <div className="lg:w-3/5 h-[400px] md:h-[450px] lg:h-auto relative overflow-hidden group bg-black">
           <AnimatePresence mode="wait">
             <motion.img
               key={currentIndex}
@@ -91,24 +91,24 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
             <>
               <button
                 onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur opacity-0 group-hover:opacity-100 transition-all z-10"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all z-10"
               >
                 <span className="material-symbols-outlined">chevron_left</span>
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur opacity-0 group-hover:opacity-100 transition-all z-10"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all z-10"
               >
                 <span className="material-symbols-outlined">chevron_right</span>
               </button>
             </>
           )}
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none hidden lg:block" />
 
           {/* Title & Thumbnails */}
           <div className="absolute bottom-6 left-6 right-6 lg:bottom-10 lg:left-10 lg:right-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4 pointer-events-none">
-            <div className="pointer-events-auto">
+            <div className="pointer-events-auto hidden lg:block">
               <div className="flex items-center gap-3 mb-2">
                 <span className="bg-primary text-on-primary px-3 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg">
                   {car.condition}
@@ -145,20 +145,12 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
 
         {/* ── Right Pane: Details ── */}
         <div className="lg:w-2/5 p-8 lg:p-12 overflow-y-auto bg-surface flex flex-col relative">
-          <div className="flex justify-between items-end mb-8 border-b border-outline-variant/20 pb-6 shrink-0 mt-4 lg:mt-0">
+          <div className="mb-8 border-b border-outline-variant/20 pb-6 shrink-0 mt-4 lg:mt-0">
             <div>
               <span className="text-[9px] font-black text-outline uppercase tracking-widest mb-1 block">
                 Status
               </span>
               <p className="text-xs font-bold text-whatsapp uppercase tracking-widest">Disponible</p>
-            </div>
-            <div className="text-right">
-              <span className="text-[9px] font-black text-outline uppercase tracking-widest mb-1 block">
-                Cotización
-              </span>
-              <div className="bg-surface-container-high px-4 py-2 rounded-xl price-blur text-2xl font-black text-on-surface">
-                $XX.XXX
-              </div>
             </div>
           </div>
 
@@ -187,7 +179,7 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
                 <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-2">Motorización</h4>
                 <p className="text-lg font-black uppercase tracking-tight">{car.fuelType}</p>
               </div>
-              <div>
+              <div className="hidden lg:block">
                 <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-2">Identificación</h4>
                 <p className="text-lg font-black tracking-tight flex items-center gap-1">
                   PLACA <span className="text-primary bg-primary/10 px-2 rounded font-mono">***{car.plateEnd}</span>
@@ -219,16 +211,13 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
               href={getWhatsAppLink(car.brand, car.model, car.year)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-4 bg-whatsapp text-white rounded-xl font-black uppercase tracking-widest hover:opacity-90 transition-all duration-300 transform hover:scale-[1.01] flex items-center justify-center gap-3 text-[10px] shadow-xl shadow-whatsapp/20"
+              className="w-full py-4 bg-whatsapp text-white rounded-xl font-black uppercase tracking-widest hover:opacity-90 transition-all duration-300 transform hover:scale-[1.01] flex items-center justify-center gap-3 text-[10px] shadow-xl shadow-whatsapp/20"
             >
               <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
                 chat
               </span>
-              Solicitar Cotización
+              Solicitar Cotización en WhatsApp
             </a>
-            <button className="flex-1 py-4 bg-black text-white rounded-xl font-black uppercase tracking-widest hover:bg-slate-900 transition-all duration-300 transform hover:scale-[1.01] flex items-center justify-center text-[10px]">
-              Test Drive
-            </button>
           </div>
         </div>
       </motion.div>
