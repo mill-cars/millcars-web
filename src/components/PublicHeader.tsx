@@ -18,7 +18,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  const { user, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
 
   const avatarUrl: string | undefined =
     (user?.user_metadata?.avatar_url as string | undefined) ??
@@ -121,14 +121,16 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
                       <p className="text-xs text-slate-500 truncate">{user.email}</p>
                     </div>
                     <div className="p-2">
-                      <a
-                        href="/admin"
-                        className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-slate-50 transition-colors"
-                        onClick={() => setUserMenuOpen(false)}
-                      >
-                        <span className="material-symbols-outlined text-base text-primary">admin_panel_settings</span>
-                        Panel de administración
-                      </a>
+                      {profile?.role !== 'cliente' && (
+                        <a
+                          href="/admin"
+                          className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-on-surface hover:bg-slate-50 transition-colors"
+                          onClick={() => setUserMenuOpen(false)}
+                        >
+                          <span className="material-symbols-outlined text-base text-primary">admin_panel_settings</span>
+                          Panel de administración
+                        </a>
+                      )}
                       <button
                         type="button"
                         onClick={handleSignOut}
@@ -203,14 +205,16 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
 
             {user ? (
               <div className="mt-3 flex flex-col gap-2">
-                <a
-                  href="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-on-primary"
-                >
-                  <span className="material-symbols-outlined text-base">admin_panel_settings</span>
-                  Panel de administración
-                </a>
+                {profile?.role !== 'cliente' && (
+                  <a
+                    href="/admin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-on-primary"
+                  >
+                    <span className="material-symbols-outlined text-base">admin_panel_settings</span>
+                    Panel de administración
+                  </a>
+                )}
                 <button
                   type="button"
                   onClick={handleSignOut}

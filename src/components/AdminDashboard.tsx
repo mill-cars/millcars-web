@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ArrowUpDown, ChevronLeft, ChevronRight, Filter, MoreVertical, Zap } from 'lucide-react';
 import { Car } from '../types';
 import { fetchAllCars } from '../services/carsService';
@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext';
 type AdminView = 'inventario' | 'usuarios';
 
 export function AdminDashboard() {
-  const { session, loading } = useAuth();
+  const { session, loading, profile } = useAuth();
   const [activeView, setActiveView] = useState<AdminView>('inventario');
   const [searchQuery, setSearchQuery] = useState('');
   const [cars, setCars] = useState<Car[]>([]);
@@ -19,6 +19,8 @@ export function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState<'todos' | 'disponibles' | 'inactivos'>('todos');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   // Auth guard: redirect to login if not authenticated
   useEffect(() => {
@@ -38,6 +40,21 @@ export function AdminDashboard() {
     if (!loading && session) loadCars();
   }, [loading, session]);
 
+  if (!loading && session && profile?.role === 'cliente') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-slate-900 bg-slate-50 dark:bg-slate-950 dark:text-slate-50 font-sans antialiased p-6">
+        <h1 className="text-6xl font-black mb-4">403</h1>
+        <h2 className="text-2xl font-bold mb-4">Acceso no permitido</h2>
+        <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-md text-center">
+          Tu rol de usuario cliente no tiene los permisos necesarios para acceder a este panel de administración.
+        </p>
+        <a href="/" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition">
+          Volver al inicio
+        </a>
+      </div>
+    );
+  }
+
   const filteredCars = cars.filter(car => {
     const matchesSearch = !searchQuery ||
       `${car.brand} ${car.model}`.toLowerCase().includes(searchQuery.toLowerCase());
@@ -53,13 +70,42 @@ export function AdminDashboard() {
     currentPage * itemsPerPage
   );
 
-  const handleSaved = () => {
+  const handleSaved = useCallback(() => {
     setCarsLoading(true);
     fetchAllCars()
       .then(data => { setCars(data); setCarsError(null); })
       .catch(err => setCarsError(err.message))
       .finally(() => setCarsLoading(false));
-  };
+  }, []);
+
+  /** Close dropdown when clicking outside */
+  const handleClickOutside = useCallback((e: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      setOpenMenuId(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [handleClickOutside]);
+
+  /** Navigate to edit page for a specific car */
+  function navigateToEdit(carId: string) {
+    setOpenMenuId(null);
+    const path = `/admin/vehiculos/${carId}/editar`;
+    window.history.pushState({}, '', path);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }
+
+  /** Toggle is_active for a car (soft-delete / restore) */
+  async function toggleActive(car: Car) {
+    setOpenMenuId(null);
+    const { supabase } = await import('../lib/supabase');
+    const newValue = car.isActive === false ? true : false;
+    await supabase.from('cars').update({ is_active: newValue }).eq('id', car.id);
+    handleSaved();
+  }
 
   return (
     <div className="flex font-sans antialiased min-h-screen text-slate-900 dark:text-slate-50 bg-slate-50 dark:bg-slate-950">
@@ -210,8 +256,8 @@ export function AdminDashboard() {
             </div>
           </div>
           {/* Inventory Table */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
-            <div className="p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 gap-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800">
+            <div className="p-4 sm:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 gap-4 rounded-t-2xl">
               <div className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 sm:pb-0">
                 <button
                   onClick={() => { setFilterStatus('todos'); setCurrentPage(1); }}
@@ -327,10 +373,43 @@ export function AdminDashboard() {
                         ${car.price.toLocaleString()}
                       </p>
                     </td>
-                    <td className="px-8 py-5 text-right">
-                      <button className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    <td className="px-8 py-5 text-right relative">
+                      <button
+                        onClick={() => setOpenMenuId(openMenuId === car.id ? null : car.id)}
+                        className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+                        aria-label="Opciones del vehículo"
+                      >
                         <MoreVertical className="w-5 h-5" />
                       </button>
+
+                      {openMenuId === car.id && (
+                        <div
+                          ref={menuRef}
+                          className="absolute right-8 top-12 z-50 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 py-1 overflow-hidden"
+                        >
+                          <button
+                            onClick={() => navigateToEdit(car.id)}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          >
+                            <span className="material-symbols-outlined text-base">edit</span>
+                            Editar vehículo
+                          </button>
+                          <div className="h-px bg-slate-100 dark:bg-slate-700 mx-3" />
+                          <button
+                            onClick={() => toggleActive(car)}
+                            className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold transition-colors ${
+                              isActive
+                                ? 'text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20'
+                                : 'text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20'
+                            }`}
+                          >
+                            <span className="material-symbols-outlined text-base">
+                              {isActive ? 'visibility_off' : 'visibility'}
+                            </span>
+                            {isActive ? 'Desactivar' : 'Activar'}
+                          </button>
+                        </div>
+                      )}
                     </td>
                       </tr>
                     );
@@ -344,7 +423,7 @@ export function AdminDashboard() {
                 )}
               </tbody>
             </table>
-            <div className="p-4 sm:p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="p-4 sm:p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 rounded-b-2xl">
               <p className="text-xs font-medium text-slate-600 dark:text-slate-400">
                 Mostrando {paginatedCars.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-{Math.min(currentPage * itemsPerPage, filteredCars.length)} de {filteredCars.length} unidades
               </p>
