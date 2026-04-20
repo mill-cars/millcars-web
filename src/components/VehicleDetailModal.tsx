@@ -145,15 +145,6 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
 
         {/* ── Right Pane: Details ── */}
         <div className="lg:w-2/5 p-8 lg:p-12 overflow-y-auto bg-surface flex flex-col relative">
-          <div className="mb-8 border-b border-outline-variant/20 pb-6 shrink-0 mt-4 lg:mt-0">
-            <div>
-              <span className="text-[9px] font-black text-outline uppercase tracking-widest mb-1 block">
-                Status
-              </span>
-              <p className="text-xs font-bold text-whatsapp uppercase tracking-widest">Disponible</p>
-            </div>
-          </div>
-
           <div className="space-y-8 flex-1">
             <div>
               <h4 className="text-[9px] font-black uppercase tracking-widest text-outline mb-4">
@@ -216,7 +207,7 @@ export function VehicleDetailModal({ car, onClose }: VehicleDetailModalProps) {
               <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
                 chat
               </span>
-              Solicitar Cotización en WhatsApp
+              Precio
             </a>
           </div>
         </div>
