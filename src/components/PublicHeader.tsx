@@ -71,7 +71,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
               Catálogo
             </a>
             <a href="/cotizar" className={linkClass(active === 'cotizar')}>
-              Cotizar
+              Vender mi auto
             </a>
           </nav>
 
