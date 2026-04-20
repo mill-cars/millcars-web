@@ -1,3 +1,11 @@
+export interface CarImage {
+  id: string;
+  url: string;
+  storagePath: string | null;
+  isCover: boolean;
+  sortOrder: number;
+}
+
 export interface Car {
   id: string;
   brand: string;
@@ -14,6 +22,8 @@ export interface Car {
   image: string;
   description: string;
   features: string[];
+  /** All images for detail view */
+  images?: CarImage[];
   /** Whether the car is visible in the public catalog (soft-delete) */
   isActive?: boolean;
   /** SEO-friendly slug */
