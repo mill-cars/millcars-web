@@ -81,3 +81,35 @@ export async function fetchAllCars(): Promise<Car[]> {
 
   return (data as CarRow[]).map(mapRowToCar);
 }
+
+/**
+ * Fetch a single active car by its URL slug.
+ * Returns `null` when the car does not exist or is inactive.
+ */
+export async function fetchCarBySlug(slug: string): Promise<Car | null> {
+  const { data, error } = await supabase.rpc('get_car_by_slug', { p_slug: slug });
+
+  if (error) {
+    console.error('[carsService] Error fetching car by slug:', error.message);
+    throw new Error(error.message);
+  }
+
+  if (!data || (data as CarRow[]).length === 0) return null;
+  return mapRowToCar((data as CarRow[])[0]);
+}
+
+/**
+ * Fetch a single active car by its UUID.
+ * Returns `null` when the car does not exist or is inactive.
+ */
+export async function fetchCarById(id: string): Promise<Car | null> {
+  const { data, error } = await supabase.rpc('get_car_by_id', { p_id: id });
+
+  if (error) {
+    console.error('[carsService] Error fetching car by id:', error.message);
+    throw new Error(error.message);
+  }
+
+  if (!data || (data as CarRow[]).length === 0) return null;
+  return mapRowToCar((data as CarRow[])[0]);
+}

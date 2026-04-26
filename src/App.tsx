@@ -9,6 +9,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { AddVehiclePage } from './components/AddVehiclePage';
 import { EditVehiclePage } from './components/EditVehiclePage';
 import { VehicleDetailModal } from './components/VehicleDetailModal';
+import { VehicleDetailPage } from './components/VehicleDetailPage';
 import { Login } from './components/Login';
 import { Vender } from './components/Vender';
 import { PublicHeader } from './components/PublicHeader';
@@ -110,6 +111,9 @@ function AppContent() {
   const isLoginPage = currentPath === '/login';
   const isQuotePage = currentPath === '/cotizar';
   const isLegacySellPage = currentPath === '/vender';
+  // /autos/:id  — public vehicle detail page (UUID-based route)
+  const vehicleDetailMatch = currentPath.match(/^\/autos\/([^/]+)$/);
+  const vehicleDetailId = vehicleDetailMatch ? vehicleDetailMatch[1] : null;
 
   useEffect(() => {
     const onPopState = () => setCurrentPath(window.location.pathname);
@@ -281,6 +285,10 @@ function AppContent() {
     return <Vender mode="cotizar" />;
   }
 
+  if (vehicleDetailId) {
+    return <VehicleDetailPage id={vehicleDetailId} />;
+  }
+
   return (
     <div className="min-h-screen bg-surface">
       <PublicHeader active="inventario" ctaLabel="Ingresar" ctaHref="/login" />
@@ -392,7 +400,11 @@ function AppContent() {
                             <CarCard 
                               key={car.id} 
                               car={car} 
-                              onClick={setSelectedCar} 
+                              onClick={(c) => {
+                                window.history.pushState({}, '', `/autos/${c.id}`);
+                                setCurrentPath(`/autos/${c.id}`);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                              }}
                               variant="used"
                             />
                           ))
@@ -566,7 +578,11 @@ function AppContent() {
                       <CarCard 
                         key={car.id}
                         car={car} 
-                        onClick={setSelectedCar} 
+                        onClick={(c) => {
+                          window.history.pushState({}, '', `/autos/${c.id}`);
+                          setCurrentPath(`/autos/${c.id}`);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         variant="featured"
                       />
                     ))
