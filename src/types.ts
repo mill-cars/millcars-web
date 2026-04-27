@@ -6,6 +6,16 @@ export interface CarImage {
   sortOrder: number;
 }
 
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  icon: string;
+  description: string | null;
+  sort_order: number;
+  car_count: number;
+}
+
 export interface Car {
   id: string;
   brand: string;
@@ -28,6 +38,12 @@ export interface Car {
   isActive?: boolean;
   /** SEO-friendly slug */
   slug?: string;
+  /** Millcars certified inspection badge */
+  isCertified?: boolean;
+  /** Optional promotion label */
+  promotion?: 'flash_sale' | 'oferta' | 'mejor_vendido' | null;
+  /** Category slugs this car belongs to */
+  categories?: string[];
 }
 
 export interface Message {

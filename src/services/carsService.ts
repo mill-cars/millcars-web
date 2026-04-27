@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { Car } from '../types';
+import { Car, Category } from '../types';
 
 /**
  * Row shape returned by the `cars` join query.
@@ -24,8 +24,11 @@ interface CarRow {
   description: string | null;
   is_active: boolean;
   slug: string | null;
+  is_certified: boolean;
+  promotion: 'flash_sale' | 'oferta' | 'mejor_vendido' | null;
   cover_image: string | null;
   features: string[] | null;
+  categories: string[] | null;
 }
 
 /** Maps a DB row to the frontend `Car` type */
@@ -50,6 +53,9 @@ function mapRowToCar(row: CarRow): Car {
     features: row.features ?? [],
     isActive: row.is_active,
     slug: row.slug ?? undefined,
+    isCertified: row.is_certified,
+    promotion: row.promotion ?? null,
+    categories: row.categories ?? [],
   };
 }
 
@@ -66,6 +72,32 @@ export async function fetchCars(): Promise<Car[]> {
   }
 
   return (data as CarRow[]).map(mapRowToCar);
+}
+
+/**
+ * Fetch paginated active cars, optionally filtered by category slug.
+ */
+export async function fetchPaginatedCars(
+  page: number,
+  limit: number = 10,
+  categorySlug?: string | null
+): Promise<{ cars: Car[], total: number }> {
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
+  const { data, error, count } = await supabase
+    .rpc('get_cars_with_details', { p_category_slug: categorySlug ?? null }, { count: 'exact' })
+    .range(from, to);
+
+  if (error) {
+    console.error('[carsService] Error fetching paginated cars:', error.message);
+    throw new Error(error.message);
+  }
+
+  return {
+    cars: (data as CarRow[]).map(mapRowToCar),
+    total: count ?? 0,
+  };
 }
 
 /**
@@ -112,4 +144,17 @@ export async function fetchCarById(id: string): Promise<Car | null> {
 
   if (!data || (data as CarRow[]).length === 0) return null;
   return mapRowToCar((data as CarRow[])[0]);
+}
+/**
+ * Fetch all vehicle categories with their car count.
+ */
+export async function fetchCategories(): Promise<Category[]> {
+  const { data, error } = await supabase.rpc('get_categories');
+
+  if (error) {
+    console.error('[carsService] Error fetching categories:', error.message);
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as Category[];
 }
