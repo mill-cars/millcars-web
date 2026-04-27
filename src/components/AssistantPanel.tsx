@@ -62,6 +62,19 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
 
   return (
     <section aria-label="Asistente de búsqueda" className={shellClass}>
+      {onClose && (
+        <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-outline-variant/20 shrink-0 z-10 shadow-sm">
+          <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Asistente IA</span>
+          <button
+            type="button"
+            aria-label="Cerrar asistente"
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+          >
+            <span className="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+      )}
       <div
         ref={scrollRef}
         className={contentClass}
@@ -71,32 +84,19 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
       >
         <div className="space-y-4">
           <div className="rounded-[1.35rem] border border-slate-200/80 bg-white p-4 shadow-sm">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="relative shrink-0">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20">
-                    <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      smart_toy
-                    </span>
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-tertiary-fixed-dim" />
+            <div className="flex items-center gap-3">
+              <div className="relative shrink-0">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20">
+                  <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    smart_toy
+                  </span>
                 </div>
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] text-outline">Asistente IA</p>
-                  <p className="text-sm font-semibold text-slate-900">Encuentra tu auto ideal</p>
-                </div>
+                <div className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-white bg-tertiary-fixed-dim" />
               </div>
-
-              {mode === 'mobile' && onClose && (
-                <button
-                  type="button"
-                  aria-label="Cerrar asistente"
-                  onClick={onClose}
-                  className="shrink-0 rounded-xl border border-slate-200 p-2 text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-900"
-                >
-                  <span className="material-symbols-outlined text-xl">close</span>
-                </button>
-              )}
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-outline">Asistente IA</p>
+                <p className="text-sm font-semibold text-slate-900">Encuentra tu auto ideal</p>
+              </div>
             </div>
           </div>
 

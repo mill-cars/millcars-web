@@ -6,6 +6,7 @@ import { fetchCarImages } from '../services/imageService';
 import { formatNumber, getWhatsAppLink } from '../lib/utils';
 import { PublicHeader } from './PublicHeader';
 import { Footer } from './Footer';
+import { CountdownTimer } from './CountdownTimer';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -29,38 +30,6 @@ function fuelIcon(ft: string) {
   return map[ft] ?? 'local_gas_station';
 }
 
-// ── CountdownTimer ────────────────────────────────────────────────────────────
-
-function CountdownTimer() {
-  // Fixed 2h 45m 12s countdown that resets every day (cosmetic)
-  const [time, setTime] = useState({ h: 2, m: 45, s: 12 });
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setTime(prev => {
-        let { h, m, s } = prev;
-        s--;
-        if (s < 0) { s = 59; m--; }
-        if (m < 0) { m = 59; h--; }
-        if (h < 0) { h = 2; m = 45; s = 12; }
-        return { h, m, s };
-      });
-    }, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const pad = (n: number) => String(n).padStart(2, '0');
-
-  return (
-    <div className="flex gap-2 items-center">
-      <div className="bg-black/25 rounded-lg px-2.5 py-1 font-mono font-black text-white tabular-nums">{pad(time.h)}</div>
-      <span className="font-bold text-white">:</span>
-      <div className="bg-black/25 rounded-lg px-2.5 py-1 font-mono font-black text-white tabular-nums">{pad(time.m)}</div>
-      <span className="font-bold text-white">:</span>
-      <div className="bg-black/25 rounded-lg px-2.5 py-1 font-mono font-black text-white tabular-nums">{pad(time.s)}</div>
-    </div>
-  );
-}
 
 // ── NotFound ──────────────────────────────────────────────────────────────────
 
@@ -102,8 +71,37 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const [showCopied, setShowCopied] = useState(false);
 
   const mainImgRef = useRef<HTMLDivElement>(null);
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    const title = car ? `${car.brand} ${car.model} ${car.year} - MILLCARS` : 'MILLCARS';
+    const text = car ? `Mira este ${car.brand} ${car.model} ${car.year} en MILLCARS` : '';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+        return;
+      } catch {
+        // user cancelled — fall through to clipboard
+      }
+    }
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const el = document.createElement('textarea');
+      el.value = url;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+    setShowCopied(true);
+    setTimeout(() => setShowCopied(false), 2500);
+  };
 
   // ── Fetch car by UUID ──────────────────────────────────────────
   useEffect(() => {
@@ -178,14 +176,33 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
 
       <main className="flex-1 pt-[112px] pb-32 max-w-7xl mx-auto px-4 lg:px-8 w-full">
 
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-outline mb-6 pt-4 font-semibold" aria-label="Breadcrumb">
-          <a href="/" className="hover:text-primary transition-colors">Inicio</a>
-          <span className="material-symbols-outlined text-sm">chevron_right</span>
-          <a href="/#catalogo" className="hover:text-primary transition-colors">Catálogo</a>
-          <span className="material-symbols-outlined text-sm">chevron_right</span>
-          <span className="text-on-surface truncate max-w-[180px]">{car.brand} {car.model} {car.year}</span>
-        </nav>
+        {/* Breadcrumb + Share */}
+        <div className="flex items-center justify-between mb-6 pt-4">
+          <nav className="flex items-center gap-2 text-xs text-outline font-semibold" aria-label="Breadcrumb">
+            <a href="/" className="hover:text-primary transition-colors">Inicio</a>
+            <span className="material-symbols-outlined text-sm">chevron_right</span>
+            <a href="/#catalogo" className="hover:text-primary transition-colors">Catálogo</a>
+            <span className="material-symbols-outlined text-sm">chevron_right</span>
+            <span className="text-on-surface truncate max-w-[180px]">{car.brand} {car.model} {car.year}</span>
+          </nav>
+
+          {/* Share button */}
+          <button
+            id="share-car-btn"
+            onClick={handleShare}
+            aria-label="Compartir este auto"
+            className={`flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-black uppercase tracking-widest transition-all ${
+              showCopied
+                ? 'border-green-400 bg-green-50 text-green-600'
+                : 'border-outline-variant/40 bg-white text-outline hover:border-primary/40 hover:text-primary hover:shadow-sm'
+            }`}
+          >
+            <span className="material-symbols-outlined text-base">
+              {showCopied ? 'check_circle' : 'share'}
+            </span>
+            <span className="hidden sm:inline">{showCopied ? '\u00a1Link copiado!' : 'Compartir'}</span>
+          </button>
+        </div>
 
         {/* Flash Sale Banner */}
         <div className="bg-secondary text-white px-5 py-3.5 rounded-2xl mb-8 flex items-center justify-between shadow-xl shadow-secondary/25">

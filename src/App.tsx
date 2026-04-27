@@ -4,12 +4,13 @@ import { fetchCars } from './services/carsService';
 import { chatWithAgent } from './services/gemini';
 import { CarCard, CarCardSkeleton } from './components/CarCard';
 import { motion, AnimatePresence } from 'motion/react';
-import { countActiveFilters, formatNumber, getWhatsAppLink } from './lib/utils';
+import { countActiveFilters, formatNumber, getWhatsAppLink, filterCarsByFilters } from './lib/utils';
 import { AdminDashboard } from './components/AdminDashboard';
 import { AddVehiclePage } from './components/AddVehiclePage';
 import { EditVehiclePage } from './components/EditVehiclePage';
 import { VehicleDetailModal } from './components/VehicleDetailModal';
 import { VehicleDetailPage } from './components/VehicleDetailPage';
+import { CatalogoPage } from './components/CatalogoPage';
 import { Login } from './components/Login';
 import { Vender } from './components/Vender';
 import { PublicHeader } from './components/PublicHeader';
@@ -17,91 +18,7 @@ import { Footer } from './components/Footer';
 import { Button } from './components/Button';
 import { AssistantPanel } from './components/AssistantPanel';
 import { AuthProvider } from './context/AuthContext';
-
-const PRICE_POLICY_MESSAGE =
-  'Respecto al precio, por políticas de seguridad y para brindarte la mejor oferta del día, te invito a iniciar sesión o registrarte en nuestro portal. También puedes contactarnos directamente por WhatsApp desde la tarjeta del vehículo para recibir atención inmediata de uno de nuestros asesores. ¿Te gustaría coordinar una visita para verla en persona?';
-
-const filterCarsByFilters = (cars: Car[], filters: SearchFilters) => {
-  return cars.filter(car => {
-    if (filters.brand) {
-      const brands = filters.brand.toLowerCase().split(',').map(b => b.trim());
-      if (!brands.some(b => car.brand.toLowerCase().includes(b))) return false;
-    }
-
-    if (filters.model) {
-      const models = filters.model.toLowerCase().split(',').map(m => m.trim());
-      if (!models.some(m => car.model.toLowerCase().includes(m))) return false;
-    }
-
-    if (filters.minPrice && car.price < filters.minPrice) return false;
-    if (filters.maxPrice && car.price > filters.maxPrice) return false;
-    if (filters.minYear && car.year < filters.minYear) return false;
-    if (filters.maxYear && car.year > filters.maxYear) return false;
-    if (filters.maxMileage && car.mileage > filters.maxMileage) return false;
-    if (filters.color && !car.color.toLowerCase().includes(filters.color.toLowerCase())) return false;
-    if (filters.condition && car.condition !== filters.condition) return false;
-    if (filters.plateEnd !== undefined && car.plateEnd !== filters.plateEnd) return false;
-    if (filters.owners !== undefined && car.owners > filters.owners) return false;
-    if (filters.fuelType && !car.fuelType.toLowerCase().includes(filters.fuelType.toLowerCase())) return false;
-    if (filters.transmission && !car.transmission.toLowerCase().includes(filters.transmission.toLowerCase())) return false;
-
-    if (filters.query) {
-      const q = filters.query.toLowerCase();
-      const inBrand = car.brand.toLowerCase().includes(q);
-      const inModel = car.model.toLowerCase().includes(q);
-      const inDesc = car.description.toLowerCase().includes(q);
-      const inFeatures = car.features.some(f => f.toLowerCase().includes(q));
-      if (!inBrand && !inModel && !inDesc && !inFeatures) return false;
-    }
-
-    return true;
-  });
-};
-
-const buildFiltersFromMentionedCars = (text: string, cars: Car[]): SearchFilters | null => {
-  const normalizedText = text.toLowerCase();
-  const mentionedCars = cars.filter(car => normalizedText.includes(`${car.brand} ${car.model}`.toLowerCase()));
-
-  if (mentionedCars.length === 0) {
-    return null;
-  }
-
-  const uniqueBrands = [...new Set(mentionedCars.map(car => car.brand))];
-  const uniqueModels = [...new Set(mentionedCars.map(car => car.model))];
-
-  return {
-    brand: uniqueBrands.join(','),
-    model: uniqueModels.join(','),
-  };
-};
-
-const buildConciseAssistantMessage = (cars: Car[]) => {
-  const listedCars = cars.slice(0, 3);
-  const lines = listedCars.map((car, index) => `${index + 1}. ${car.brand} ${car.model} (${car.year})`);
-  return `${lines.join('\n')}\n\n${PRICE_POLICY_MESSAGE}`;
-};
-
-const extractExplicitFiltersFromText = (text: string): Partial<SearchFilters> => {
-  const normalized = text.toLowerCase();
-  const explicitFilters: Partial<SearchFilters> = {};
-
-  // "menos de $15,000", "menor a 15000", "max 15000"
-  const maxPriceMatch = normalized.match(/(?:menos de|menor a|max(?:imo)?(?: de)?)\s*\$?\s*([\d.,]+)/i);
-  if (maxPriceMatch?.[1]) {
-    const parsed = Number(maxPriceMatch[1].replace(/[.,]/g, ''));
-    if (!Number.isNaN(parsed) && parsed > 0) {
-      explicitFilters.maxPrice = parsed;
-    }
-  }
-
-  if (/\bautom[áa]tic[oa]s?\b/i.test(normalized)) {
-    explicitFilters.transmission = 'automático';
-  } else if (/\bmanual(?:es)?\b/i.test(normalized)) {
-    explicitFilters.transmission = 'manual';
-  }
-
-  return explicitFilters;
-};
+import { useAssistant } from './hooks/useAssistant';
 
 function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -111,6 +28,7 @@ function AppContent() {
   const isLoginPage = currentPath === '/login';
   const isQuotePage = currentPath === '/cotizar';
   const isLegacySellPage = currentPath === '/vender';
+  const isCatalogoPage = currentPath === '/catalogo';
   // /autos/:id  — public vehicle detail page (UUID-based route)
   const vehicleDetailMatch = currentPath.match(/^\/autos\/([^/]+)$/);
   const vehicleDetailId = vehicleDetailMatch ? vehicleDetailMatch[1] : null;
@@ -132,13 +50,8 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [filters, setFilters] = useState<SearchFilters>({});
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-  const [input, setInput] = useState('');
   const [isAssistantOpen, setIsAssistantOpen] = useState(false);
-  const [assistantAutoAdjusted, setAssistantAutoAdjusted] = useState(false);
   const featuredScrollRef = useRef<HTMLDivElement | null>(null);
 
   // ── Real data from Supabase ──────────────────────────────────────────────
@@ -161,6 +74,26 @@ function AppContent() {
   }, []);
   // ────────────────────────────────────────────────────────────────────────
 
+  const {
+    messages,
+    filters,
+    isLoading,
+    input,
+    setInput,
+    assistantAutoAdjusted,
+    handleSendMessage,
+    clearFilters
+  } = useAssistant(carsData);
+
+  const handleCloseAssistant = () => {
+    if (isLoading) {
+      alert('Existe una consulta en curso. Por favor, espera a que finalice para cerrar el asistente.');
+      return;
+    }
+    setIsAssistantOpen(false);
+  };
+
+
   const activeFilterCount = countActiveFilters(filters as object);
   const hasActiveSearch = messages.length > 0 || activeFilterCount > 0;
 
@@ -170,88 +103,6 @@ function AppContent() {
 
   // Limit public catalog to 10 units total (3 featured + 7 used)
   const catalogCars = filteredCars.slice(0, 10);
-
-  const handleSendMessage = async (text: string) => {
-    if (!text.trim() || isLoading) return;
-    
-    setInput('');
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      text,
-      timestamp: Date.now(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setIsLoading(true);
-
-    try {
-      const response = await chatWithAgent(text, messages);
-
-      const aiFilters = response.filters ?? {};
-      let nextFilters = aiFilters;
-      let adjustedByFallback = false;
-      const resultsWithAiFilters = filterCarsByFilters(carsData, aiFilters);
-
-      if (resultsWithAiFilters.length === 0) {
-        const fallbackFilters = buildFiltersFromMentionedCars(response.message ?? '', carsData);
-        if (fallbackFilters) {
-          nextFilters = fallbackFilters;
-          adjustedByFallback = true;
-        } else if (countActiveFilters(aiFilters as object) > 0) {
-          nextFilters = {};
-          adjustedByFallback = true;
-        }
-      }
-
-      // Enforce hard constraints explicitly written by the user
-      const explicitFilters = extractExplicitFiltersFromText(text);
-      nextFilters = { ...nextFilters, ...explicitFilters };
-
-      let resultsForFinalFilters = filterCarsByFilters(carsData, nextFilters);
-
-      // Final reconciliation: if we still have no results but assistant mentioned concrete cars,
-      // prioritize visual coherence between chat and result grid.
-      if (resultsForFinalFilters.length === 0) {
-        const finalFallbackFilters = buildFiltersFromMentionedCars(response.message ?? '', carsData);
-        if (finalFallbackFilters) {
-          const fallbackResults = filterCarsByFilters(carsData, finalFallbackFilters);
-          if (fallbackResults.length > 0) {
-            nextFilters = finalFallbackFilters;
-            resultsForFinalFilters = fallbackResults;
-            adjustedByFallback = true;
-          }
-        }
-      }
-
-      const assistantText =
-        resultsForFinalFilters.length > 0
-          ? buildConciseAssistantMessage(resultsForFinalFilters)
-          : response.message;
-
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'model',
-        text: assistantText,
-        timestamp: Date.now(),
-      };
-
-      setMessages(prev => [...prev, botMessage]);
-      setFilters(nextFilters);
-      setAssistantAutoAdjusted(adjustedByFallback);
-    } catch (error) {
-      console.error(error);
-      setAssistantAutoAdjusted(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const clearFilters = () => {
-    setFilters({});
-    setMessages([]);
-    setAssistantAutoAdjusted(false);
-  };
 
   const scrollFeaturedCars = (direction: 'left' | 'right') => {
     if (!featuredScrollRef.current) return;
@@ -283,6 +134,10 @@ function AppContent() {
 
   if (isQuotePage || isLegacySellPage) {
     return <Vender mode="cotizar" />;
+  }
+
+  if (isCatalogoPage) {
+    return <CatalogoPage />;
   }
 
   if (vehicleDetailId) {
@@ -341,9 +196,7 @@ function AppContent() {
                       size="lg"
                        className="flex items-center gap-2 shadow-xl shadow-primary/20"
                       
-                      onClick={() => {
-                        window.location.href = '/#catalogo';
-                      }}
+                      onClick={() => navigateTo('/catalogo')}
                     >
                       Ver catálogo
                       <span className="material-symbols-outlined">apps</span>
@@ -564,7 +417,29 @@ function AppContent() {
                     {hasActiveSearch ? 'Selección afinada por tu búsqueda' : 'Selección destacada del catálogo'}
                   </p>
                 </div>
+                {!hasActiveSearch && (
+                  <Button
+                    variant="secondary"
+                    className="hidden sm:flex items-center gap-2"
+                    onClick={() => navigateTo('/catalogo')}
+                  >
+                    Ver catálogo completo
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </Button>
+                )}
               </div>
+              {!hasActiveSearch && (
+                <div className="mb-6 sm:hidden">
+                  <Button
+                    variant="secondary"
+                    className="w-full flex items-center justify-center gap-2"
+                    onClick={() => navigateTo('/catalogo')}
+                  >
+                    Ver catálogo completo
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  </Button>
+                </div>
+              )}
   <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 <AnimatePresence mode='popLayout'>
                   {carsLoading ? (
@@ -691,7 +566,7 @@ function AppContent() {
           <button
             type="button"
             aria-label="Cerrar asistente"
-            onClick={() => setIsAssistantOpen(false)}
+            onClick={handleCloseAssistant}
             className="absolute inset-0 bg-slate-950/45 backdrop-blur-sm"
           />
           <div className="absolute inset-x-0 bottom-0 max-h-[86vh] overflow-hidden rounded-t-3xl shadow-2xl">
@@ -704,7 +579,7 @@ function AppContent() {
               filters={filters}
               clearFilters={clearFilters}
               mode="mobile"
-              onClose={() => setIsAssistantOpen(false)}
+              onClose={handleCloseAssistant}
             />
           </div>
         </div>
