@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 interface PublicHeaderProps {
-  active?: 'inventario' | 'cotizar';
+  active?: 'inventario' | 'cotizar' | 'catalogo';
   ctaLabel?: string;
   ctaHref?: string;
   offsetDesktop?: boolean;
@@ -46,7 +46,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
     : 'fixed inset-x-0 top-0';
 
   const linkClass = (isActive: boolean) =>
-    `rounded-full px-4 py-2 transition-all ${isActive ? 'bg-on-surface text-white shadow-[0_8px_24px_rgba(17,28,45,0.16)]' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`;
+    `rounded-full px-4 py-2 font-bold transition-all ${isActive ? 'bg-secondary text-white shadow-[0_8px_24px_rgba(17,28,45,0.16)]' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`;
 
   const handleSignOut = async () => {
     setUserMenuOpen(false);
@@ -67,7 +67,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
           </a>
 
           <nav className="hidden md:flex items-center rounded-full border border-slate-200 bg-slate-50/85 p-1.5 text-sm font-medium">
-            <a href="/#catalogo" className={linkClass(active === 'inventario')}>
+            <a href="/catalogo" className={linkClass(active === 'inventario' || active === 'catalogo')}>
               Catálogo
             </a>
             <a href="/cotizar" className={linkClass(active === 'cotizar')}>
@@ -195,7 +195,7 @@ export const PublicHeader: React.FC<PublicHeaderProps> = ({
             )}
 
             <div className="flex flex-col gap-2 text-sm font-medium">
-              <a href="/#catalogo" className={linkClass(active === 'inventario')} onClick={() => setMobileMenuOpen(false)}>
+              <a href="/catalogo" className={linkClass(active === 'inventario' || active === 'catalogo')} onClick={() => setMobileMenuOpen(false)}>
                 Catálogo
               </a>
               <a href="/cotizar" className={linkClass(active === 'cotizar')} onClick={() => setMobileMenuOpen(false)}>
