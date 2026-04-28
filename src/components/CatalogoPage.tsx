@@ -8,6 +8,7 @@ import { getWhatsAppLink, countActiveFilters, filterCarsByFilters } from '../lib
 import { AssistantPanel } from './AssistantPanel';
 import { useAssistant } from '../hooks/useAssistant';
 import { CountdownTimer } from './CountdownTimer';
+import { Helmet } from 'react-helmet-async';
 
 const LIMIT = 12;
 
@@ -103,16 +104,39 @@ export function CatalogoPage() {
     car.model.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Catálogo de vehículos Millcars",
+    "description": "Listado de autos nuevos importados y usados disponibles en Millcars",
+    "url": "https://www.millcars.com/catalogo"
+  };
+
   return (
     <div className="min-h-screen bg-surface flex flex-col font-label text-on-surface selection:bg-primary/20">
+      <Helmet>
+        <title>Catálogo de autos en venta | Millcars</title>
+        <meta name="description" content="Explora el catálogo de autos nuevos importados y usados de Millcars. Compra o vende tu vehículo con asesoría personalizada y total seguridad." />
+        <meta property="og:title" content="Catálogo de vehículos | Millcars" />
+        <meta property="og:description" content="Autos nuevos importados y usados disponibles en Millcars" />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaData)}
+        </script>
+      </Helmet>
+      
       <PublicHeader active="catalogo" ctaLabel="Ingresar" ctaHref="/login" />
 
       <main className="flex-1 w-full min-w-0 pt-[112px] pb-24">
 
         {/* ── Title ──────────────────────────────────────────────────────── */}
         <div className="max-w-7xl mx-auto px-4 lg:px-0 w-full mt-4 md:mt-8 mb-4">
-          <span className="text-primary font-black text-[10px] tracking-[0.15em] uppercase mb-1 block">Catálogo Premium</span>
-          <h1 className="text-3xl md:text-[40px] font-display font-bold text-on-surface tracking-tight">Inventario de Lujo</h1>
+          <span className="text-primary font-black text-[10px] tracking-[0.15em] uppercase mb-1 block"><div className="inline-flex items-center self-start rounded-full bg-primary-fixed px-3.5 py-1.5 font-label text-[11px] font-semibold uppercase tracking-[0.18em] text-on-primary-fixed">
+                    Catálogo Premium
+          </div></span>
+          <h1 className="text-5xl md:text-[35px] font-display font-bold text-on-surface tracking-tight">Catálogo de vehículos en venta | Autos nuevos importados y usados</h1>
+          <p className="mt-4 text-on-surface-variant max-w-3xl leading-relaxed text-sm md:text-base">
+            Explora nuestro catálogo exclusivo de vehículos. Contamos con una selecta variedad de <strong className="font-semibold text-on-surface">autos nuevos importados y usados</strong> en excelentes condiciones. En Millcars te ofrecemos asesoría personalizada, seguridad en cada transacción y la confianza que necesitas para realizar la mejor compra.
+          </p>
         </div>
 
         {/* ── Search bar & Assistant Toggle ──────────────────────────────── */}
@@ -289,14 +313,14 @@ export function CatalogoPage() {
 
                 {/* ── Info body ── */}
                 <div className="flex flex-col flex-grow p-3 sm:p-4">
-                  {/* Brand */}
-                  <p className="text-[9px] sm:text-[10px] font-bold text-outline uppercase tracking-[0.14em] mb-0.5 truncate">
-                    {car.brand}
-                  </p>
-                  {/* Model */}
-                  <h2 className="font-display font-bold text-sm sm:text-base md:text-[17px] leading-tight text-on-surface truncate mb-3">
-                    {car.model}
+                  {/* Title optimized for SEO */}
+                  <h2 className="font-display font-bold text-sm sm:text-base md:text-[17px] leading-tight text-on-surface mb-1">
+                    {car.brand} {car.model} {car.year} en venta
                   </h2>
+                  {/* Short optimized description */}
+                  <p className="text-[11px] sm:text-xs text-on-surface-variant line-clamp-2 mb-3 leading-relaxed">
+                    Vehículo {car.condition === 'nuevo' ? 'nuevo importado' : 'usado'} disponible en Millcars en excelente estado. Conoce más detalles y especificaciones.
+                  </p>
 
                   {/* Condition + Year row */}
                   <div className="flex items-center gap-2 mt-auto flex-wrap">
@@ -341,6 +365,31 @@ export function CatalogoPage() {
             );
           })}
         </div>
+
+        {/* ── LLMO / Semantic Content (SEO) ────────────────────────────── */}
+        {filteredCars.length > 0 && (
+          <div className="max-w-7xl mx-auto px-4 lg:px-0 mt-16 mb-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-on-surface-variant">
+            <section className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 hover:border-primary/30 transition-colors shadow-sm">
+              <h2 className="text-xl font-display font-bold text-on-surface mb-3 flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>handshake</span>
+                Compra tu próximo vehículo con Millcars
+              </h2>
+              <p className="leading-relaxed text-sm">
+                Explora nuestro <strong className="text-on-surface font-semibold">catálogo actualizado</strong> con las mejores opciones del mercado. Todos nuestros <strong className="text-on-surface font-semibold">vehículos son seleccionados y verificados</strong> rigurosamente para garantizar tu tranquilidad y seguridad. Además, te ofrecemos <strong className="text-on-surface font-semibold">acompañamiento en todo el proceso</strong> de compra o venta, desde la primera consulta hasta la entrega definitiva de las llaves.
+              </p>
+            </section>
+
+            <section className="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 hover:border-primary/30 transition-colors shadow-sm">
+              <h2 className="text-xl font-display font-bold text-on-surface mb-3 flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
+                ¿Qué es el catálogo de Millcars?
+              </h2>
+              <p className="leading-relaxed text-sm">
+                El catálogo de Millcars es una plataforma digital avanzada diseñada para mostrar nuestro inventario en tiempo real. Aquí podrás encontrar de manera rápida y estructurada una extensa variedad de <strong className="text-on-surface font-semibold">autos nuevos importados y vehículos usados premium</strong>. Nuestro sistema está optimizado para brindarte toda la información técnica y comercial relevante, facilitando la toma de decisiones y ofreciéndote una experiencia de compra automotriz superior y transparente.
+              </p>
+            </section>
+          </div>
+        )}
 
 
         {loading && (

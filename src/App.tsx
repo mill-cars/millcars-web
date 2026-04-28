@@ -19,6 +19,7 @@ import { Button } from './components/Button';
 import { AssistantPanel } from './components/AssistantPanel';
 import { AuthProvider } from './context/AuthContext';
 import { useAssistant } from './hooks/useAssistant';
+import { HelmetProvider } from 'react-helmet-async';
 
 function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
@@ -600,8 +601,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </HelmetProvider>
   );
 }
