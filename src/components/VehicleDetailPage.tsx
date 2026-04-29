@@ -4,6 +4,7 @@ import { Car } from '../types';
 import { fetchCarById } from '../services/carsService';
 import { fetchCarImages } from '../services/imageService';
 import { formatNumber, getWhatsAppLink } from '../lib/utils';
+import { notifyWhatsAppClick } from '../services/notificationService';
 import { PublicHeader } from './PublicHeader';
 import { Footer } from './Footer';
 import { CountdownTimer } from './CountdownTimer';
@@ -372,6 +373,7 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   id="whatsapp-cta-main"
+                  onClick={() => notifyWhatsAppClick(car, 'detalle')}
                   className="w-full py-4 bg-whatsapp text-white rounded-xl font-black flex items-center justify-center gap-3 shadow-xl shadow-green-500/20 hover:brightness-105 active:scale-[0.98] transition-all text-base"
                   style={{ animation: 'pulse-subtle 2.5s infinite' }}
                 >
@@ -447,6 +449,7 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => notifyWhatsAppClick(car, 'detalle')}
                 className="bg-whatsapp text-white px-8 py-3 rounded-xl font-black flex items-center gap-2 hover:brightness-110 transition-all shadow-md"
               >
                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
@@ -471,6 +474,7 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => notifyWhatsAppClick(car, 'detalle')}
           className="flex flex-col items-center text-whatsapp transition-transform active:scale-90"
         >
           <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
