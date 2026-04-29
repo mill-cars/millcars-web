@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Car } from '../types';
 import { fetchCarById } from '../services/carsService';
 import { fetchCarImages } from '../services/imageService';
-import { formatNumber, getWhatsAppLink } from '../lib/utils';
+import { formatNumber, getWhatsAppLink, formatCurrency } from '../lib/utils';
 import { notifyWhatsAppClick } from '../services/notificationService';
 import { PublicHeader } from './PublicHeader';
 import { Footer } from './Footer';
@@ -346,7 +346,14 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
                 </span>
               </div>
 
-
+              {/* Price */}
+              <div className="bg-primary/5 border border-primary/15 rounded-2xl px-5 py-4 flex items-end gap-3">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-outline mb-0.5">Precio de lista</p>
+                  <p className="text-3xl font-black text-primary leading-none">{formatCurrency(car.price)}</p>
+                </div>
+                <span className="text-xs text-outline font-semibold uppercase tracking-wide mb-0.5">USD</span>
+              </div>
 
               {/* Key specs */}
               <div className="grid grid-cols-2 gap-3">
@@ -442,9 +449,10 @@ export function VehicleDetailPage({ id }: VehicleDetailPageProps) {
                 />
                 <div>
                   <p className="font-black text-sm text-on-surface">{car.brand} {car.model} {car.year}</p>
-                  <p className="text-xs text-primary font-bold capitalize">{car.condition} · {fuelTypeLabel(car.fuelType)}</p>
+                  <p className="text-xs text-outline font-semibold capitalize">{car.condition} · {fuelTypeLabel(car.fuelType)}</p>
                 </div>
               </div>
+              <p className="text-xl font-black text-primary">{formatCurrency(car.price)}</p>
               <a
                 href={whatsappUrl}
                 target="_blank"
