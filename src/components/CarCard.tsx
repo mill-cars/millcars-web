@@ -2,6 +2,7 @@ import React from 'react';
 import { Car } from '../types';
 import { formatNumber, getWhatsAppLink } from '../lib/utils';
 import { motion } from 'motion/react';
+import { notifyWhatsAppClick } from '../services/notificationService';
 
 interface CarCardProps {
   car: Car;
@@ -133,11 +134,11 @@ export const CarCard: React.FC<CarCardProps> = ({ car, onClick, variant = 'featu
           <button className="flex-[2] rounded-[1rem] bg-black py-3.5 text-[11px] font-black uppercase tracking-[0.18em] text-white flex items-center justify-center gap-2 hover:bg-slate-900 transition-colors">
             DETALLES <span className="material-symbols-outlined text-xs">arrow_forward_ios</span>
           </button>
-          <a 
+          <a
             href={waLink}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); notifyWhatsAppClick(car, 'home'); }}
             className="flex-1 rounded-[1rem] bg-whatsapp py-3.5 text-[11px] font-black uppercase tracking-[0.16em] text-white flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
           >
             <span className="material-symbols-outlined text-lg" style={{fontVariationSettings: "'FILL' 1"}}>chat</span> PRECIO

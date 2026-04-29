@@ -5,6 +5,7 @@ import { Car, Category } from '../types';
 import { fetchPaginatedCars, fetchCategories, fetchCars } from '../services/carsService';
 import { useAuth } from '../context/AuthContext';
 import { getWhatsAppLink, countActiveFilters, filterCarsByFilters } from '../lib/utils';
+import { notifyWhatsAppClick } from '../services/notificationService';
 import { AssistantPanel } from './AssistantPanel';
 import { useAssistant } from '../hooks/useAssistant';
 import { CountdownTimer } from './CountdownTimer';
@@ -354,7 +355,7 @@ export function CatalogoPage() {
                     href={getWhatsAppLink(car.brand, car.model, car.year)}
                     target="_blank"
                     rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e) => { e.stopPropagation(); notifyWhatsAppClick(car, 'catalogo'); }}
                     className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 bg-[#25D366] text-white rounded-xl flex items-center justify-center active:scale-95 hover:bg-[#20b858] transition-all shadow-sm shadow-[#25D366]/20"
                     aria-label="Consultar por WhatsApp"
                   >
