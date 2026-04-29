@@ -12,6 +12,7 @@ interface NotificationPayload {
   carYear: number;
   source: string;
   env: 'development' | 'production';
+  userIp?: string;
 }
 
 const SOURCE_LABELS: Record<string, string> = {
@@ -42,7 +43,7 @@ async function getGmailAccessToken(): Promise<string> {
   return data.access_token as string;
 }
 
-async function sendNotificationEmail(payload: NotificationPayload): Promise<void> {
+async function sendNotificationEmail(payload: NotificationPayload & { resolvedIp: string }): Promise<void> {
   const accessToken = await getGmailAccessToken();
 
   const to = Deno.env.get('NOTIFICATION_EMAIL')!;
@@ -58,6 +59,7 @@ async function sendNotificationEmail(payload: NotificationPayload): Promise<void
     `  ID      : ${payload.carId}`,
     `  Origen  : ${sourceLabel}`,
     `  Ambiente: ${envLabel}`,
+    `  IP      : ${payload.resolvedIp}`,
     '',
     '---',
     'Notificación automática de Millcars',
@@ -110,7 +112,15 @@ serve(async (req) => {
       return new Response('Missing required fields', { status: 400, headers: CORS_HEADERS });
     }
 
-    await sendNotificationEmail(payload);
+    // Resolve IP: prefer payload value (client-detected), fall back to request headers
+    const resolvedIp =
+      payload.userIp ||
+      req.headers.get('cf-connecting-ip') ||
+      req.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+      req.headers.get('x-real-ip') ||
+      'N/A';
+
+    await sendNotificationEmail({ ...payload, resolvedIp });
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
