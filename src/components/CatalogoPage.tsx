@@ -4,7 +4,7 @@ import { Footer } from './Footer';
 import { Car, Category } from '../types';
 import { fetchPaginatedCars, fetchCategories, fetchCars } from '../services/carsService';
 import { useAuth } from '../context/AuthContext';
-import { getWhatsAppLink, countActiveFilters, filterCarsByFilters } from '../lib/utils';
+import { getWhatsAppLink, countActiveFilters, filterCarsByFilters, formatCurrency } from '../lib/utils';
 import { notifyWhatsAppClick } from '../services/notificationService';
 import { AssistantPanel } from './AssistantPanel';
 import { useAssistant } from '../hooks/useAssistant';
@@ -318,6 +318,12 @@ export function CatalogoPage() {
                   <h2 className="font-display font-bold text-sm sm:text-base md:text-[17px] leading-tight text-on-surface mb-1">
                     {car.brand} {car.model} {car.year} en venta
                   </h2>
+                  {/* Price */}
+                  <div className="flex items-baseline gap-1 mt-1 mb-2">
+                    <span className="text-base sm:text-[17px] font-black text-primary leading-none">{formatCurrency(car.price)}</span>
+                    <span className="text-[9px] text-outline font-semibold uppercase tracking-wide">USD</span>
+                  </div>
+
                   {/* Short optimized description */}
                   <p className="text-[11px] sm:text-xs text-on-surface-variant line-clamp-2 mb-3 leading-relaxed">
                     Vehículo {car.condition === 'nuevo' ? 'nuevo importado' : 'usado'} disponible en Millcars en excelente estado. Conoce más detalles y especificaciones.
